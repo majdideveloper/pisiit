@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:pisiit/features/auth/screens/signup_widget/widget_birthday.dart';
 import 'package:pisiit/features/auth/screens/signup_widget/widget_images.dart';
-import 'package:pisiit/features/auth/widgets/widget_title.dart';
-import 'package:pisiit/utils/helper_padding.dart';
 
 class LoginScreen extends StatefulWidget {
   static const routeName = '/login-screen';

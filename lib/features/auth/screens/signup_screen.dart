@@ -1,82 +1,69 @@
 import 'package:flutter/material.dart';
+import 'package:pisiit/features/auth/screens/signup_widget/widget_birthday.dart';
+import 'package:pisiit/features/auth/screens/signup_widget/widget_email.dart';
 import 'package:pisiit/features/auth/screens/signup_widget/widget_gender.dart';
+import 'package:pisiit/features/auth/screens/signup_widget/widget_images.dart';
 import 'package:pisiit/features/auth/screens/signup_widget/widget_nickname.dart';
-import 'package:pisiit/features/auth/widgets/textfield_auth.dart';
 import 'package:pisiit/utils/colors.dart';
-import 'package:pisiit/utils/helper_padding.dart';
-import 'package:pisiit/utils/helper_textstyle.dart';
 import 'package:pisiit/widgets/custom_button.dart';
 
-class SignUpScreen extends StatelessWidget {
+class SignUpScreen extends StatefulWidget {
   static const routeName = '/signup-screen';
   const SignUpScreen({super.key});
 
   @override
+  State<SignUpScreen> createState() => _SignUpScreenState();
+}
+
+class _SignUpScreenState extends State<SignUpScreen> {
+  final TextEditingController _nameController = TextEditingController();
+  @override
   Widget build(BuildContext context) {
-    return Scaffold(
-        appBar: AppBar(),
-        body: 
-       
-         Padding(
-           padding: const EdgeInsets.all(16.0),
-          child:  Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
+    return DefaultTabController(
+      length: 5,
+      child: Builder(
+        builder: (BuildContext context) {
+          final TabController tabController = DefaultTabController.of(context);
+          return Scaffold(
+            appBar: AppBar(
+                centerTitle: true,
+                title: const SizedBox(
+                  width: 220,
+                  child: LinearProgressIndicator(
+                    borderRadius: BorderRadius.all(Radius.circular(12)),
+                    minHeight: 10,
+                    backgroundColor: greyColor,
+                    color: purpleColor,
+                    value: 0.2,
+                  ),
+                )),
+            body: TabBarView(
+              // physics: const NeverScrollableScrollPhysics(),
               children: [
-                Text(
-                  "Create an account 👩‍💻",
-                  style: textStyleSubtitle,
+                WidgetEmail(tabController: tabController),
+                WidgetNickName(
+                    tabController: tabController,
+                    nameController: _nameController),
+                WidgetBirthday(
+                  tabController: tabController,
                 ),
-                smallPaddingVert,
-                Text(
-                  "Create your account in Seconds. We'll help you find your perfect match",
-                  style: textStyleText,
+                GenderWidget(
+                  tabController: tabController,
                 ),
-                smallPaddingVert,
-                TextFieldAuth(
-                  nameTextField: "Email",
+                WidgetImages(
+                  tabController: tabController,
+                  listImages: [],
                 ),
-                smallPaddingVert,
-                TextFieldAuth(
-                  nameTextField: "Password",
-                  prefixIcon: const Icon(
-                    Icons.lock,
-                    color: blackColor,
-                  ),
-                  suffixIcon: const Icon(
-                    Icons.remove_red_eye,
-                    color: blackColor,
-                  ),
-                ),
-                mediumPaddingVert,
-               // ! Custom this in widget
-                Row(
-                  children: [
-                    Checkbox(value: false, onChanged: (value) {}),
-                    Text(
-                      'I agree to Pisit',
-                      style: textStyleText.copyWith(
-                        fontWeight: FontWeight.w900,
-                      ),
-                    ),
-                    TextButton(
-                      onPressed: () {},
-                      child: Text(
-                        'Privacy Policy',
-                        style: textStyleTextBold,
-                      ),
-                    )
-                  ],
-                ),
-                const Spacer(),
-                CustomButton(
-                  colorText: whiteColor,
-                  textButton: "Sign up",
-                  onPressed: () {},
-                ),
-                mediumPaddingVert,
               ],
             ),
-         )
-        );
+            bottomNavigationBar: Padding(
+              padding: const EdgeInsets.all(8.0),
+              child:
+                  CustomButton(colorText: purpleColor, textButton: "Sign up"),
+            ),
+          );
+        },
+      ),
+    );
   }
 }
