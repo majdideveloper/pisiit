@@ -1,5 +1,6 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:flutter/material.dart';
+import 'package:pisiit/features/auth/widgets/customtext_field.dart';
 
 import 'package:pisiit/features/auth/widgets/widget_title.dart';
 import 'package:pisiit/utils/helper_padding.dart';
@@ -37,8 +38,27 @@ class _WidgetBirthdayState extends State<WidgetBirthday> {
         ),
         mediumPaddingVert,
         //!  a complete after ...
-        const Row(
-          children: [],
+        Row(
+          children: [
+            Expanded(
+              child: CustomTextField(hintText: "DD", controller: dayController),
+            ),
+            const VerticalDivider(
+              width: 2,
+            ),
+            Expanded(
+              child:
+                  CustomTextField(hintText: "MM", controller: monthController),
+            ),
+            const VerticalDivider(
+              width: 2,
+            ),
+            Expanded(
+              flex: 2,
+              child:
+                  CustomTextField(hintText: "YYYY", controller: yearController),
+            ),
+          ],
         )
       ],
     );
