@@ -32,7 +32,7 @@ class _WidgetBirthdayState extends State<WidgetBirthday> {
         ),
         mediumPaddingVert,
         Image.asset(
-          "assets/images/logo_request_active.png",
+          "assets/images/birthday.png",
           height: 200,
           width: 200,
         ),

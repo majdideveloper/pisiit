@@ -4,8 +4,12 @@ import 'package:pisiit/features/auth/screens/signup_widget/widget_email.dart';
 import 'package:pisiit/features/auth/screens/signup_widget/widget_gender.dart';
 import 'package:pisiit/features/auth/screens/signup_widget/widget_images.dart';
 import 'package:pisiit/features/auth/screens/signup_widget/widget_nickname.dart';
+
+import 'package:pisiit/features/auth/screens/signup_widget/widget_relationgoals.dart';
+import 'package:pisiit/features/auth/widgets/textfield_auth.dart';
 import 'package:pisiit/utils/colors.dart';
 import 'package:pisiit/widgets/custom_button.dart';
+
 
 class SignUpScreen extends StatefulWidget {
   static const routeName = '/signup-screen';
@@ -19,8 +23,9 @@ class _SignUpScreenState extends State<SignUpScreen> {
   final TextEditingController _nameController = TextEditingController();
   @override
   Widget build(BuildContext context) {
+
     return DefaultTabController(
-      length: 5,
+      length: 6,
       child: Builder(
         builder: (BuildContext context) {
           final TabController tabController = DefaultTabController.of(context);
@@ -37,24 +42,28 @@ class _SignUpScreenState extends State<SignUpScreen> {
                     value: 0.2,
                   ),
                 )),
-            body: TabBarView(
-              // physics: const NeverScrollableScrollPhysics(),
-              children: [
-                WidgetEmail(tabController: tabController),
-                WidgetNickName(
+            body: Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+              child: TabBarView(
+                // physics: const NeverScrollableScrollPhysics(),
+                children: [
+                  WidgetEmail(tabController: tabController),
+                  WidgetNickName(
+                      tabController: tabController,
+                      nameController: _nameController),
+                  WidgetBirthday(
                     tabController: tabController,
-                    nameController: _nameController),
-                WidgetBirthday(
-                  tabController: tabController,
-                ),
-                GenderWidget(
-                  tabController: tabController,
-                ),
-                WidgetImages(
-                  tabController: tabController,
-                  listImages: [],
-                ),
-              ],
+                  ),
+                  GenderWidget(
+                    tabController: tabController,
+                  ),
+                  RelationGoalsWidget(tabController: tabController),
+                  WidgetImages(
+                    tabController: tabController,
+                    listImages: [],
+                  ),
+                ],
+              ),
             ),
             bottomNavigationBar: Padding(
               padding: const EdgeInsets.all(8.0),
@@ -65,5 +74,6 @@ class _SignUpScreenState extends State<SignUpScreen> {
         },
       ),
     );
+
   }
 }
