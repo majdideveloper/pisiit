@@ -19,63 +19,63 @@ class SignUpScreen extends StatelessWidget {
        
          Padding(
            padding: const EdgeInsets.all(16.0),
-           // Column(
-          //    crossAxisAlignment: CrossAxisAlignment.start,
-          //    children: [
-          //      Text(
-          //        "Create an account 👩‍💻",
-          //        style: textStyleSubtitle,
-          //      ),
-          //      smallPaddingVert,
-          //      Text(
-          //        "Create your account in Seconds. We'll help you find your perfect match",
-          //        style: textStyleText,
-          //      ),
-          //      smallPaddingVert,
-          //      TextFieldAuth(
-          //        nameTextField: "Email",
-          //      ),
-          //      smallPaddingVert,
-          //      TextFieldAuth(
-          //        nameTextField: "Password",
-          //        prefixIcon: const Icon(
-          //          Icons.lock,
-          //          color: blackColor,
-          //        ),
-          //        suffixIcon: const Icon(
-          //          Icons.remove_red_eye,
-          //          color: blackColor,
-          //        ),
-          //      ),
-          //      mediumPaddingVert,
-          //      //! Custom this in widget
-          //      Row(
-          //        children: [
-          //          Checkbox(value: false, onChanged: (value) {}),
-          //          Text(
-          //            'I agree to Pisit',
-          //            style: textStyleText.copyWith(
-          //              fontWeight: FontWeight.w900,
-          //            ),
-          //          ),
-          //          TextButton(
-          //            onPressed: () {},
-          //            child: Text(
-          //              'Privacy Policy',
-          //              style: textStyleTextBold,
-          //            ),
-          //          )
-          //        ],
-          //      ),
-          //      const Spacer(),
-          //      CustomButton(
-          //        colorText: whiteColor,
-          //        textButton: "Sign up",
-          //        onPressed: () {},
-          //      ),
-          //      mediumPaddingVert,
-          //    ],
-          //  ),
+          child:  Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  "Create an account 👩‍💻",
+                  style: textStyleSubtitle,
+                ),
+                smallPaddingVert,
+                Text(
+                  "Create your account in Seconds. We'll help you find your perfect match",
+                  style: textStyleText,
+                ),
+                smallPaddingVert,
+                TextFieldAuth(
+                  nameTextField: "Email",
+                ),
+                smallPaddingVert,
+                TextFieldAuth(
+                  nameTextField: "Password",
+                  prefixIcon: const Icon(
+                    Icons.lock,
+                    color: blackColor,
+                  ),
+                  suffixIcon: const Icon(
+                    Icons.remove_red_eye,
+                    color: blackColor,
+                  ),
+                ),
+                mediumPaddingVert,
+               // ! Custom this in widget
+                Row(
+                  children: [
+                    Checkbox(value: false, onChanged: (value) {}),
+                    Text(
+                      'I agree to Pisit',
+                      style: textStyleText.copyWith(
+                        fontWeight: FontWeight.w900,
+                      ),
+                    ),
+                    TextButton(
+                      onPressed: () {},
+                      child: Text(
+                        'Privacy Policy',
+                        style: textStyleTextBold,
+                      ),
+                    )
+                  ],
+                ),
+                const Spacer(),
+                CustomButton(
+                  colorText: whiteColor,
+                  textButton: "Sign up",
+                  onPressed: () {},
+                ),
+                mediumPaddingVert,
+              ],
+            ),
          )
         );
   }
