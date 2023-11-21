@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:pisiit/features/auth/screens/login_screen.dart';
 import 'package:pisiit/features/auth/screens/signup_screen.dart';
 import 'package:pisiit/features/auth/widgets/button_social_media.dart';
 import 'package:pisiit/utils/colors.dart';
@@ -66,7 +67,7 @@ class HomeAuthScreen extends StatelessWidget {
               onPressed: () {
                 Navigator.pushNamed(
                   context,
-                  SignUpScreen.routeName,
+                  LoginScreen.routeName,
                 );
               },
             ),
