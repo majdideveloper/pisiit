@@ -1,0 +1,26 @@
+import 'package:flutter/material.dart';
+import 'package:pisiit/utils/helper_padding.dart';
+import 'package:pisiit/utils/helper_textstyle.dart';
+class WidgetTitle extends StatelessWidget {
+  final String title;
+  final String subTitle;
+  const WidgetTitle({super.key, required this.title, required this.subTitle});
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      children: [
+        Text(
+                title,
+                style: textStyleSubtitle,
+              ),
+              smallPaddingVert,
+              Text(
+                subTitle,
+                style: textStyleText,
+              ),
+      ],
+    );
+  }
+}
+
