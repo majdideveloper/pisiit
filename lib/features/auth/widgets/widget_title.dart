@@ -10,10 +10,13 @@ class WidgetTitle extends StatelessWidget {
   Widget build(BuildContext context) {
     return Column(
       children: [
-        Text(
-                title,
-                style: textStyleSubtitle,
-              ),
+        Align(
+          alignment: Alignment.topLeft,
+          child: Text(
+                  title,
+                  style: textStyleSubtitle,
+                ),
+        ),
               smallPaddingVert,
               Text(
                 subTitle,
