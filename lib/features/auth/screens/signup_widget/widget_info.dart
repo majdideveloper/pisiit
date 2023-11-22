@@ -35,7 +35,7 @@ class _InfoWidgetState extends State<InfoWidget> {
     return Column(
       children: [
         const WidgetTitle(
-            title: "Discover Your Careers and Connections 🌐💼",
+            title: "DConnections 🌐💼",
             subTitle:
                 "Reveal Your Job Status and Country Living for Meaningful Connections! Share your professional journey and explore matches who resonate with your lifestyle"),
         mediumPaddingVert,
