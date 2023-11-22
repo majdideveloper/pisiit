@@ -33,64 +33,72 @@ class _CustomImageContainerState extends State<CustomImageContainer> {
   Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.only(bottom: 10.0, right: 10.0),
-      child: Container(
-        height: 150,
-        width: 100,
-        decoration: BoxDecoration(
-          color: greyColor.shade200,
-          borderRadius: BorderRadius.circular(20.0),
-        ),
-        child: (widget.imageUrl == null)
-            ? Center(
-                child: IconButton(
-                  icon: const Icon(
+      child: GestureDetector(
+        onTap: () async {
+          await _pickImage();
+
+          if (widget.imageUrl == null) {
+            ScaffoldMessenger.of(context).showSnackBar(
+                SnackBar(content: Text('No image was selected.')));
+          }
+
+          if (widget.imageUrl != null) {
+            print('Uploading ...');
+            setState(() {
+              widget.listImages.add(widget.imageUrl);
+            });
+          }
+        },
+        child: Container(
+          height: 150,
+          width: 100,
+          decoration: BoxDecoration(
+            color: greyColor.shade200,
+            borderRadius: BorderRadius.circular(20.0),
+          ),
+          child: (widget.imageUrl == null)
+              ? const Center(
+                  child: Icon(
                     Icons.add,
                     color: purpleColor,
                   ),
-                  onPressed: () async {
-                    await _pickImage();
-
-                    if (widget.imageUrl == null) {
-                      ScaffoldMessenger.of(context).showSnackBar(
-                          SnackBar(content: Text('No image was selected.')));
-                    }
-
-                    if (widget.imageUrl != null) {
-                      print('Uploading ...');
-                      setState(() {
-                        widget.listImages.add(widget.imageUrl);
-                      });
-                    }
-                  },
-                ),
-              )
-            : Stack(
-                alignment: Alignment.topRight,
-                children: [
-                  Image.file(
-                    widget.imageUrl!,
-                    fit: BoxFit.cover,
-                    height: double.infinity,
-                    width: double.infinity,
-                  ),
-                  Positioned(
-                    right: -5,
-                    top: -5,
-                    child: CircleAvatar(
-                      radius: 16,
-                      backgroundColor: Colors.red,
-                      child: IconButton(
-                        icon: const Icon(
-                          Icons.remove,
-                          color: whiteColor,
-                          size: 16,
-                        ),
-                        onPressed: () {},
+                )
+              : Stack(
+                  clipBehavior: Clip.none,
+                  children: [
+                    ClipRRect(
+                      borderRadius: BorderRadius.circular(12),
+                      child: Image.file(
+                        widget.imageUrl!,
+                        fit: BoxFit.cover,
+                        height: double.infinity,
+                        width: double.infinity,
                       ),
                     ),
-                  ),
-                ],
-              ),
+                    Positioned(
+                      right: -5,
+                      top: -5,
+                      child: CircleAvatar(
+                        radius: 16,
+                        backgroundColor: Colors.red,
+                        child: IconButton(
+                          icon: const Icon(
+                            Icons.close,
+                            color: whiteColor,
+                            size: 16,
+                          ),
+                          onPressed: () {
+                            setState(() {
+                              widget.listImages.remove(widget.imageUrl);
+                              widget.imageUrl = null;
+                            });
+                          },
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+        ),
       ),
     );
   }
