@@ -2,6 +2,8 @@ import 'dart:io';
 
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:pisiit/features/auth/controller/auth_controller.dart';
 import 'package:pisiit/features/auth/screens/signup_widget/widget_birthday.dart';
 import 'package:pisiit/features/auth/screens/signup_widget/widget_email.dart';
 import 'package:pisiit/features/auth/screens/signup_widget/widget_gender.dart';
@@ -16,17 +18,22 @@ import 'package:pisiit/utils/colors.dart';
 import 'package:pisiit/utils/signin_showpopup.dart';
 import 'package:pisiit/widgets/custom_button.dart';
 
-class SignUpScreen extends StatefulWidget {
+class SignUpScreen extends ConsumerStatefulWidget {
   static const routeName = '/signup-screen';
   const SignUpScreen({super.key});
 
   @override
-  State<SignUpScreen> createState() => _SignUpScreenState();
+  ConsumerState<SignUpScreen> createState() => _SignUpScreenState();
 }
 
-class _SignUpScreenState extends State<SignUpScreen> {
+class _SignUpScreenState extends ConsumerState<SignUpScreen> {
+  //! controller signup
+  final emailController = TextEditingController();
+  final passwordController = TextEditingController();
+
   final TextEditingController _nameController = TextEditingController();
   final TextEditingController _jobController = TextEditingController();
+
   final dayController = TextEditingController();
   final monthController = TextEditingController();
   final yearController = TextEditingController();
@@ -38,6 +45,8 @@ class _SignUpScreenState extends State<SignUpScreen> {
   List<String> relationGoals = [" "];
   List<File> listImages = [];
   List<String> interests = [];
+
+  bool isLoading = false;
   @override
   void initState() {
     super.initState();
@@ -64,6 +73,27 @@ class _SignUpScreenState extends State<SignUpScreen> {
     monthfocusNode.dispose();
     yearfocusNode.dispose();
     super.dispose();
+  }
+
+  void registerWithEmailAndPassword(BuildContext context,
+      TabController tabController, PageController pageController) {
+    String email = emailController.text;
+    String password = emailController.text;
+
+    if (email.isNotEmpty && password.isNotEmpty) {
+      ref
+          .read(authControllerProvider)
+          .signUpWithEmailAndPassword(email, password);
+
+      tabController.animateTo(tabController.index + 1);
+      pageController.animateToPage(
+        tabController.index,
+        duration: const Duration(milliseconds: 500),
+        curve: Curves.easeInOut,
+      );
+    } else {
+      // showSnackBar(context: context, content: 'Fill out all the fields');
+    }
   }
 
   @override
@@ -105,7 +135,11 @@ class _SignUpScreenState extends State<SignUpScreen> {
                 },
                 // physics: const NeverScrollableScrollPhysics(),
                 children: [
-                  WidgetEmail(tabController: tabController),
+                  WidgetEmail(
+                    tabController: tabController,
+                    emailController: emailController,
+                    passwordController: passwordController,
+                  ),
                   WidgetNickName(
                       tabController: tabController,
                       nameController: _nameController),
@@ -190,15 +224,20 @@ class _SignUpScreenState extends State<SignUpScreen> {
                       textButton:
                           tabController.index == 0 ? "Sign up" : "Continue",
                       onPressed: () {
-                        setState(() {
-                          tabController.animateTo(tabController.index + 1);
-                          pageController.animateToPage(
-                            tabController.index,
-                            duration: const Duration(milliseconds: 500),
-                            curve: Curves.easeInOut,
-                          );
-                        });
-                        showSignInPopup(context);
+                        print(tabController.index);
+                        if (tabController.index == 0) {
+                          registerWithEmailAndPassword(
+                              context, tabController, pageController);
+                        } else {
+                          setState(() {
+                            tabController.animateTo(tabController.index + 1);
+                            pageController.animateToPage(
+                              tabController.index,
+                              duration: const Duration(milliseconds: 500),
+                              curve: Curves.easeInOut,
+                            );
+                          });
+                        }
                       },
                     ),
             ),

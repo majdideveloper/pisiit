@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:pisiit/features/auth/widgets/widget_title.dart';
-import 'package:pisiit/utils/colors.dart';
+
 import 'package:pisiit/utils/helper_padding.dart';
 
 Future<void> showSignInPopup(BuildContext context) async {
@@ -30,14 +30,11 @@ Future<void> showSignInPopup(BuildContext context) async {
                 ),
               ),
             ),
-
-            WidgetTitle(
-              title: "welcome", subTitle: "please wait"
-              ),
-              mediumPaddingVert,
-              CircularProgressIndicator(
-                strokeWidth: 4,
-              )
+            WidgetTitle(title: "welcome", subTitle: "please wait"),
+            mediumPaddingVert,
+            CircularProgressIndicator(
+              strokeWidth: 4,
+            )
           ]),
         ),
         actions: <Widget>[

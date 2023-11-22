@@ -8,9 +8,13 @@ import 'package:pisiit/utils/helper_textstyle.dart';
 import 'package:pisiit/widgets/custom_button.dart';
 
 class WidgetEmail extends StatelessWidget {
+  final TextEditingController emailController;
+  final TextEditingController passwordController;
   final TabController tabController;
   const WidgetEmail({
     Key? key,
+    required this.emailController,
+    required this.passwordController,
     required this.tabController,
   }) : super(key: key);
 
@@ -32,11 +36,13 @@ class WidgetEmail extends StatelessWidget {
           ),
           smallPaddingVert,
           TextFieldAuth(
+            controller: emailController,
             nameTextField: "Email",
           ),
           smallPaddingVert,
           TextFieldAuth(
             nameTextField: "Password",
+            controller: passwordController,
             prefixIcon: const Icon(
               Icons.lock,
               color: blackColor,
