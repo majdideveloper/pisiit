@@ -5,8 +5,6 @@ import 'package:pisiit/utils/helper_textstyle.dart';
 class CustomTextField extends StatelessWidget {
   final String hintText;
   final TextEditingController controller;
-  
-
 
   const CustomTextField({
     Key? key,
@@ -19,7 +17,7 @@ class CustomTextField extends StatelessWidget {
     return Container(
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(10.0),
-        color: Colors.grey[300], // Set the background color to grey
+        color: Colors.grey[200], // Set the background color to grey
       ),
       child: TextField(
         controller: controller,
@@ -28,7 +26,7 @@ class CustomTextField extends StatelessWidget {
           contentPadding: EdgeInsets.all(16.0),
           labelStyle: textStyleText, // Adjust content padding as needed
           hintText: hintText,
-          hintStyle: TextStyle(color: Colors.grey),
+          hintStyle: TextStyle(color: Colors.grey[700]),
           border: InputBorder.none, // Remove the default border
         ),
       ),

@@ -10,7 +10,6 @@ import 'package:pisiit/features/auth/widgets/textfield_auth.dart';
 import 'package:pisiit/utils/colors.dart';
 import 'package:pisiit/widgets/custom_button.dart';
 
-
 class SignUpScreen extends StatefulWidget {
   static const routeName = '/signup-screen';
   const SignUpScreen({super.key});
@@ -21,9 +20,9 @@ class SignUpScreen extends StatefulWidget {
 
 class _SignUpScreenState extends State<SignUpScreen> {
   final TextEditingController _nameController = TextEditingController();
+
   @override
   Widget build(BuildContext context) {
-
     return DefaultTabController(
       length: 6,
       child: Builder(
@@ -32,10 +31,10 @@ class _SignUpScreenState extends State<SignUpScreen> {
           return Scaffold(
             appBar: AppBar(
                 centerTitle: true,
-                title: const SizedBox(
+                title: SizedBox(
                   width: 220,
                   child: LinearProgressIndicator(
-                    borderRadius: BorderRadius.all(Radius.circular(12)),
+                    borderRadius: const BorderRadius.all(Radius.circular(12)),
                     minHeight: 10,
                     backgroundColor: greyColor,
                     color: purpleColor,
@@ -66,7 +65,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
               ),
             ),
             bottomNavigationBar: Padding(
-              padding: const EdgeInsets.all(8.0),
+              padding: const EdgeInsets.only(bottom: 25.0),
               child:
                   CustomButton(colorText: purpleColor, textButton: "Sign up"),
             ),
@@ -74,6 +73,5 @@ class _SignUpScreenState extends State<SignUpScreen> {
         },
       ),
     );
-
   }
 }
