@@ -13,6 +13,7 @@ import 'package:pisiit/features/auth/screens/signup_widget/widget_nickname.dart'
 import 'package:pisiit/features/auth/screens/signup_widget/widget_relationgoals.dart';
 
 import 'package:pisiit/utils/colors.dart';
+import 'package:pisiit/utils/signin_showpopup.dart';
 import 'package:pisiit/widgets/custom_button.dart';
 
 class SignUpScreen extends StatefulWidget {
@@ -197,6 +198,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                             curve: Curves.easeInOut,
                           );
                         });
+                        showSignInPopup(context);
                       },
                     ),
             ),
