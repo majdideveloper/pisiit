@@ -38,6 +38,7 @@ dependencies:
   firebase_core: ^2.22.0
   google_fonts: ^6.1.0
   image_picker: ^0.8.7  #^1.0.4
+  country_picker: ^2.0.22
 
 dev_dependencies:
   flutter_test:

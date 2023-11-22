@@ -5,6 +5,7 @@ import 'package:pisiit/features/auth/screens/signup_widget/widget_birthday.dart'
 import 'package:pisiit/features/auth/screens/signup_widget/widget_email.dart';
 import 'package:pisiit/features/auth/screens/signup_widget/widget_gender.dart';
 import 'package:pisiit/features/auth/screens/signup_widget/widget_images.dart';
+import 'package:pisiit/features/auth/screens/signup_widget/widget_info.dart';
 import 'package:pisiit/features/auth/screens/signup_widget/widget_interest.dart';
 import 'package:pisiit/features/auth/screens/signup_widget/widget_nickname.dart';
 
@@ -23,7 +24,7 @@ class SignUpScreen extends StatefulWidget {
 
 class _SignUpScreenState extends State<SignUpScreen> {
   final TextEditingController _nameController = TextEditingController();
-
+final TextEditingController _jobController = TextEditingController();
   final dayController = TextEditingController();
   final monthController = TextEditingController();
   final yearController = TextEditingController();
@@ -34,7 +35,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
   List<String> gender = [""];
   List<String> relationGoals = [" "];
   List<File> listImages = [];
-  List<String> interests  =[""];
+  List<String> interests = [""];
   @override
   void initState() {
     super.initState();
@@ -66,7 +67,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
   @override
   Widget build(BuildContext context) {
     return DefaultTabController(
-      length: 7,
+      length: 8,
       child: Builder(
         builder: (BuildContext context) {
           final TabController tabController = DefaultTabController.of(context);
@@ -126,7 +127,10 @@ class _SignUpScreenState extends State<SignUpScreen> {
                   InterestWidget(
                     tabController: tabController,
                     interests: interests,
-
+                  ),
+                  InfoWidget(
+                    tabController: tabController,
+                    jobController: _jobController,
                   ),
                   WidgetImages(
                     tabController: tabController,
