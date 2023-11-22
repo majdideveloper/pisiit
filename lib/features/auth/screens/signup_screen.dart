@@ -5,6 +5,7 @@ import 'package:pisiit/features/auth/screens/signup_widget/widget_birthday.dart'
 import 'package:pisiit/features/auth/screens/signup_widget/widget_email.dart';
 import 'package:pisiit/features/auth/screens/signup_widget/widget_gender.dart';
 import 'package:pisiit/features/auth/screens/signup_widget/widget_images.dart';
+import 'package:pisiit/features/auth/screens/signup_widget/widget_interest.dart';
 import 'package:pisiit/features/auth/screens/signup_widget/widget_nickname.dart';
 
 import 'package:pisiit/features/auth/screens/signup_widget/widget_relationgoals.dart';
@@ -33,7 +34,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
   List<String> gender = [""];
   List<String> relationGoals = [" "];
   List<File> listImages = [];
-
+  List<String> interests  =[""];
   @override
   void initState() {
     super.initState();
@@ -65,7 +66,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
   @override
   Widget build(BuildContext context) {
     return DefaultTabController(
-      length: 6,
+      length: 7,
       child: Builder(
         builder: (BuildContext context) {
           final TabController tabController = DefaultTabController.of(context);
@@ -121,6 +122,11 @@ class _SignUpScreenState extends State<SignUpScreen> {
                   RelationGoalsWidget(
                     tabController: tabController,
                     relationGoals: relationGoals,
+                  ),
+                  InterestWidget(
+                    tabController: tabController,
+                    interests: interests,
+
                   ),
                   WidgetImages(
                     tabController: tabController,
