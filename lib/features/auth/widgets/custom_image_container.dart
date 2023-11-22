@@ -38,25 +38,16 @@ class _CustomImageContainerState extends State<CustomImageContainer> {
         width: 100,
         decoration: BoxDecoration(
           color: greyColor.shade200,
-          borderRadius: BorderRadius.circular(5.0),
-
-          //  Border.all(
-          //   color: Theme.of(context).primaryColor,
-          // ),
+          borderRadius: BorderRadius.circular(20.0),
         ),
         child: (widget.imageUrl == null)
             ? Center(
                 child: IconButton(
-                  icon: Icon(
+                  icon: const Icon(
                     Icons.add,
                     color: purpleColor,
                   ),
                   onPressed: () async {
-                    // ImagePicker _picker = ImagePicker();
-                    // final XFile? _image = await _picker.pickImage(
-                    //   source: ImageSource.gallery,
-                    //   imageQuality: 50,
-                    // );
                     await _pickImage();
 
                     if (widget.imageUrl == null) {
@@ -69,16 +60,36 @@ class _CustomImageContainerState extends State<CustomImageContainer> {
                       setState(() {
                         widget.listImages.add(widget.imageUrl);
                       });
-                      // BlocProvider.of<OnboardingBloc>(context).add(
-                      //   UpdateUserImages(image: _image),
-                      // );
                     }
                   },
                 ),
               )
-            : Image.file(
-                widget.imageUrl!,
-                fit: BoxFit.cover,
+            : Stack(
+                alignment: Alignment.topRight,
+                children: [
+                  Image.file(
+                    widget.imageUrl!,
+                    fit: BoxFit.cover,
+                    height: double.infinity,
+                    width: double.infinity,
+                  ),
+                  Positioned(
+                    right: -5,
+                    top: -5,
+                    child: CircleAvatar(
+                      radius: 16,
+                      backgroundColor: Colors.red,
+                      child: IconButton(
+                        icon: const Icon(
+                          Icons.remove,
+                          color: whiteColor,
+                          size: 16,
+                        ),
+                        onPressed: () {},
+                      ),
+                    ),
+                  ),
+                ],
               ),
       ),
     );

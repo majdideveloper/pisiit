@@ -1,4 +1,6 @@
+// ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:flutter/material.dart';
+
 import 'package:pisiit/features/auth/widgets/widget_title.dart';
 import 'package:pisiit/utils/colors.dart';
 import 'package:pisiit/utils/helper_padding.dart';
@@ -6,42 +8,49 @@ import 'package:pisiit/utils/helper_textstyle.dart';
 
 class GenderWidget extends StatelessWidget {
   final TabController tabController;
-  const GenderWidget({Key? key, required this.tabController}) : super(key: key);
+  final List<String> gender;
+  const GenderWidget({
+    Key? key,
+    required this.tabController,
+    required this.gender,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return 
-    const Column(
+    return Column(
       children: [
-        WidgetTitle(title: "Be true to yourself 🌟", 
-        subTitle: "Choose the gender that best represents you Authenticity is key to meaningful connections."
-        ),
+        const WidgetTitle(
+            title: "Be true to yourself 🌟",
+            subTitle:
+                "Choose the gender that best represents you Authenticity is key to meaningful connections."),
         mediumPaddingVert,
-        CustomShapes(),
+        CustomShapes(
+          gender: gender,
+        ),
       ],
     );
   }
 }
 
 class CustomShapes extends StatefulWidget {
-
-
-  const CustomShapes({super.key,});
+  final List<String> gender;
+  const CustomShapes({
+    Key? key,
+    required this.gender,
+  }) : super(key: key);
 
   @override
   _CustomShapesState createState() => _CustomShapesState();
 }
 
 class _CustomShapesState extends State<CustomShapes> {
-
   int selectedShapeIndex = -1; // -1 represents no selection
 
-
-   List<ShapeItemData> shapes = [
-      ShapeItemData(0, 'Male', 'assets/images/male_gender.png'),
-      ShapeItemData(1, 'Female', 'assets/images/femal_gender.png'),
-      ShapeItemData(2, 'Non Binary', 'assets/images/bi_gender.png'),
-    ];
+  List<ShapeItemData> shapes = [
+    ShapeItemData(0, 'Male', 'assets/images/male_gender.png'),
+    ShapeItemData(1, 'Female', 'assets/images/femal_gender.png'),
+    ShapeItemData(2, 'Non Binary', 'assets/images/bi_gender.png'),
+  ];
   @override
   Widget build(BuildContext context) {
     return Row(
@@ -51,24 +60,28 @@ class _CustomShapesState extends State<CustomShapes> {
           .entries
           .map((entry) => ShapeItem(
                 shapeData: entry.value,
-                color: selectedShapeIndex == entry.key
+                color: selectedShapeIndex == entry.key ||
+                        widget.gender[0] == shapes[entry.key].text
                     ? purpleColor
                     : greyColor.shade300,
                 onShapeSelected: () {
-                  _handleShapeSelected(entry.key, );
+                  _handleShapeSelected(
+                    entry.key,
+                  );
                 },
               ))
           .toList(),
     );
   }
 
-  void _handleShapeSelected(int index,) {
+  void _handleShapeSelected(int index) {
     setState(() {
       // Toggle the selection
       selectedShapeIndex = selectedShapeIndex == index ? -1 : index;
       if (selectedShapeIndex != -1) {
-     //value = shapes[selectedShapeIndex].text; 
+        //value = shapes[selectedShapeIndex].text;
         print('Selected shape text: ${shapes[selectedShapeIndex].text}');
+        widget.gender[0] = shapes[selectedShapeIndex].text;
       }
     });
   }

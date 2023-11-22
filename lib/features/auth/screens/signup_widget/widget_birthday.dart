@@ -1,25 +1,28 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:flutter/material.dart';
-import 'package:pisiit/features/auth/widgets/customtext_field.dart';
 
+import 'package:pisiit/features/auth/widgets/customtext_field.dart';
 import 'package:pisiit/features/auth/widgets/widget_title.dart';
 import 'package:pisiit/utils/helper_padding.dart';
 
-class WidgetBirthday extends StatefulWidget {
+class WidgetBirthday extends StatelessWidget {
+  final TextEditingController dayController;
+  final TextEditingController monthController;
+  final TextEditingController yearController;
+  final FocusNode dayfocusNode;
+  final FocusNode monthfocusNode;
+  final FocusNode yearfocusNode;
   final TabController tabController;
   const WidgetBirthday({
     Key? key,
+    required this.dayController,
+    required this.monthController,
+    required this.yearController,
+    required this.dayfocusNode,
+    required this.monthfocusNode,
+    required this.yearfocusNode,
     required this.tabController,
   }) : super(key: key);
-
-  @override
-  State<WidgetBirthday> createState() => _WidgetBirthdayState();
-}
-
-class _WidgetBirthdayState extends State<WidgetBirthday> {
-  final dayController = TextEditingController();
-  final monthController = TextEditingController();
-  final yearController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -41,22 +44,38 @@ class _WidgetBirthdayState extends State<WidgetBirthday> {
         Row(
           children: [
             Expanded(
-              child: CustomTextField(hintText: "DD", controller: dayController),
+              child: CustomTextField(
+                hintText: "DD",
+                controller: dayController,
+                maxLength: 2,
+                keyboardType: TextInputType.number,
+                focusNode: dayfocusNode,
+              ),
             ),
             const VerticalDivider(
               width: 2,
             ),
             Expanded(
-              child:
-                  CustomTextField(hintText: "MM", controller: monthController),
+              child: CustomTextField(
+                hintText: "MM",
+                controller: monthController,
+                maxLength: 2,
+                keyboardType: TextInputType.number,
+                focusNode: monthfocusNode,
+              ),
             ),
             const VerticalDivider(
               width: 2,
             ),
             Expanded(
               flex: 2,
-              child:
-                  CustomTextField(hintText: "YYYY", controller: yearController),
+              child: CustomTextField(
+                hintText: "YYYY",
+                controller: yearController,
+                maxLength: 4,
+                keyboardType: TextInputType.number,
+                focusNode: yearfocusNode,
+              ),
             ),
           ],
         )

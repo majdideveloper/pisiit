@@ -35,9 +35,10 @@ class _LoginScreenState extends State<LoginScreen> {
                   tabController: tabController,
                   listImages: [],
                 ),
-                WidgetBirthday(
+                WidgetImages(
                   tabController: tabController,
-                )
+                  listImages: [],
+                ),
               ],
             ),
           );
