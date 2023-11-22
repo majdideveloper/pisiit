@@ -34,24 +34,38 @@ class _InterestWidgetState extends State<InterestWidget> {
             runSpacing: 10,
             spacing: 5,
             children: [
-              CustomTextContainer(listInteresrt: widget.interests, text: "Travel 🛩️"),
-              CustomTextContainer(listInteresrt: widget.interests, text: "Cooking 🍳"),
+              CustomTextContainer(
+                  listInteresrt: widget.interests, text: "Travel 🛩️"),
+              CustomTextContainer(
+                  listInteresrt: widget.interests, text: "Cooking 🍳"),
               CustomTextContainer(
                   listInteresrt: widget.interests, text: "Photography 📸"),
-              CustomTextContainer(listInteresrt: widget.interests, text: "Hiking 🧗‍♀️"),
-              CustomTextContainer(listInteresrt: widget.interests, text: "Music 🎶"),
-              CustomTextContainer(listInteresrt: widget.interests, text: "Yoga 🧘‍♂️"),
-              CustomTextContainer(listInteresrt: widget.interests, text: "Pets 😺"),
-              CustomTextContainer(listInteresrt: widget.interests, text: "Gaming 🎮"),
-              CustomTextContainer(listInteresrt: widget.interests, text: "Painting 🖼️"),
-              CustomTextContainer(listInteresrt: widget.interests, text: "Movies 🎬"),
-              CustomTextContainer(listInteresrt: widget.interests, text: "Art 🎨"),
-              CustomTextContainer(listInteresrt: widget.interests, text: "Reading 📖"),
-              CustomTextContainer(listInteresrt: widget.interests, text: "Dancing 💃"),
-              CustomTextContainer(listInteresrt: widget.interests, text: "Sports ⚽"),
+              CustomTextContainer(
+                  listInteresrt: widget.interests, text: "Hiking 🧗‍♀️"),
+              CustomTextContainer(
+                  listInteresrt: widget.interests, text: "Music 🎶"),
+              CustomTextContainer(
+                  listInteresrt: widget.interests, text: "Yoga 🧘‍♂️"),
+              CustomTextContainer(
+                  listInteresrt: widget.interests, text: "Pets 😺"),
+              CustomTextContainer(
+                  listInteresrt: widget.interests, text: "Gaming 🎮"),
+              CustomTextContainer(
+                  listInteresrt: widget.interests, text: "Painting 🖼️"),
+              CustomTextContainer(
+                  listInteresrt: widget.interests, text: "Movies 🎬"),
+              CustomTextContainer(
+                  listInteresrt: widget.interests, text: "Art 🎨"),
+              CustomTextContainer(
+                  listInteresrt: widget.interests, text: "Reading 📖"),
+              CustomTextContainer(
+                  listInteresrt: widget.interests, text: "Dancing 💃"),
+              CustomTextContainer(
+                  listInteresrt: widget.interests, text: "Sports ⚽"),
               CustomTextContainer(
                   listInteresrt: widget.interests, text: "Techhnology 📱"),
-              CustomTextContainer(listInteresrt: widget.interests, text: "Fashion 👗"),
+              CustomTextContainer(
+                  listInteresrt: widget.interests, text: "Fashion 👗"),
               CustomTextContainer(
                   listInteresrt: widget.interests, text: "Motorcycling 🏍️"),
             ],
@@ -77,20 +91,20 @@ class CustomTextContainer extends StatefulWidget {
 }
 
 class _CustomTextContainerState extends State<CustomTextContainer> {
-  bool clickable = false;
+  // bool clickable = false;
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
         setState(() {
-          if (clickable) {
+          if (widget.listInteresrt.contains(widget.text)) {
             widget.listInteresrt.remove(widget.text);
             print(widget.listInteresrt);
-            clickable = !clickable;
           } else {
-            widget.listInteresrt.add(widget.text);
-            print(widget.listInteresrt);
-            clickable = !clickable;
+            if (!widget.listInteresrt.contains(widget.text)) {
+              widget.listInteresrt.add(widget.text);
+              print(widget.listInteresrt);
+            }
           }
         });
       },
@@ -98,7 +112,9 @@ class _CustomTextContainerState extends State<CustomTextContainer> {
         height: 45,
         padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
         decoration: BoxDecoration(
-          color: clickable ? purpleColor : whiteColor,
+          color: widget.listInteresrt.contains(widget.text)
+              ? purpleColor
+              : whiteColor,
           border: Border.all(
             color: purpleColor,
             width: 2.0,
@@ -106,7 +122,7 @@ class _CustomTextContainerState extends State<CustomTextContainer> {
           borderRadius: BorderRadius.circular(20),
         ),
         child: Text(
-           widget.text,
+          widget.text,
           style: textStyleTextBold,
         ),
       ),

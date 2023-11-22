@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:pisiit/features/auth/screens/signup_widget/widget_birthday.dart';
 import 'package:pisiit/features/auth/screens/signup_widget/widget_email.dart';
@@ -24,7 +25,7 @@ class SignUpScreen extends StatefulWidget {
 
 class _SignUpScreenState extends State<SignUpScreen> {
   final TextEditingController _nameController = TextEditingController();
-final TextEditingController _jobController = TextEditingController();
+  final TextEditingController _jobController = TextEditingController();
   final dayController = TextEditingController();
   final monthController = TextEditingController();
   final yearController = TextEditingController();
@@ -35,7 +36,7 @@ final TextEditingController _jobController = TextEditingController();
   List<String> gender = [""];
   List<String> relationGoals = [" "];
   List<File> listImages = [];
-  List<String> interests = [""];
+  List<String> interests = [];
   @override
   void initState() {
     super.initState();
@@ -141,20 +142,63 @@ final TextEditingController _jobController = TextEditingController();
             ),
             bottomNavigationBar: Padding(
               padding: const EdgeInsets.only(bottom: 25.0),
-              child: CustomButton(
-                colorText: purpleColor,
-                textButton: tabController.index == 0 ? "Sign up" : "Continue",
-                onPressed: () {
-                  setState(() {
-                    tabController.animateTo(tabController.index + 1);
-                    pageController.animateToPage(
-                      tabController.index,
-                      duration: const Duration(milliseconds: 500),
-                      curve: Curves.easeInOut,
-                    );
-                  });
-                },
-              ),
+              child: kIsWeb
+                  ? Row(
+                      children: [
+                        Expanded(
+                          child: CustomButton(
+                            colorText: purpleColor,
+                            textButton:
+                                tabController.index == 0 ? "Sign " : "Prev",
+                            onPressed: () {
+                              setState(() {
+                                tabController
+                                    .animateTo(tabController.index - 1);
+                                pageController.animateToPage(
+                                  tabController.index,
+                                  duration: const Duration(milliseconds: 500),
+                                  curve: Curves.easeInOut,
+                                );
+                              });
+                            },
+                          ),
+                        ),
+                        Expanded(
+                          child: CustomButton(
+                            colorText: purpleColor,
+                            textButton: tabController.index == 0
+                                ? "Sign Up"
+                                : "Continue",
+                            onPressed: () {
+                              setState(() {
+                                tabController
+                                    .animateTo(tabController.index + 1);
+                                pageController.animateToPage(
+                                  tabController.index,
+                                  duration: const Duration(milliseconds: 500),
+                                  curve: Curves.easeInOut,
+                                );
+                              });
+                            },
+                          ),
+                        ),
+                      ],
+                    )
+                  : CustomButton(
+                      colorText: purpleColor,
+                      textButton:
+                          tabController.index == 0 ? "Sign up" : "Continue",
+                      onPressed: () {
+                        setState(() {
+                          tabController.animateTo(tabController.index + 1);
+                          pageController.animateToPage(
+                            tabController.index,
+                            duration: const Duration(milliseconds: 500),
+                            curve: Curves.easeInOut,
+                          );
+                        });
+                      },
+                    ),
             ),
           );
         },
