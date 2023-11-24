@@ -31,3 +31,7 @@ const SizedBox largePaddingHor = SizedBox(
 const SizedBox xlargePaddingHor = SizedBox(
   width: 100,
 );
+
+const Divider divider = Divider(
+  thickness: 0.9,
+);

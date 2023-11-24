@@ -17,7 +17,10 @@ import 'package:flutter/foundation.dart'
 class DefaultFirebaseOptions {
   static FirebaseOptions get currentPlatform {
     if (kIsWeb) {
-      return web;
+      throw UnsupportedError(
+        'DefaultFirebaseOptions have not been configured for web - '
+        'you can reconfigure this by running the FlutterFire CLI again.',
+      );
     }
     switch (defaultTargetPlatform) {
       case TargetPlatform.android:
@@ -46,30 +49,20 @@ class DefaultFirebaseOptions {
     }
   }
 
-  static const FirebaseOptions web = FirebaseOptions(
-    apiKey: 'AIzaSyBWhLMBcUfNYi2VM9806S1y3cOfsbHntBU',
-    appId: '1:198411346858:web:05d805ba6ed2513eab41d3',
-    messagingSenderId: '198411346858',
-    projectId: 'pisiit',
-    authDomain: 'pisiit.firebaseapp.com',
-    storageBucket: 'pisiit.appspot.com',
-    measurementId: 'G-63CQ1DWYPV',
-  );
-
   static const FirebaseOptions android = FirebaseOptions(
-    apiKey: 'AIzaSyAsfsGhwHBsEa6olqChMElSA_rG5xPqwlc',
-    appId: '1:198411346858:android:9a771595d25954edab41d3',
-    messagingSenderId: '198411346858',
-    projectId: 'pisiit',
-    storageBucket: 'pisiit.appspot.com',
+    apiKey: 'AIzaSyB60t8UZ9FCRozMJ8cvpL7Zgc0uNbBknQk',
+    appId: '1:679556973741:android:e3e31104857101782a3224',
+    messagingSenderId: '679556973741',
+    projectId: 'pisit-db790',
+    storageBucket: 'pisit-db790.appspot.com',
   );
 
   static const FirebaseOptions ios = FirebaseOptions(
-    apiKey: 'AIzaSyDMg6yRfkLgEm0Gh9_vmbrCCwun0fuA2Qo',
-    appId: '1:198411346858:ios:48e21b01ee57bae7ab41d3',
-    messagingSenderId: '198411346858',
-    projectId: 'pisiit',
-    storageBucket: 'pisiit.appspot.com',
+    apiKey: 'AIzaSyDpYWb1-lXZSMW-NULNmTI-K-14gisyYGA',
+    appId: '1:679556973741:ios:ac6beec0a13661942a3224',
+    messagingSenderId: '679556973741',
+    projectId: 'pisit-db790',
+    storageBucket: 'pisit-db790.appspot.com',
     iosBundleId: 'com.example.pisiit',
   );
 }

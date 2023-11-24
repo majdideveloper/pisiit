@@ -7,7 +7,7 @@ import 'package:pisiit/utils/helper_padding.dart';
 import 'package:pisiit/utils/helper_textstyle.dart';
 import 'package:pisiit/widgets/custom_button.dart';
 
-class WidgetEmail extends StatelessWidget {
+class WidgetEmail extends StatefulWidget {
   final TextEditingController emailController;
   final TextEditingController passwordController;
   final TabController tabController;
@@ -19,60 +19,76 @@ class WidgetEmail extends StatelessWidget {
   }) : super(key: key);
 
   @override
+  State<WidgetEmail> createState() => _WidgetEmailState();
+}
+
+class _WidgetEmailState extends State<WidgetEmail> {
+  bool showPassword = true;
+  @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.all(16.0),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Text(
-            "Create an account 👩‍💻",
-            style: textStyleSubtitle,
-          ),
-          smallPaddingVert,
-          Text(
-            "Create your account in Seconds. We'll help you find your perfect match",
-            style: textStyleText,
-          ),
-          smallPaddingVert,
-          TextFieldAuth(
-            controller: emailController,
-            nameTextField: "Email",
-          ),
-          smallPaddingVert,
-          TextFieldAuth(
-            nameTextField: "Password",
-            controller: passwordController,
-            prefixIcon: const Icon(
-              Icons.lock,
-              color: blackColor,
+    return SingleChildScrollView(
+      child: Padding(
+        padding: const EdgeInsets.all(16.0),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text(
+              "Create an account 👩‍💻",
+              style: textStyleSubtitle,
             ),
-            suffixIcon: const Icon(
-              Icons.remove_red_eye,
-              color: blackColor,
+            smallPaddingVert,
+            Text(
+              "Create your account in Seconds. We'll help you find your perfect match",
+              style: textStyleText,
             ),
-          ),
-          mediumPaddingVert,
-          // ! Custom this in widget
-          Row(
-            children: [
-              Checkbox(value: false, onChanged: (value) {}),
-              Text(
-                'I agree to Pisit',
-                style: textStyleText.copyWith(
-                  fontWeight: FontWeight.w900,
-                ),
+            smallPaddingVert,
+            TextFieldAuth(
+              controller: widget.emailController,
+              nameTextField: "Email",
+            ),
+            smallPaddingVert,
+            TextFieldAuth(
+              nameTextField: "Password",
+              controller: widget.passwordController,
+              obscureText: showPassword,
+              prefixIcon: const Icon(
+                Icons.lock,
+                color: blackColor,
               ),
-              TextButton(
-                onPressed: () {},
-                child: Text(
-                  'Privacy Policy',
-                  style: textStyleTextBold,
+              suffixIcon: IconButton(
+                icon: showPassword
+                    ? const Icon(Icons.remove_red_eye)
+                    : const Icon(Icons.event_busy),
+                onPressed: () {
+                  setState(() {
+                    showPassword = !showPassword;
+                  });
+                },
+                color: blackColor,
+              ),
+            ),
+            mediumPaddingVert,
+            // ! Custom this in widget
+            Row(
+              children: [
+                Checkbox(value: false, onChanged: (value) {}),
+                Text(
+                  'I agree to Pisit',
+                  style: textStyleText.copyWith(
+                    fontWeight: FontWeight.w900,
+                  ),
                 ),
-              )
-            ],
-          ),
-        ],
+                TextButton(
+                  onPressed: () {},
+                  child: Text(
+                    'Privacy Policy',
+                    style: textStyleTextBold,
+                  ),
+                )
+              ],
+            ),
+          ],
+        ),
       ),
     );
   }

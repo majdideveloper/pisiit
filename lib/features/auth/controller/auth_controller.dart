@@ -1,4 +1,6 @@
-import 'package:firebase_auth/firebase_auth.dart';
+import 'dart:io';
+
+import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:pisiit/features/auth/repository/auth_repository.dart';
 import 'package:pisiit/models/user_model.dart';
@@ -8,9 +10,14 @@ final authControllerProvider = Provider((ref) {
   return AuthController(authRepository: authRepository, ref: ref);
 });
 
-final userInfoAuthProvider = FutureProvider((ref) {
+final userDataAuthProvider = FutureProvider((ref) {
   final authController = ref.watch(authRepositoryProvider);
   return authController.getCurrentUserData();
+});
+
+final userDataProvider = FutureProvider.autoDispose((ref) {
+  final authController = ref.watch(authRepositoryProvider);
+  return authController.fetchUserData();
 });
 
 class AuthController {
@@ -26,25 +33,59 @@ class AuthController {
     return user;
   }
 
-  Future<UserModel?> signInWithEmailAndPassword(
-      String email, String password) async {
-    UserModel? user = await authRepository.signInWithEmailAndPassword(
+  void signInWithEmailAndPassword(
+      BuildContext context, String email, String password) async {
+    authRepository.signInWithEmailAndPassword(
+      context,
       email,
       password,
     );
-    return user;
   }
 
-  void signUpWithEmailAndPassword(String email, String password) async {
-    return authRepository.signUpWithEmailAndPassword(email, password);
+  void signUpWithEmailAndPassword({
+    required BuildContext context,
+    required String email,
+    required String password,
+    required List<File> imageURLs,
+    required String name,
+    required String gender,
+    required String relationGoals,
+    required String age,
+    required String birthday,
+    required List<dynamic> interests,
+    required String country,
+    required String jobTitle,
+  }) async {
+    return authRepository.signUpWithEmailAndPassword(
+        context: context,
+        ref: ref,
+        email: email,
+        password: password,
+        imageURLs: imageURLs,
+        name: name,
+        gender: gender,
+        relationGoals: relationGoals,
+        age: age,
+        birthday: birthday,
+        interests: interests,
+        country: country,
+        jobTitle: jobTitle);
   }
 
-  Future<void> signOut() async {
-    await authRepository.signOut();
+  void signOut(BuildContext context) async {
+    await authRepository.signOut(context);
   }
 
-  Future<void> saveUserDataToFirebase(
-      String username, String profileImageUrl) async {
-    authRepository.saveUserDataToFirebase(username, profileImageUrl);
+  // Future<void> saveUserDataToFirebase(
+  //     String username, String profileImageUrl) async {
+  //   authRepository.saveUserDataToFirebase(username, profileImageUrl);
+  // }
+
+  Stream<UserModel> userDataById(String userId) {
+    return authRepository.userData(userId);
+  }
+
+  Future<UserModel?> fetchUserData() {
+    return authRepository.fetchUserData();
   }
 }

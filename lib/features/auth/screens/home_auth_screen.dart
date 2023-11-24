@@ -3,6 +3,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:pisiit/features/auth/screens/login_screen.dart';
 import 'package:pisiit/features/auth/screens/signup_screen.dart';
 import 'package:pisiit/features/auth/widgets/button_social_media.dart';
+import 'package:pisiit/features/auth/widgets/goto_signup.dart';
 import 'package:pisiit/utils/colors.dart';
 import 'package:pisiit/utils/helper_padding.dart';
 import 'package:pisiit/utils/helper_textstyle.dart';
@@ -73,20 +74,7 @@ class HomeAuthScreen extends StatelessWidget {
             ),
             mediumPaddingVert,
             //! Custom this widget
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                const Text("Don't have an  account?"),
-                TextButton(
-                    onPressed: () {
-                      Navigator.pushNamed(
-                        context,
-                        SignUpScreen.routeName,
-                      );
-                    },
-                    child: const Text("Sign up"))
-              ],
-            )
+            const GoToSignUp(),
           ],
         ),
       ),

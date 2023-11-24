@@ -45,6 +45,7 @@ class _SignUpScreenState extends ConsumerState<SignUpScreen> {
   List<String> relationGoals = [" "];
   List<File> listImages = [];
   List<String> interests = [];
+  List<String> country = [""];
 
   bool isLoading = false;
   @override
@@ -77,20 +78,34 @@ class _SignUpScreenState extends ConsumerState<SignUpScreen> {
 
   void registerWithEmailAndPassword(BuildContext context,
       TabController tabController, PageController pageController) {
-    String email = emailController.text;
-    String password = emailController.text;
+    String email = emailController.text.trim();
+    String password = passwordController.text.trim();
+    print(password);
 
     if (email.isNotEmpty && password.isNotEmpty) {
-      ref
-          .read(authControllerProvider)
-          .signUpWithEmailAndPassword(email, password);
+      ref.read(authControllerProvider).signUpWithEmailAndPassword(
+          context: context,
+          email: email,
+          password: password,
+          imageURLs: listImages,
+          name: _nameController.text,
+          gender: gender[0],
+          relationGoals: relationGoals[0],
+          age: calculateAge(
+                  "${dayController.text}/${monthController.text}/${yearController.text}")
+              .toString(),
+          birthday:
+              "${dayController.text}/${monthController.text}/${yearController.text}",
+          interests: interests,
+          country: country[0],
+          jobTitle: _jobController.text);
 
-      tabController.animateTo(tabController.index + 1);
-      pageController.animateToPage(
-        tabController.index,
-        duration: const Duration(milliseconds: 500),
-        curve: Curves.easeInOut,
-      );
+      // tabController.animateTo(tabController.index + 1);
+      // pageController.animateToPage(
+      //   tabController.index,
+      //   duration: const Duration(milliseconds: 500),
+      //   curve: Curves.easeInOut,
+      // );
     } else {
       // showSnackBar(context: context, content: 'Fill out all the fields');
     }
@@ -165,6 +180,7 @@ class _SignUpScreenState extends ConsumerState<SignUpScreen> {
                     interests: interests,
                   ),
                   InfoWidget(
+                    country: country,
                     tabController: tabController,
                     jobController: _jobController,
                   ),
@@ -221,11 +237,14 @@ class _SignUpScreenState extends ConsumerState<SignUpScreen> {
                     )
                   : CustomButton(
                       colorText: purpleColor,
-                      textButton:
-                          tabController.index == 0 ? "Sign up" : "Continue",
+                      textButton: tabController.index == 0
+                          ? "Sign up"
+                          : tabController.index == 5
+                              ? "Continue (${interests.length}/5)"
+                              : "Continue",
                       onPressed: () {
                         print(tabController.index);
-                        if (tabController.index == 0) {
+                        if (tabController.index == 7) {
                           registerWithEmailAndPassword(
                               context, tabController, pageController);
                         } else {

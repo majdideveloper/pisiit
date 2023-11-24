@@ -49,3 +49,25 @@ Future<void> showSignInPopup(BuildContext context) async {
     },
   );
 }
+
+int calculateAge(String birthday) {
+  // Parse the birthday string into a DateTime object
+  List<String> parts = birthday.split('/');
+  int day = int.parse(parts[0]);
+  int month = int.parse(parts[1]);
+  int year = int.parse(parts[2]);
+  DateTime birthDate = DateTime(year, month, day);
+
+  // Calculate the difference between the current date and the birthdate
+  DateTime currentDate = DateTime.now();
+  int age = currentDate.year - birthDate.year;
+
+  // Check if the birthday has occurred this year
+  if (currentDate.month < birthDate.month ||
+      (currentDate.month == birthDate.month &&
+          currentDate.day < birthDate.day)) {
+    age--;
+  }
+
+  return age;
+}

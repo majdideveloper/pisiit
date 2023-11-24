@@ -6,15 +6,17 @@ import 'package:pisiit/utils/helper_textstyle.dart';
 
 class TextFieldAuth extends StatelessWidget {
   final String nameTextField;
+  bool obscureText;
   TextEditingController? controller;
   Widget? suffixIcon;
   Widget? prefixIcon;
   TextFieldAuth({
     Key? key,
     required this.nameTextField,
+    this.obscureText = false,
+    this.controller,
     this.suffixIcon,
     this.prefixIcon,
-    this.controller,
   }) : super(key: key);
 
   @override
@@ -29,6 +31,7 @@ class TextFieldAuth extends StatelessWidget {
         smallPaddingVert,
         TextFormField(
           controller: controller,
+          obscureText: obscureText,
           decoration: InputDecoration(
             suffixIcon: suffixIcon,
             prefixIcon: prefixIcon,

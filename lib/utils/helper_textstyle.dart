@@ -20,3 +20,8 @@ TextStyle textStyleTextBold = GoogleFonts.poppins(
   fontSize: 16,
   fontWeight: FontWeight.w600,
 );
+
+TextStyle textStyleTextMeduimBold = GoogleFonts.poppins(
+  fontSize: 16,
+  fontWeight: FontWeight.w400,
+);
