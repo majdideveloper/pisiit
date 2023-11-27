@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:pisiit/features/auth/widgets/textfield_auth.dart';
 import 'package:pisiit/features/auth/widgets/widget_title.dart';
 import 'package:pisiit/utils/colors.dart';
 import 'package:pisiit/utils/helper_padding.dart';
@@ -95,6 +94,5 @@ class OtpInputField extends StatelessWidget {
         ),
       ),
     );
-    ;
   }
 }
