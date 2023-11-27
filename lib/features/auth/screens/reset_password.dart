@@ -31,7 +31,8 @@ String generateOTP() {
 
   return otp;
 }
-//!Function to send mail
+//?Function to send mail
+//! gmail information 
 final String username = 'pesstapp@gmail.com';
 final String password = '129@pesst';
 Future<void> sendEmail({required String to, required String subject, required String body}) async {
@@ -51,7 +52,7 @@ Future<void> sendEmail({required String to, required String subject, required St
   }
 }
 
-//!Function to send OTP code
+//?Function to send OTP code
 Future<void> sendOTPToEmail(String email) async {
   final String otp;
 
