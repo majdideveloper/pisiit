@@ -3,9 +3,13 @@ import 'package:flutter/material.dart';
 
 class ImageWidget extends StatelessWidget {
   final String imageUrl;
-  const ImageWidget({
+  double? height;
+  double? width;
+  ImageWidget({
     Key? key,
     required this.imageUrl,
+    this.height = 400,
+    this.width = 400,
   }) : super(key: key);
 
   @override

@@ -44,10 +44,14 @@ class AuthRepository {
         password: password,
       );
 
+      UserModel? userModel = await getCurrentUserData();
+
       Navigator.pushAndRemoveUntil(
         context,
         MaterialPageRoute(
-          builder: (context) => const HomeApplicationScreen(),
+          builder: (context) => HomeApplicationScreen(
+            userModel: userModel,
+          ),
         ),
         (route) => false,
       );
@@ -95,7 +99,7 @@ class AuthRepository {
           lastActive: DateTime.now().toUtc(),
           scoreAccount: 0,
           noteAccount: 0,
-          numberPisit: 0,
+          numberPisit: 10,
         );
 
         await firestore
@@ -106,7 +110,9 @@ class AuthRepository {
         Navigator.pushAndRemoveUntil(
           context,
           MaterialPageRoute(
-            builder: (context) => const HomeApplicationScreen(),
+            builder: (context) => HomeApplicationScreen(
+              userModel: userModel,
+            ),
           ),
           (route) => false,
         );

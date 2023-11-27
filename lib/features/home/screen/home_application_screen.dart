@@ -1,14 +1,21 @@
+// ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+
 import 'package:pisiit/features/auth/controller/auth_controller.dart';
 import 'package:pisiit/features/home/screen/chats/chats_screen.dart';
 import 'package:pisiit/features/home/screen/home/home_screen.dart';
-import 'package:pisiit/features/home/screen/profile/profile_screen.dart';
+import 'package:pisiit/features/home/screen/my_profile/profile_screen.dart';
+import 'package:pisiit/models/user_model.dart';
 import 'package:pisiit/utils/colors.dart';
 import 'package:pisiit/utils/helper_textstyle.dart';
 
 class HomeApplicationScreen extends StatefulWidget {
-  const HomeApplicationScreen({super.key});
+  UserModel? userModel;
+  HomeApplicationScreen({
+    Key? key,
+    this.userModel,
+  }) : super(key: key);
 
   @override
   State<HomeApplicationScreen> createState() => _HomeApplicationScreenState();
@@ -38,10 +45,16 @@ class _HomeApplicationScreenState extends State<HomeApplicationScreen> {
       body: PageView(
         controller: _pageController,
         onPageChanged: _onPageChanged,
-        children: const [
-          HomeScreen(),
-          ChatsScreen(),
-          ProfileScreen(),
+        children: [
+          HomeScreen(
+            userModel: widget.userModel!,
+          ),
+          ChatsScreen(
+            userModel: widget.userModel!,
+          ),
+          ProfileScreen(
+            userModel: widget.userModel!,
+          ),
         ],
       ),
       bottomNavigationBar: BottomNavigationBar(

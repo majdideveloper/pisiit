@@ -18,8 +18,6 @@ void main() async {
   runApp(const ProviderScope(child: MyApp()));
 }
 
-UserModel? userModel;
-
 class MyApp extends ConsumerWidget {
   const MyApp({super.key});
 
@@ -44,8 +42,10 @@ class MyApp extends ConsumerWidget {
                   if (user == null) {
                     return const HomeAuthScreen();
                   }
-                  userModel = user;
-                  return const HomeApplicationScreen();
+                  user;
+                  return HomeApplicationScreen(
+                    userModel: user,
+                  );
                 },
                 error: (err, trace) {
                   return ErrorScreen(
