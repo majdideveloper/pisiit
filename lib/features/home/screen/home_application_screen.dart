@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import 'package:pisiit/features/auth/controller/auth_controller.dart';
-import 'package:pisiit/features/home/screen/chats/chats_screen.dart';
+import 'package:pisiit/features/chat/screens/chats_screen.dart';
 import 'package:pisiit/features/home/screen/home/home_screen.dart';
 import 'package:pisiit/features/home/screen/my_profile/profile_screen.dart';
 import 'package:pisiit/models/user_model.dart';

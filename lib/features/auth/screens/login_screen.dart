@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:pisiit/features/auth/controller/auth_controller.dart';
+import 'package:pisiit/features/auth/screens/reset_password.dart';
 import 'package:pisiit/features/auth/screens/signup_widget/widget_birthday.dart';
 import 'package:pisiit/features/auth/screens/signup_widget/widget_images.dart';
 import 'package:pisiit/features/auth/widgets/goto_signup.dart';
@@ -91,7 +92,9 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                     ],
                   ),
                   TextButton(
-                      onPressed: () {},
+                      onPressed:(){
+                        Navigator.pushNamed(context, resetPassword.routeName);
+                      } ,
                       child: Text(
                         "Forget Password?",
                         style: textStyleTextBold,
