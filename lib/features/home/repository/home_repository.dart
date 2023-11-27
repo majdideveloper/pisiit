@@ -54,33 +54,33 @@ class HomeRepository {
     // return user;
   }
 
-  void sendRequest({
-    required String recieverUserId,
-    required String message,
-    required String currentUserId,
-  }) {
-    var timeSent = DateTime.now();
-    var requestId = const Uuid().v1();
+  // void sendRequest({
+  //   required String recieverUserId,
+  //   required String message,
+  //   required String currentUserId,
+  // }) {
+  //   var timeSent = DateTime.now();
+  //   var requestId = const Uuid().v1();
 
-    final RequestModel request = RequestModel(
-        uid: requestId,
-        currentUserUid: currentUserId,
-        recepieUserUid: recieverUserId,
-        imageSender: "",
-        opener: message,
-        timeRequest: timeSent);
+  //   final RequestModel request = RequestModel(
+  //       uid: requestId,
+  //       currentUserUid: currentUserId,
+  //       recepieUserUid: recieverUserId,
+  //       imageSender: "",
+  //       opener: message,
+  //       timeRequest: timeSent);
 
-    firestore
-        .collection("Users")
-        .doc(recieverUserId)
-        .collection("Requests")
-        .doc(requestId)
-        .set(request.toMap());
-    firestore
-        .collection("Users")
-        .doc(currentUserId)
-        .update({"numberPisit": -1});
-  }
+  //   firestore
+  //       .collection("Users")
+  //       .doc(recieverUserId)
+  //       .collection("Requests")
+  //       .doc(requestId)
+  //       .set(request.toMap());
+  //   firestore
+  //       .collection("Users")
+  //       .doc(currentUserId)
+  //       .update({"numberPisit": -1});
+  // }
 
   // Stream<List<ChatContact>> getChatContacts() {
   //   return firestore
@@ -112,34 +112,34 @@ class HomeRepository {
   //   });
   // }
 
-  Stream<List<RequestModel>> getAllRequest() {
-    return firestore
-        .collection('Users')
-        .doc(auth.currentUser!.uid)
-        .collection('Requests')
-        .snapshots()
-        .asyncMap(
-      (event) async {
-        List<RequestModel> requests = [];
-        for (var document in event.docs) {
-          var requestModel = RequestModel.fromMap(document.data());
+  // Stream<List<RequestModel>> getAllRequest() {
+  //   return firestore
+  //       .collection('Users')
+  //       .doc(auth.currentUser!.uid)
+  //       .collection('Requests')
+  //       .snapshots()
+  //       .asyncMap(
+  //     (event) async {
+  //       List<RequestModel> requests = [];
+  //       for (var document in event.docs) {
+  //         var requestModel = RequestModel.fromMap(document.data());
 
-          var userData = await firestore
-              .collection('Users')
-              .doc(requestModel.currentUserUid)
-              .get();
-          var user = UserModel.fromMap(userData.data()!);
+  //         var userData = await firestore
+  //             .collection('Users')
+  //             .doc(requestModel.currentUserUid)
+  //             .get();
+  //         var user = UserModel.fromMap(userData.data()!);
 
-          requests.add(RequestModel(
-              uid: requestModel.uid,
-              currentUserUid: requestModel.currentUserUid,
-              recepieUserUid: requestModel.recepieUserUid,
-              imageSender: user.imageURLs![0],
-              opener: requestModel.opener,
-              timeRequest: requestModel.timeRequest));
-        }
-        return requests;
-      },
-    );
-  }
+  //         requests.add(RequestModel(
+  //             uid: requestModel.uid,
+  //             currentUserUid: requestModel.currentUserUid,
+  //             recepieUserUid: requestModel.recepieUserUid,
+  //             imageSender: user.imageURLs![0],
+  //             opener: requestModel.opener,
+  //             timeRequest: requestModel.timeRequest));
+  //       }
+  //       return requests;
+  //     },
+  //   );
+  // }
 }

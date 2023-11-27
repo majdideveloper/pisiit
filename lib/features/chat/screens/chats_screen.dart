@@ -3,9 +3,8 @@ import 'package:cached_network_image/cached_network_image.dart';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-
 import 'package:pisiit/features/auth/controller/auth_controller.dart';
-import 'package:pisiit/features/home/controller/home_controller.dart';
+import 'package:pisiit/features/chat/controller/chat_controller.dart';
 
 import 'package:pisiit/models/user_model.dart';
 import 'package:pisiit/utils/colors.dart';
@@ -56,7 +55,7 @@ class ChatsScreen extends StatelessWidget {
                   ),
                   smallPaddingVert,
                   StreamBuilder(
-                      stream: ref.watch(homeControllerProvider).getAllRequest(),
+                      stream: ref.watch(chatControllerProvider).getAllRequest(),
                       builder: (context, snapshot) {
                         if (snapshot.connectionState ==
                             ConnectionState.waiting) {
@@ -96,7 +95,7 @@ class ChatsScreen extends StatelessWidget {
                         // list or single element
                         var request = snapshot.data!;
                         return SizedBox(
-                          height: 120,
+                          height: 150,
                           child: ListView.builder(
                               scrollDirection: Axis.horizontal,
                               itemCount: request.length,
@@ -106,21 +105,31 @@ class ChatsScreen extends StatelessWidget {
                                     popUpRepondRequestDialog(
                                       context: context,
                                       requestModel: request[index],
-                                      sender: userModel,
                                       recipient: userModel,
                                     );
                                   },
                                   child: Padding(
                                     padding: const EdgeInsets.all(10.0),
-                                    child: ClipRRect(
-                                      borderRadius: const BorderRadius.all(
-                                          Radius.circular(12)),
-                                      child: CachedNetworkImage(
-                                        imageUrl: request[index].imageSender,
-                                        fit: BoxFit.cover,
-                                        height: 100,
-                                        width: 100,
-                                      ),
+                                    child: Column(
+                                      children: [
+                                        ClipRRect(
+                                          borderRadius: const BorderRadius.all(
+                                              Radius.circular(12)),
+                                          child: CachedNetworkImage(
+                                            imageUrl:
+                                                request[index].imageSender,
+                                            fit: BoxFit.cover,
+                                            height: 100,
+                                            width: 100,
+                                          ),
+                                        ),
+                                        smallPaddingVert,
+                                        Text(
+                                          request[index].nameSender,
+                                          style: textStyleText.copyWith(
+                                              fontSize: 14),
+                                        ),
+                                      ],
                                     ),
                                   ),
                                 );

@@ -26,22 +26,22 @@ class HomeController {
     return listUser;
   }
 
-  void sendRequest({
-    required String recieverUserId,
-    required String message,
-    required String currentUserId,
-  }) {
-    homeRepository.sendRequest(
-        recieverUserId: recieverUserId,
-        message: message,
-        currentUserId: currentUserId);
-  }
+  // void sendRequest({
+  //   required String recieverUserId,
+  //   required String message,
+  //   required String currentUserId,
+  // }) {
+  //   homeRepository.sendRequest(
+  //       recieverUserId: recieverUserId,
+  //       message: message,
+  //       currentUserId: currentUserId);
+  // }
 
   Stream<List<UserModel>> getAllUsers() {
     return homeRepository.getAllUsers();
   }
 
-  Stream<List<RequestModel>> getAllRequest() {
-    return homeRepository.getAllRequest();
-  }
+  // Stream<List<RequestModel>> getAllRequest() {
+  //   return homeRepository.getAllRequest();
+  // }
 }

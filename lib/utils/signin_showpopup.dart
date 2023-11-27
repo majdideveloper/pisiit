@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:pisiit/features/auth/widgets/widget_title.dart';
+import 'package:pisiit/features/chat/controller/chat_controller.dart';
 import 'package:pisiit/features/home/controller/home_controller.dart';
 import 'package:pisiit/features/home/screen/widgets/image_widget.dart';
 import 'package:pisiit/models/request_model.dart';
@@ -140,7 +141,7 @@ void simplePisitDialog(
                 colorText: purpleColor,
                 textButton: "send",
                 onPressed: () async {
-                  ref.watch(homeControllerProvider).sendRequest(
+                  ref.watch(chatControllerProvider).sendRequest(
                       recieverUserId: recipient.uid,
                       message: controller.text,
                       currentUserId: sender.uid);
@@ -160,7 +161,6 @@ void simplePisitDialog(
 void popUpRepondRequestDialog(
     {required BuildContext context,
     required RequestModel requestModel,
-    required UserModel sender,
     required UserModel recipient}) {
   showDialog(
     context: context,
@@ -177,7 +177,7 @@ void popUpRepondRequestDialog(
                 ClipRRect(
                   borderRadius: const BorderRadius.all(Radius.circular(12)),
                   child: Image.network(
-                    sender.imageURLs![0],
+                    requestModel.imageSender,
                     height: 80,
                     width: 80,
                     fit: BoxFit.cover,
@@ -185,14 +185,14 @@ void popUpRepondRequestDialog(
                 ),
                 smallPaddingVert,
                 Text(
-                  sender.name,
+                  requestModel.nameSender,
                   style: Theme.of(context).textTheme.bodyLarge,
                 )
               ],
             ),
             mediumPaddingHor,
             Image.asset(
-              'assets/images/logo_request_active.png',
+              'assets/images/logo_request.png',
               height: 40,
             ),
             mediumPaddingHor,
@@ -238,54 +238,62 @@ void popUpRepondRequestDialog(
           ],
         ),
         actions: <Widget>[
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-            children: [
-              Container(
-                width: 80.0,
-                height: 80.0,
-                decoration: BoxDecoration(
-                  shape: BoxShape.circle,
-                  // You can set your desired color here
-                  border: Border.all(
-                    color: Colors.red,
-                    width: 2.0,
-                  ),
-                ),
-                child: Center(
-                  child: IconButton(
-                    onPressed: () {
-                      Navigator.pop(context);
-                    },
-                    icon: Icon(
-                      Icons.close,
-                      size: 50,
-                      color: Colors.red,
+          Consumer(
+            builder: (context, ref, child) {
+              return Row(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: [
+                  Container(
+                    width: 80.0,
+                    height: 80.0,
+                    decoration: BoxDecoration(
+                      shape: BoxShape.circle,
+                      // You can set your desired color here
+                      border: Border.all(
+                        color: Colors.red,
+                        width: 2.0,
+                      ),
+                    ),
+                    child: Center(
+                      child: IconButton(
+                        onPressed: () {
+                          // ! here
+                          ref.watch(chatControllerProvider).cancelRequest(
+                              requestId: requestModel.uid,
+                              userId: recipient.uid);
+                          Navigator.pop(context);
+                        },
+                        icon: Icon(
+                          Icons.close,
+                          size: 50,
+                          color: Colors.red,
+                        ),
+                      ),
                     ),
                   ),
-                ),
-              ),
-              GestureDetector(
-                onTap: () {},
-                child: Container(
-                  width: 80.0,
-                  height: 80.0,
-                  decoration: BoxDecoration(
-                    shape: BoxShape.circle,
-                    // You can set your desired color here
-                    border: Border.all(
-                      color: purpleColor,
-                      width: 2.0,
+                  GestureDetector(
+                    onTap: () {},
+                    child: Container(
+                      width: 80.0,
+                      height: 80.0,
+                      decoration: BoxDecoration(
+                        shape: BoxShape.circle,
+                        // You can set your desired color here
+                        border: Border.all(
+                          color: purpleColor,
+                          width: 2.0,
+                        ),
+                      ),
+                      child: Center(
+                          child: Image.asset(
+                        "assets/images/logo_request_active.png",
+                        height: 40,
+                      )),
                     ),
                   ),
-                  child: Center(
-                      child: Image.asset(
-                    "assets/images/logo_request_active.png",
-                    height: 40,
-                  )),
-                ),
-              ),
-            ],
+                ],
+              );
+            },
           )
 
           // Padding(
