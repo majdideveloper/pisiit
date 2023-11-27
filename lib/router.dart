@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:pisiit/features/auth/screens/login_screen.dart';
+import 'package:pisiit/features/auth/screens/otp_verification.dart';
+import 'package:pisiit/features/auth/screens/reset_password.dart';
 import 'package:pisiit/features/auth/screens/signup_screen.dart';
 import 'package:pisiit/features/home/screen/user_profile/user_profile.dart';
 import 'package:pisiit/models/user_model.dart';
@@ -9,6 +11,15 @@ Route<dynamic> generateRoute(RouteSettings settings) {
     case LoginScreen.routeName:
       return MaterialPageRoute(
         builder: (context) => const LoginScreen(),
+      );
+    case resetPassword.routeName:
+      return MaterialPageRoute(
+        builder: (context) => const resetPassword(),
+      );
+    case otpVerification.routeName:
+     final email = settings.arguments as TextEditingController;
+      return MaterialPageRoute(
+        builder: (context) =>  otpVerification(emailController: email,),
       );
     case SignUpScreen.routeName:
       return MaterialPageRoute(
