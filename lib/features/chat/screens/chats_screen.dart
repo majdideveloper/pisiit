@@ -105,6 +105,7 @@ class ChatsScreen extends StatelessWidget {
                                     popUpRepondRequestDialog(
                                       context: context,
                                       requestModel: request[index],
+                                      sender: request[index].senderRequest,
                                       recipient: userModel,
                                     );
                                   },
@@ -137,6 +138,93 @@ class ChatsScreen extends StatelessWidget {
                         );
                       }),
                   divider,
+                  Expanded(
+                      child: StreamBuilder(
+                    stream:
+                        ref.watch(chatControllerProvider).getAllChatcontact(),
+                    builder: (context, snapshot) {
+                      if (snapshot.connectionState == ConnectionState.waiting) {
+                        return ListView.builder(
+                            scrollDirection: Axis.vertical,
+                            itemCount: 5,
+                            itemBuilder: (context, index) {
+                              return Padding(
+                                padding: const EdgeInsets.all(10.0),
+                                child: Container(
+                                  decoration: BoxDecoration(
+                                    color: greyColor.shade300,
+                                    borderRadius: const BorderRadius.all(
+                                        Radius.circular(12)),
+                                  ),
+                                  child: SizedBox(
+                                    height: 100,
+                                    width: 100,
+                                  ),
+                                ),
+                              );
+                            });
+                      }
+                      if (!snapshot.hasData || snapshot.data!.isEmpty) {
+                        return SizedBox(
+                          height: 50,
+                          child: Text(
+                            'You don\'t have request yett ... try to send',
+                            style: textStyleTextMeduimBold,
+                          ),
+                        );
+                      }
+                      var contacts = snapshot.data!;
+                      print(contacts.length);
+                      return SizedBox(
+                        height: 150,
+                        child: ListView.builder(
+                            scrollDirection: Axis.vertical,
+                            itemCount: contacts.length,
+                            itemBuilder: (context, index) {
+                              return Padding(
+                                  padding: const EdgeInsets.all(10.0),
+                                  child: Row(
+                                    children: [
+                                      ClipRRect(
+                                        borderRadius: const BorderRadius.all(
+                                            Radius.circular(50)),
+                                        child: CachedNetworkImage(
+                                          imageUrl: contacts[index].profilePic,
+                                          fit: BoxFit.cover,
+                                          height: 60,
+                                          width: 60,
+                                        ),
+                                      ),
+                                      mediumPaddingHor,
+                                      Column(
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.start,
+                                        children: [
+                                          Text(
+                                            contacts[index].name,
+                                            style: textStyleTextBold,
+                                          ),
+                                          Text(contacts[index].lastMessage),
+                                        ],
+                                      )
+                                    ],
+                                  )
+                                  // Container(
+                                  //   decoration: BoxDecoration(
+                                  //     color: greyColor.shade300,
+                                  //     borderRadius: const BorderRadius.all(
+                                  //         Radius.circular(12)),
+                                  //   ),
+                                  //   child: SizedBox(
+                                  //     height: 100,
+                                  //     width: 100,
+                                  //   ),
+                                  // ),
+                                  );
+                            }),
+                      );
+                    },
+                  )),
                   ElevatedButton(
                     onPressed: () {
                       ref.read(authControllerProvider).signOut(context);

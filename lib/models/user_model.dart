@@ -80,7 +80,7 @@ class UserModel {
       'bio': bio,
       'jobTitle': jobTitle,
       'country': country,
-      'lastActive': lastActive,
+      'lastActive': lastActive.toUtc().toIso8601String(),
       'noteAccount': noteAccount,
       'scoreAccount': scoreAccount,
       'numberPisit': numberPisit,
@@ -100,7 +100,10 @@ class UserModel {
       bio: map['bio'] ?? '',
       jobTitle: map['jobTitle'] ?? '',
       country: map['country'] ?? '',
-      lastActive: map['last_active'] ?? DateTime.now(), //.toDate(),
+      lastActive: map['last_active'] ?? DateTime.now(),
+      // DateTime.parse(map['last_active']).toLocal() ??
+      //     DateTime.parse(DateTime.now().toString())
+      // .toLocal(),  //.toDate(),
       noteAccount: map['noteAccount'] ?? 0,
       scoreAccount: map['scoreAccount'] ?? 0,
       numberPisit: map['numberPisit'] ?? 0,

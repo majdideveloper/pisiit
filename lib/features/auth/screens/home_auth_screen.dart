@@ -17,65 +17,68 @@ class HomeAuthScreen extends StatelessWidget {
     return Scaffold(
       backgroundColor: whiteColor,
       body: SafeArea(
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
-            largePaddingVert,
-            Center(
-              child: Image.asset(
-                "assets/images/logo_request_active.png",
-                height: 150,
-                width: 150,
+        child: SingleChildScrollView(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              largePaddingVert,
+              Center(
+                child: Image.asset(
+                  "assets/images/logo_request_active.png",
+                  height: 150,
+                  width: 150,
+                ),
               ),
-            ),
-            Text(
-              'Pisit',
-              style: textStyleTitle,
-            ),
-            Text(
-              "Let's dive in into your account",
-              style: textStyleText,
-            ),
-            largePaddingVert,
-            ButtonSocialMedia(
-              colorText: blackColor,
-              textButton: "Continue with Google",
-              onPressed: () {},
-            ),
-            mediumPaddingVert,
-            ButtonSocialMedia(
-              colorText: blackColor,
-              textButton: "Continue with Google",
-              onPressed: () {},
-            ),
-            mediumPaddingVert,
-            ButtonSocialMedia(
-              colorText: blackColor,
-              textButton: "Continue with Google",
-              onPressed: () {},
-            ),
-            mediumPaddingVert,
-            ButtonSocialMedia(
-              colorText: blackColor,
-              textButton: "Continue with Google",
-              onPressed: () {},
-            ),
+              Text(
+                'Pisit',
+                style: textStyleTitle,
+              ),
+              Text(
+                "Let's dive in into your account",
+                style: textStyleText,
+              ),
+              largePaddingVert,
+              ButtonSocialMedia(
+                colorText: blackColor,
+                textButton: "Continue with Google",
+                onPressed: () {},
+              ),
+              mediumPaddingVert,
+              ButtonSocialMedia(
+                colorText: blackColor,
+                textButton: "Continue with Google",
+                onPressed: () {},
+              ),
+              mediumPaddingVert,
+              ButtonSocialMedia(
+                colorText: blackColor,
+                textButton: "Continue with Google",
+                onPressed: () {},
+              ),
+              mediumPaddingVert,
+              ButtonSocialMedia(
+                colorText: blackColor,
+                textButton: "Continue with Google",
+                onPressed: () {},
+              ),
 
-            const Spacer(),
-            CustomButton(
-              colorText: whiteColor,
-              textButton: "Log in",
-              onPressed: () {
-                Navigator.pushNamed(
-                  context,
-                  LoginScreen.routeName,
-                );
-              },
-            ),
-            mediumPaddingVert,
-            //! Custom this widget
-            const GoToSignUp(),
-          ],
+              // const Spacer(),
+              mediumPaddingVert,
+              CustomButton(
+                colorText: whiteColor,
+                textButton: "Log in",
+                onPressed: () {
+                  Navigator.pushNamed(
+                    context,
+                    LoginScreen.routeName,
+                  );
+                },
+              ),
+              mediumPaddingVert,
+              //! Custom this widget
+              const GoToSignUp(),
+            ],
+          ),
         ),
       ),
     );

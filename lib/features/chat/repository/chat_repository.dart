@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:pisiit/models/chat_contact_model.dart';
 import 'package:pisiit/models/request_model.dart';
 import 'package:pisiit/models/user_model.dart';
 import 'package:uuid/uuid.dart';
@@ -37,15 +38,19 @@ class ChatRepository {
               .doc(requestModel.currentUserUid)
               .get();
           var user = UserModel.fromMap(userData.data()!);
+          print("heree");
 
           requests.add(RequestModel(
-              uid: requestModel.uid,
-              currentUserUid: requestModel.currentUserUid,
-              recepieUserUid: requestModel.recepieUserUid,
-              imageSender: user.imageURLs![0],
-              nameSender: user.name,
-              opener: requestModel.opener,
-              timeRequest: requestModel.timeRequest));
+            uid: requestModel.uid,
+            currentUserUid: requestModel.currentUserUid,
+            recepieUserUid: requestModel.recepieUserUid,
+            imageSender: user.imageURLs![0],
+            nameSender: user.name,
+            opener: requestModel.opener,
+            //!you need to change names of variable to be more clear
+            senderRequest: user,
+            timeRequest: requestModel.timeRequest,
+          ));
         }
         return requests;
       },
@@ -56,6 +61,7 @@ class ChatRepository {
     required String recieverUserId,
     required String message,
     required String currentUserId,
+    required UserModel senderUserModel,
   }) {
     var timeSent = DateTime.now();
     var requestId = const Uuid().v1();
@@ -64,6 +70,7 @@ class ChatRepository {
         uid: requestId,
         currentUserUid: currentUserId,
         recepieUserUid: recieverUserId,
+        senderRequest: senderUserModel,
         imageSender: "",
         nameSender: "",
         opener: message,
@@ -91,5 +98,91 @@ class ChatRepository {
         .collection("Requests")
         .doc(requestId)
         .delete();
+  }
+
+  void accepteRequest({
+    required UserModel senderUserData,
+    required UserModel recieverUserData,
+    required RequestModel requestModel,
+  }) {
+    _saveDataToContactsSubcollection(
+        senderUserData: senderUserData,
+        recieverUserData: recieverUserData,
+        text: requestModel.opener,
+        timeSent: requestModel.timeRequest,
+        recieverUserId: recieverUserData.uid);
+    cancelRequest(requestId: requestModel.uid, userId: recieverUserData.uid);
+  }
+
+  //!this metode create chat model
+  void _saveDataToContactsSubcollection({
+    required UserModel senderUserData,
+    required UserModel recieverUserData,
+    required String text,
+    required DateTime timeSent,
+    required String recieverUserId,
+  }) async {
+// users -> reciever user id => chats -> current user id -> set data
+    var recieverChatContact = ChatContactModel(
+      name: senderUserData.name,
+      profilePic: senderUserData.imageURLs![0],
+      contactId: senderUserData.uid,
+      timeSent: timeSent,
+      lastMessage: text,
+    );
+    await firestore
+        .collection('Users')
+        .doc(recieverUserId)
+        .collection('Chats')
+        .doc(auth.currentUser!.uid)
+        .set(
+          recieverChatContact.toMap(),
+        );
+    // users -> current user id  => chats -> reciever user id -> set data
+    var senderChatContact = ChatContactModel(
+      name: recieverUserData!.name,
+      profilePic: recieverUserData.imageURLs![0],
+      contactId: recieverUserData.uid,
+      timeSent: timeSent,
+      lastMessage: text,
+    );
+    await firestore
+        .collection('Users')
+        .doc(auth.currentUser!.uid)
+        .collection('Chats')
+        .doc(recieverUserId)
+        .set(
+          senderChatContact.toMap(),
+        );
+  }
+
+  Stream<List<ChatContactModel>> getChatContacts() {
+    return firestore
+        .collection('Users')
+        .doc(auth.currentUser!.uid)
+        .collection('Chats')
+        .snapshots()
+        .asyncMap((event) async {
+      List<ChatContactModel> contacts = [];
+      for (var document in event.docs) {
+        var chatContact = ChatContactModel.fromMap(document.data());
+        var userData = await firestore
+            .collection('Users')
+            .doc(chatContact.contactId)
+            .get();
+        var user = UserModel.fromMap(userData.data()!);
+
+        contacts.add(
+          ChatContactModel(
+            name: user.name,
+            profilePic: user.imageURLs![0],
+            contactId: chatContact.contactId,
+            timeSent: chatContact.timeSent,
+            lastMessage: chatContact.lastMessage,
+          ),
+        );
+      }
+      return contacts;
+    });
   }
 }
