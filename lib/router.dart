@@ -16,11 +16,20 @@ Route<dynamic> generateRoute(RouteSettings settings) {
       return MaterialPageRoute(
         builder: (context) => const resetPassword(),
       );
+
     case otpVerification.routeName:
-     final email = settings.arguments as TextEditingController;
-      return MaterialPageRoute(
-        builder: (context) =>  otpVerification(emailController: email,),
-      );
+    
+      final argument = settings.arguments as Map<String, dynamic>;
+        String email = argument['emailController'] as String;
+        String otp = argument['otp'] as String;
+        return MaterialPageRoute(
+          builder: (context) => otpVerification(
+            emailController: TextEditingController(text: email),
+            otp: otp,
+          ),
+        );
+      
+
     case SignUpScreen.routeName:
       return MaterialPageRoute(
         builder: (context) => const SignUpScreen(),

@@ -7,7 +7,8 @@ import 'package:pisiit/widgets/custom_button.dart';
 class otpVerification extends StatefulWidget {
   static const routeName = '/otpVerification';
   final TextEditingController emailController;
-  const otpVerification({super.key, required this.emailController});
+  final String otp;
+  const otpVerification({super.key, required this.emailController, required this.otp});
   @override
   State<otpVerification> createState() => _otpVerificationState();
 }
@@ -29,6 +30,7 @@ class _otpVerificationState extends State<otpVerification> {
                     subTitle:
                         "We have sent an OTP code to your email and ${widget.emailController.text}.\n Enter the OTP code below to verify"),
                 mediumPaddingVert,
+                Text(widget.otp),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                 
