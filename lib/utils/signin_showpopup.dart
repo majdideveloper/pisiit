@@ -142,9 +142,11 @@ void simplePisitDialog(
                 textButton: "send",
                 onPressed: () async {
                   ref.watch(chatControllerProvider).sendRequest(
-                      recieverUserId: recipient.uid,
-                      message: controller.text,
-                      currentUserId: sender.uid);
+                        recieverUserId: recipient.uid,
+                        message: controller.text,
+                        currentUserId: sender.uid,
+                        senderUserModel: sender,
+                      );
 
                   Navigator.pop(context);
                 },
@@ -161,7 +163,8 @@ void simplePisitDialog(
 void popUpRepondRequestDialog(
     {required BuildContext context,
     required RequestModel requestModel,
-    required UserModel recipient}) {
+    required UserModel recipient,
+    required UserModel sender}) {
   showDialog(
     context: context,
     builder: (BuildContext context) {
@@ -272,7 +275,14 @@ void popUpRepondRequestDialog(
                     ),
                   ),
                   GestureDetector(
-                    onTap: () {},
+                    onTap: () {
+                      ref.watch(chatControllerProvider).accepteRequest(
+                          senderUserData: sender,
+                          recieverUserData: recipient,
+                          requestModel: requestModel);
+
+                      Navigator.pop(context);
+                    },
                     child: Container(
                       width: 80.0,
                       height: 80.0,
