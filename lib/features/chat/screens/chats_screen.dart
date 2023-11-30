@@ -3,6 +3,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:intl/intl.dart';
 import 'package:pisiit/features/auth/controller/auth_controller.dart';
 import 'package:pisiit/features/chat/controller/chat_controller.dart';
 
@@ -185,29 +186,48 @@ class ChatsScreen extends StatelessWidget {
                               return Padding(
                                   padding: const EdgeInsets.all(10.0),
                                   child: Row(
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceBetween,
                                     children: [
-                                      ClipRRect(
-                                        borderRadius: const BorderRadius.all(
-                                            Radius.circular(50)),
-                                        child: CachedNetworkImage(
-                                          imageUrl: contacts[index].profilePic,
-                                          fit: BoxFit.cover,
-                                          height: 60,
-                                          width: 60,
-                                        ),
+                                      Row(
+                                        children: [
+                                          ClipRRect(
+                                            borderRadius:
+                                                const BorderRadius.all(
+                                                    Radius.circular(50)),
+                                            child: CachedNetworkImage(
+                                              imageUrl:
+                                                  contacts[index].profilePic,
+                                              fit: BoxFit.cover,
+                                              height: 60,
+                                              width: 60,
+                                            ),
+                                          ),
+                                          mediumPaddingHor,
+                                          Column(
+                                            crossAxisAlignment:
+                                                CrossAxisAlignment.start,
+                                            children: [
+                                              Text(
+                                                contacts[index].name,
+                                                style: textStyleTextBold,
+                                              ),
+                                              Text(contacts[index].lastMessage),
+                                            ],
+                                          ),
+                                        ],
                                       ),
-                                      mediumPaddingHor,
                                       Column(
                                         crossAxisAlignment:
-                                            CrossAxisAlignment.start,
+                                            CrossAxisAlignment.end,
                                         children: [
                                           Text(
-                                            contacts[index].name,
+                                            DateFormat('HH:mm').format(
+                                                contacts[index].timeSent),
                                             style: textStyleTextBold,
                                           ),
-                                          Text(contacts[index].lastMessage),
                                         ],
-                                      )
+                                      ),
                                     ],
                                   )
                                   // Container(
