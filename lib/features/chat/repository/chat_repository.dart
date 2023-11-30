@@ -132,15 +132,15 @@ class ChatRepository {
     );
     await firestore
         .collection('Users')
-        .doc(recieverUserId)
-        .collection('Chats')
         .doc(auth.currentUser!.uid)
+        .collection('Chats')
+        .doc(senderUserData.uid)
         .set(
           recieverChatContact.toMap(),
         );
     // users -> current user id  => chats -> reciever user id -> set data
     var senderChatContact = ChatContactModel(
-      name: recieverUserData!.name,
+      name: recieverUserData.name,
       profilePic: recieverUserData.imageURLs![0],
       contactId: recieverUserData.uid,
       timeSent: timeSent,
@@ -148,9 +148,9 @@ class ChatRepository {
     );
     await firestore
         .collection('Users')
-        .doc(auth.currentUser!.uid)
+        .doc(senderUserData.uid)
         .collection('Chats')
-        .doc(recieverUserId)
+        .doc(auth.currentUser!.uid)
         .set(
           senderChatContact.toMap(),
         );

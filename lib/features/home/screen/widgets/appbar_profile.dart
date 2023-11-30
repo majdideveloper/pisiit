@@ -38,7 +38,10 @@ class AppBarProfile extends StatelessWidget implements PreferredSizeWidget {
                   left: Radius.circular(12),
                   right: Radius.circular(12),
                 )),
-            child: const Text("⭐UPGRADE"),
+            child: Text(
+              "⭐UPGRADE",
+              style: textStyleTextMeduimBold.copyWith(color: Colors.white),
+            ),
           ),
         ),
         IconButton(
