@@ -59,6 +59,7 @@ class ChatsScreen extends StatelessWidget {
                       builder: (context, snapshot) {
                         if (snapshot.connectionState ==
                             ConnectionState.waiting) {
+// make this widget in class
                           return SizedBox(
                             height: 120,
                             child: ListView.builder(
