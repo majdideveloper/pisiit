@@ -2,8 +2,11 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:pisiit/models/chat_contact_model.dart';
+import 'package:pisiit/models/message_model.dart';
 import 'package:pisiit/models/request_model.dart';
 import 'package:pisiit/models/user_model.dart';
+import 'package:pisiit/utils/message_enum.dart';
+import 'package:pisiit/utils/message_reply_provider.dart';
 import 'package:uuid/uuid.dart';
 
 final chatRepositoryProvider = Provider(
@@ -111,6 +114,21 @@ class ChatRepository {
         text: requestModel.opener,
         timeSent: requestModel.timeRequest,
         recieverUserId: recieverUserData.uid);
+
+    var messageId = const Uuid().v1();
+
+    _saveMessageToMessageSubcollection(
+      recieverUserId: senderUserData.uid,
+      text: requestModel.opener,
+      timeSent: requestModel.timeRequest,
+      messageId: messageId,
+      username: senderUserData.name,
+      messageType: MessageEnum.text,
+      messageReply: null,
+      senderUsername: recieverUserData.name,
+      recieverUserName: senderUserData.name,
+    );
+
     cancelRequest(requestId: requestModel.uid, userId: recieverUserData.uid);
   }
 
@@ -153,6 +171,59 @@ class ChatRepository {
         .doc(auth.currentUser!.uid)
         .set(
           senderChatContact.toMap(),
+        );
+  }
+
+  void _saveMessageToMessageSubcollection({
+    required String recieverUserId,
+    required String text,
+    required DateTime timeSent,
+    required String messageId,
+    required String username,
+    required MessageEnum messageType,
+    required MessageReply? messageReply,
+    required String senderUsername,
+    required String? recieverUserName,
+  }) async {
+    final message = MessageModel(
+      senderId: auth.currentUser!.uid,
+      recieverid: recieverUserId,
+      text: text,
+      type: messageType,
+      timeSent: timeSent,
+      messageId: messageId,
+      isSeen: false,
+      repliedMessage: messageReply == null ? '' : messageReply.message,
+      repliedTo: messageReply == null
+          ? ''
+          : messageReply.isMe
+              ? senderUsername
+              : recieverUserName ?? '',
+      repliedMessageType:
+          messageReply == null ? MessageEnum.text : messageReply.messageEnum,
+    );
+
+    // users -> sender id -> reciever id -> messages -> message id -> store message
+    await firestore
+        .collection('Users')
+        .doc(auth.currentUser!.uid)
+        .collection('Chats')
+        .doc(recieverUserId)
+        .collection('Messages')
+        .doc(messageId)
+        .set(
+          message.toMap(),
+        );
+    // users -> eciever id  -> sender id -> messages -> message id -> store message
+    await firestore
+        .collection('Users')
+        .doc(recieverUserId)
+        .collection('Chats')
+        .doc(auth.currentUser!.uid)
+        .collection('Messages')
+        .doc(messageId)
+        .set(
+          message.toMap(),
         );
   }
 
