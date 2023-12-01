@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:pisiit/features/auth/screens/forget_password/new_password.dart';
+import 'package:pisiit/features/auth/screens/forget_password/otp_verification.dart';
+import 'package:pisiit/features/auth/screens/forget_password/reset_password.dart';
 import 'package:pisiit/features/auth/screens/login_screen.dart';
-import 'package:pisiit/features/auth/screens/otp_verification.dart';
-import 'package:pisiit/features/auth/screens/reset_password.dart';
 import 'package:pisiit/features/auth/screens/signup_screen.dart';
 import 'package:pisiit/features/home/screen/user_profile/user_profile.dart';
 import 'package:pisiit/models/user_model.dart';
@@ -17,19 +18,27 @@ Route<dynamic> generateRoute(RouteSettings settings) {
         builder: (context) => const resetPassword(),
       );
 
-    case otpVerification.routeName:
+    case OtpVerificationScreen.routeName:
     
       final argument = settings.arguments as Map<String, dynamic>;
         String email = argument['emailController'] as String;
-        String otp = argument['otp'] as String;
+        List<String> otp = argument['otp'] as List<String>;
         return MaterialPageRoute(
-          builder: (context) => otpVerification(
+          builder: (context) => OtpVerificationScreen(
             emailController: TextEditingController(text: email),
             otp: otp,
           ),
         );
-      
+    case NewPasswordSceen.routeName:
+    final argument = settings.arguments as Map<String, dynamic>;
+      String email = argument['emailController'] as String;
+    
 
+      return MaterialPageRoute(builder:(context) => NewPasswordSceen(
+        emailController: TextEditingController(text: email), )
+       
+      
+      );
     case SignUpScreen.routeName:
       return MaterialPageRoute(
         builder: (context) => const SignUpScreen(),

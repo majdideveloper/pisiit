@@ -9,6 +9,8 @@ import 'package:pisiit/features/home/screen/home_application_screen.dart';
 import 'package:pisiit/models/user_model.dart';
 import 'package:pisiit/utils/storage_firebase.dart';
 
+
+
 final authRepositoryProvider = Provider(
   (ref) => AuthRepository(
     auth: FirebaseAuth.instance,
@@ -34,6 +36,18 @@ class AuthRepository {
     }
     return user;
   }
+//!reset password
+
+Future<void> resetPasswordWithOTP({required String email,required String newPassword}) async {
+  try {
+    
+      await auth.currentUser?.updatePassword(newPassword);
+      print('Password reset successfully');
+  
+  } catch (e) {
+    print('Error resetting password: $e');
+  }
+}
 
 // ! this function LogIn
   void signInWithEmailAndPassword(

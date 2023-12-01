@@ -41,6 +41,12 @@ class AuthController {
       password,
     );
   }
+//! reset password
+Future<void> resetPasswordWithOTP({required String email,required String newPassword})async{
+   await resetPasswordWithOTP(email: email, newPassword: newPassword);
+}
+
+//!signup
 
   void signUpWithEmailAndPassword({
     required BuildContext context,

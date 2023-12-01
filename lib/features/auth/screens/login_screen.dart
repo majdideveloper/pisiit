@@ -1,9 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:pisiit/features/auth/controller/auth_controller.dart';
-import 'package:pisiit/features/auth/screens/reset_password.dart';
-import 'package:pisiit/features/auth/screens/signup_widget/widget_birthday.dart';
-import 'package:pisiit/features/auth/screens/signup_widget/widget_images.dart';
+import 'package:pisiit/features/auth/screens/forget_password/reset_password.dart';
 import 'package:pisiit/features/auth/widgets/goto_signup.dart';
 import 'package:pisiit/features/auth/widgets/textfield_auth.dart';
 import 'package:pisiit/utils/colors.dart';
