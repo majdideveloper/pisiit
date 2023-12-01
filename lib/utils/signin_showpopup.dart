@@ -168,7 +168,6 @@ void popUpRepondRequestDialog(
   showDialog(
     context: context,
     builder: (BuildContext context) {
-      // final DatabaseService databaseService = DatabaseService();
       TextEditingController controller = TextEditingController();
       return AlertDialog(
         title: Row(
@@ -276,10 +275,13 @@ void popUpRepondRequestDialog(
                   ),
                   GestureDetector(
                     onTap: () {
-                      ref.watch(chatControllerProvider).accepteRequest(
-                          senderUserData: sender,
-                          recieverUserData: recipient,
-                          requestModel: requestModel);
+                      if (controller.text.isEmpty) {
+                        ref.watch(chatControllerProvider).accepteRequest(
+                              senderUserData: sender,
+                              recieverUserData: recipient,
+                              requestModel: requestModel,
+                            );
+                      } else {}
 
                       Navigator.pop(context);
                     },
