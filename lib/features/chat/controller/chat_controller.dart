@@ -1,8 +1,12 @@
+import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:pisiit/features/auth/controller/auth_controller.dart';
 import 'package:pisiit/features/chat/repository/chat_repository.dart';
 import 'package:pisiit/models/chat_contact_model.dart';
+import 'package:pisiit/models/message_model.dart';
 import 'package:pisiit/models/request_model.dart';
 import 'package:pisiit/models/user_model.dart';
+import 'package:pisiit/utils/message_reply_provider.dart';
 
 final chatControllerProvider = Provider((ref) {
   final chatRepository = ref.watch(chatRepositoryProvider);
@@ -44,11 +48,17 @@ class ChatController {
   void accepteRequest(
       {required UserModel senderUserData,
       required UserModel recieverUserData,
-      required RequestModel requestModel}) {
+      required RequestModel requestModel,
+      String? msg}) {
     return chatRepository.accepteRequest(
         senderUserData: senderUserData,
         recieverUserData: recieverUserData,
-        requestModel: requestModel);
+        requestModel: requestModel,
+        msg: msg);
+  }
+
+  Stream<List<MessageModel>> chatStream(String recieverUserId) {
+    return chatRepository.getChatStream(recieverUserId);
   }
 
   Stream<List<RequestModel>> getAllRequest() {
@@ -57,5 +67,23 @@ class ChatController {
 
   Stream<List<ChatContactModel>> getAllChatcontact() {
     return chatRepository.getChatContacts();
+  }
+
+  void sendTextMessage(
+    BuildContext context,
+    String text,
+    String recieverUserId,
+  ) {
+    final messageReply = ref.read(messageReplyProvider);
+    ref.read(userDataAuthProvider).whenData(
+          (value) => chatRepository.sendTextMessage(
+            context: context,
+            text: text,
+            recieverUserId: recieverUserId,
+            senderUserData: value!,
+            messageReply: messageReply,
+          ),
+        );
+    ref.read(messageReplyProvider.state).update((state) => null);
   }
 }

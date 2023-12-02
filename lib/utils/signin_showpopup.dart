@@ -281,7 +281,13 @@ void popUpRepondRequestDialog(
                               recieverUserData: recipient,
                               requestModel: requestModel,
                             );
-                      } else {}
+                      } else {
+                        ref.watch(chatControllerProvider).accepteRequest(
+                            senderUserData: sender,
+                            recieverUserData: recipient,
+                            requestModel: requestModel,
+                            msg: controller.text);
+                      }
 
                       Navigator.pop(context);
                     },

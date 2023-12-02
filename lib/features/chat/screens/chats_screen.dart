@@ -6,6 +6,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:intl/intl.dart';
 import 'package:pisiit/features/auth/controller/auth_controller.dart';
 import 'package:pisiit/features/chat/controller/chat_controller.dart';
+import 'package:pisiit/features/chat/screens/chat_contact_screen.dart';
 
 import 'package:pisiit/models/user_model.dart';
 import 'package:pisiit/utils/colors.dart';
@@ -183,65 +184,84 @@ class ChatsScreen extends StatelessWidget {
                             scrollDirection: Axis.vertical,
                             itemCount: contacts.length,
                             itemBuilder: (context, index) {
-                              return Padding(
-                                  padding: const EdgeInsets.all(10.0),
-                                  child: Row(
-                                    mainAxisAlignment:
-                                        MainAxisAlignment.spaceBetween,
-                                    children: [
-                                      Row(
-                                        children: [
-                                          ClipRRect(
-                                            borderRadius:
-                                                const BorderRadius.all(
-                                                    Radius.circular(50)),
-                                            child: CachedNetworkImage(
-                                              imageUrl:
-                                                  contacts[index].profilePic,
-                                              fit: BoxFit.cover,
-                                              height: 60,
-                                              width: 60,
-                                            ),
-                                          ),
-                                          mediumPaddingHor,
-                                          Column(
-                                            crossAxisAlignment:
-                                                CrossAxisAlignment.start,
-                                            children: [
-                                              Text(
-                                                contacts[index].name,
-                                                style: textStyleTextBold,
-                                              ),
-                                              Text(contacts[index].lastMessage),
-                                            ],
-                                          ),
-                                        ],
-                                      ),
-                                      Column(
-                                        crossAxisAlignment:
-                                            CrossAxisAlignment.end,
-                                        children: [
-                                          Text(
-                                            DateFormat('HH:mm').format(
-                                                contacts[index].timeSent),
-                                            style: textStyleTextBold,
-                                          ),
-                                        ],
-                                      ),
-                                    ],
-                                  )
-                                  // Container(
-                                  //   decoration: BoxDecoration(
-                                  //     color: greyColor.shade300,
-                                  //     borderRadius: const BorderRadius.all(
-                                  //         Radius.circular(12)),
-                                  //   ),
-                                  //   child: SizedBox(
-                                  //     height: 100,
-                                  //     width: 100,
-                                  //   ),
-                                  // ),
+                              return GestureDetector(
+                                onTap: () {
+                                  Navigator.pushNamed(
+                                    context,
+                                    ChatContactScreen.routeName,
+                                    arguments: {
+                                      'nameContact': contacts[index].name,
+                                      'idContact': contacts[index].contactId,
+                                    },
                                   );
+                                  // this code need to change with push>named
+                                  // Navigator.push(
+                                  //     context,
+                                  //     MaterialPageRoute(
+                                  //         builder: (context) =>
+                                  //             const ChatContactScreen()));
+                                },
+                                child: Padding(
+                                    padding: const EdgeInsets.all(10.0),
+                                    child: Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceBetween,
+                                      children: [
+                                        Row(
+                                          children: [
+                                            ClipRRect(
+                                              borderRadius:
+                                                  const BorderRadius.all(
+                                                      Radius.circular(50)),
+                                              child: CachedNetworkImage(
+                                                imageUrl:
+                                                    contacts[index].profilePic,
+                                                fit: BoxFit.cover,
+                                                height: 60,
+                                                width: 60,
+                                              ),
+                                            ),
+                                            mediumPaddingHor,
+                                            Column(
+                                              crossAxisAlignment:
+                                                  CrossAxisAlignment.start,
+                                              children: [
+                                                Text(
+                                                  contacts[index].name,
+                                                  style: textStyleTextBold,
+                                                ),
+                                                Text(contacts[index]
+                                                    .lastMessage),
+                                              ],
+                                            ),
+                                          ],
+                                        ),
+                                        Column(
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.end,
+                                          children: [
+                                            Text(
+                                              DateFormat('HH:mm').format(
+                                                  contacts[index].timeSent),
+                                              style: textStyleTextBold,
+                                            ),
+                                          ],
+                                        ),
+                                      ],
+                                    )
+                                    // Container(
+                                    //   decoration: BoxDecoration(
+                                    //     color: greyColor.shade300,
+                                    //     borderRadius: const BorderRadius.all(
+                                    //         Radius.circular(12)),
+                                    //   ),
+                                    //   child: SizedBox(
+                                    //     height: 100,
+                                    //     width: 100,
+                                    //   ),
+                                    // ),
+                                    ),
+                              );
                             }),
                       );
                     },

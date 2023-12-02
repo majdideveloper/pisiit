@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:pisiit/models/chat_contact_model.dart';
 import 'package:pisiit/models/message_model.dart';
@@ -103,10 +104,55 @@ class ChatRepository {
         .delete();
   }
 
+// rewrite this function
+  void sendTextMessage({
+    required BuildContext context,
+    required String text,
+    required String recieverUserId,
+    required UserModel senderUserData,
+    required MessageReply? messageReply,
+  }) async {
+    UserModel? recieverUserData;
+    try {
+      var timeSent = DateTime.now();
+
+      await firestore.collection("Users").doc(recieverUserId).get().then((doc) {
+        if (doc.exists) {
+          var model = UserModel.fromMap(doc.data()!);
+          recieverUserData = model;
+        }
+      });
+
+      var messageId = const Uuid().v1();
+      _saveDataToContactsSubcollection(
+          senderUserData: senderUserData,
+          recieverUserData: recieverUserData!,
+          text: text,
+          timeSent: timeSent,
+          recieverUserId: recieverUserId);
+
+      _saveMessageToMessageSubcollection(
+        recieverUserId: senderUserData.uid,
+        text: text,
+        timeSent: timeSent,
+        messageId: messageId,
+        username: senderUserData.name,
+        messageType: MessageEnum.text,
+        messageReply: null,
+        senderUsername: recieverUserData!.name,
+        recieverUserName: senderUserData.name,
+      );
+    } catch (e) {
+      // showSnackBar(context: context, content: e.toString());
+      print(e);
+    }
+  }
+
   void accepteRequest({
     required UserModel senderUserData,
     required UserModel recieverUserData,
     required RequestModel requestModel,
+    String? msg,
   }) {
     _saveDataToContactsSubcollection(
         senderUserData: senderUserData,
@@ -128,6 +174,28 @@ class ChatRepository {
       senderUsername: recieverUserData.name,
       recieverUserName: senderUserData.name,
     );
+    if (msg != null) {
+      var now = DateTime.now();
+      var messageRepondId = const Uuid().v1();
+      _saveDataToContactsSubcollection(
+          senderUserData: senderUserData,
+          recieverUserData: recieverUserData,
+          text: msg,
+          timeSent: now,
+          recieverUserId: recieverUserData.uid);
+
+      _saveMessageToMessageSubcollection(
+        recieverUserId: senderUserData.uid,
+        text: msg,
+        timeSent: now,
+        messageId: messageRepondId,
+        username: senderUserData.name,
+        messageType: MessageEnum.text,
+        messageReply: null,
+        senderUsername: senderUserData.name,
+        recieverUserName: recieverUserData.name,
+      );
+    }
 
     cancelRequest(requestId: requestModel.uid, userId: recieverUserData.uid);
   }
@@ -254,6 +322,24 @@ class ChatRepository {
         );
       }
       return contacts;
+    });
+  }
+
+  Stream<List<MessageModel>> getChatStream(String recieverUserId) {
+    return firestore
+        .collection('Users')
+        .doc(auth.currentUser!.uid)
+        .collection('Chats')
+        .doc(recieverUserId)
+        .collection('Messages')
+        .orderBy('timeSent')
+        .snapshots()
+        .map((event) {
+      List<MessageModel> messages = [];
+      for (var document in event.docs) {
+        messages.add(MessageModel.fromMap(document.data()));
+      }
+      return messages;
     });
   }
 }
