@@ -84,6 +84,7 @@ class ChatController {
             messageReply: messageReply,
           ),
         );
+    print(text);
     ref.read(messageReplyProvider.state).update((state) => null);
   }
 }

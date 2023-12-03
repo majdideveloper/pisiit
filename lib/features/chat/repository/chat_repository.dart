@@ -124,7 +124,7 @@ class ChatRepository {
       });
 
       var messageId = const Uuid().v1();
-      _saveDataToContactsSubcollection(
+      _saveDataToContactsSubcollectionForMsg(
           senderUserData: senderUserData,
           recieverUserData: recieverUserData!,
           text: text,
@@ -132,15 +132,15 @@ class ChatRepository {
           recieverUserId: recieverUserId);
 
       _saveMessageToMessageSubcollection(
-        recieverUserId: senderUserData.uid,
+        recieverUserId: recieverUserId,
         text: text,
         timeSent: timeSent,
         messageId: messageId,
         username: senderUserData.name,
         messageType: MessageEnum.text,
         messageReply: null,
-        senderUsername: recieverUserData!.name,
-        recieverUserName: senderUserData.name,
+        senderUsername: senderUserData.name, //recieverUserData!.name,
+        recieverUserName: recieverUserData!.name,
       );
     } catch (e) {
       // showSnackBar(context: context, content: e.toString());
@@ -164,7 +164,8 @@ class ChatRepository {
     var messageId = const Uuid().v1();
 
     _saveMessageToMessageSubcollection(
-      recieverUserId: senderUserData.uid,
+      senderId: senderUserData.uid,
+      recieverUserId: recieverUserData.uid,
       text: requestModel.opener,
       timeSent: requestModel.timeRequest,
       messageId: messageId,
@@ -185,6 +186,7 @@ class ChatRepository {
           recieverUserId: recieverUserData.uid);
 
       _saveMessageToMessageSubcollection(
+        senderId: recieverUserData.uid,
         recieverUserId: senderUserData.uid,
         text: msg,
         timeSent: now,
@@ -198,6 +200,47 @@ class ChatRepository {
     }
 
     cancelRequest(requestId: requestModel.uid, userId: recieverUserData.uid);
+  }
+
+  void _saveDataToContactsSubcollectionForMsg({
+    required UserModel senderUserData,
+    required UserModel recieverUserData,
+    required String text,
+    required DateTime timeSent,
+    required String recieverUserId,
+  }) async {
+// users -> reciever user id => chats -> current user id -> set data
+    var recieverChatContact = ChatContactModel(
+      name: senderUserData.name,
+      profilePic: senderUserData.imageURLs![0],
+      contactId: senderUserData.uid,
+      timeSent: timeSent,
+      lastMessage: text,
+    );
+    await firestore
+        .collection('Users')
+        .doc(recieverUserId)
+        .collection('Chats')
+        .doc(auth.currentUser!.uid)
+        .set(
+          recieverChatContact.toMap(),
+        );
+    // users -> current user id  => chats -> reciever user id -> set data
+    var senderChatContact = ChatContactModel(
+      name: recieverUserData.name,
+      profilePic: recieverUserData.imageURLs![0],
+      contactId: recieverUserData.uid,
+      timeSent: timeSent,
+      lastMessage: text,
+    );
+    await firestore
+        .collection('Users')
+        .doc(auth.currentUser!.uid)
+        .collection('Chats')
+        .doc(recieverUserId)
+        .set(
+          senderChatContact.toMap(),
+        );
   }
 
   //!this metode create chat model
@@ -243,6 +286,7 @@ class ChatRepository {
   }
 
   void _saveMessageToMessageSubcollection({
+    String? senderId,
     required String recieverUserId,
     required String text,
     required DateTime timeSent,
@@ -254,7 +298,7 @@ class ChatRepository {
     required String? recieverUserName,
   }) async {
     final message = MessageModel(
-      senderId: auth.currentUser!.uid,
+      senderId: senderId ?? auth.currentUser!.uid,
       recieverid: recieverUserId,
       text: text,
       type: messageType,
@@ -274,7 +318,7 @@ class ChatRepository {
     // users -> sender id -> reciever id -> messages -> message id -> store message
     await firestore
         .collection('Users')
-        .doc(auth.currentUser!.uid)
+        .doc(senderId ?? auth.currentUser!.uid)
         .collection('Chats')
         .doc(recieverUserId)
         .collection('Messages')
@@ -287,7 +331,7 @@ class ChatRepository {
         .collection('Users')
         .doc(recieverUserId)
         .collection('Chats')
-        .doc(auth.currentUser!.uid)
+        .doc(senderId ?? auth.currentUser!.uid)
         .collection('Messages')
         .doc(messageId)
         .set(
