@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:pisiit/features/auth/controller/auth_controller.dart';
 import 'package:pisiit/features/auth/screens/forget_password/reset_password.dart';
+import 'package:pisiit/features/auth/widgets/custom_validat_textfield.dart';
 import 'package:pisiit/features/auth/widgets/goto_signup.dart';
 import 'package:pisiit/features/auth/widgets/textfield_auth.dart';
 import 'package:pisiit/utils/colors.dart';
@@ -21,16 +22,13 @@ class LoginScreen extends ConsumerStatefulWidget {
 class _LoginScreenState extends ConsumerState<LoginScreen> {
   final emailController = TextEditingController();
   final passwordController = TextEditingController();
+  final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
   bool showPassword = true;
 
   logInWithEmailAndPassword() {
-    
-       
     ref.read(authControllerProvider).signInWithEmailAndPassword(
         context, emailController.text.trim(), passwordController.text.trim());
-         
-     
   }
 
   @override
@@ -40,80 +38,102 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
       body: SingleChildScrollView(
         child: Padding(
           padding: const EdgeInsets.all(20.0),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text(
-                "Welcome back 👋",
-                style: textStyleSubtitle,
-              ),
-              smallPaddingVert,
-              Text(
-                "Please enter your email & password to sign in.",
-                style: textStyleText,
-              ),
-              smallPaddingVert,
-              TextFieldAuth(
-                controller: emailController,
-                nameTextField: "Email",
-                prefixIcon: const Icon(
-                  Icons.email,
-                  color: blackColor,
+          child: Form(
+            key: _formKey,
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  "Welcome back 👋",
+                  style: textStyleSubtitle,
                 ),
-              ),
-              smallPaddingVert,
-              TextFieldAuth(
-                nameTextField: "Password",
-                controller: passwordController,
-                obscureText: showPassword,
-                prefixIcon: const Icon(
-                  Icons.lock,
-                  color: blackColor,
+                smallPaddingVert,
+                Text(
+                  "Please enter your email & password to sign in.",
+                  style: textStyleText,
                 ),
-                suffixIcon: IconButton(
-                  icon: showPassword
-                      ? const Icon(Icons.visibility)
-                      : const Icon(Icons.visibility_off),
-                  onPressed: () {
-                    setState(() {
-                      showPassword = !showPassword;
-                    });
-                  },
-                  color: blackColor,
+                smallPaddingVert,
+                //* ussing a textfiel with validate function shoing snackbar
+                CustomValidateTextField(
+                    controller: emailController,
+                    nameTextField: "Email",
+                    prefixIcon: const Icon(
+                      Icons.email,
+                      color: blackColor,
+                    ),                 
+                    ),
+                // TextFieldAuth(
+                //   controller: emailController,
+                //   nameTextField: "Email",
+                //   prefixIcon: const Icon(
+                //     Icons.email,
+                //     color: blackColor,
+                //   ),
+                // ),
+                smallPaddingVert,
+                CustomValidateTextField(
+                  isPassword: true,
+                    nameTextField: "Password",
+                  controller: passwordController,
+                  prefixIcon: const Icon(
+                    Icons.lock,
+                    color: blackColor,
+                  ),
+                    ),
+                // TextFieldAuth(
+                //   nameTextField: "Password",
+                //   controller: passwordController,
+                //   obscureText: showPassword,
+                //   prefixIcon: const Icon(
+                //     Icons.lock,
+                //     color: blackColor,
+                //   ),
+                //   suffixIcon: IconButton(
+                //     icon: showPassword
+                //         ? const Icon(Icons.visibility)
+                //         : const Icon(Icons.visibility_off),
+                //     onPressed: () {
+                //       setState(() {
+                //         showPassword = !showPassword;
+                //       });
+                //     },
+                //     color: blackColor,
+                //   ),
+                // ),
+                // ! Custom this in widget to Log In
+                Align(
+                  alignment: Alignment.topRight,
+                  child: TextButton(
+                      onPressed: () {
+                        Navigator.pushNamed(context, resetPassword.routeName);
+                      },
+                      child: Text(
+                        "Forget Password?",
+                        style: textStyleTextBold.copyWith(color: primaryColor),
+                      )),
                 ),
-              ),
-              // ! Custom this in widget to Log In
-              Align(
-                alignment: Alignment.topRight,
-                child: TextButton(
+                smallPaddingVert,
+                const Divider(
+                  height: 1,
+                ),
+                mediumPaddingVert,
+                const GoToSignUp(),
+                largePaddingVert,
+                mediumPaddingVert,
+                CustomButton(
+                    colorText: whiteColor,
+                    textButton: "Log in",
                     onPressed: () {
-                      Navigator.pushNamed(context, resetPassword.routeName);
-                    },
-                    child: Text(
-                      "Forget Password?",
-                      style: textStyleTextBold.copyWith(color: primaryColor),
-                    )),
-              ),
-              smallPaddingVert,
-              const Divider(
-                height: 1,
-              ),
-              mediumPaddingVert,
-              const GoToSignUp(),
-              largePaddingVert, 
-              mediumPaddingVert,
-              CustomButton(
-                colorText: whiteColor,
-                textButton: "Log in",
-                onPressed: logInWithEmailAndPassword,
-              ),
-            ],
+                      if (_formKey.currentState!.validate()) {
+                        _formKey.currentState!.save();
+                      }
+                      logInWithEmailAndPassword;
+                    }),
+              ],
+            ),
           ),
         ),
-        
       ),
-      
     );
-    
   }
 }
