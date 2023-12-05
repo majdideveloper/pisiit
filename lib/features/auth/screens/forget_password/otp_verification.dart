@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:pisiit/commun/functions/otp_function.dart';
 import 'package:pisiit/features/auth/screens/forget_password/new_password.dart';
@@ -5,6 +7,7 @@ import 'package:pisiit/features/auth/widgets/widget_title.dart';
 import 'package:pisiit/utils/colors.dart';
 import 'package:pisiit/utils/helper_padding.dart';
 import 'package:pisiit/utils/helper_textstyle.dart';
+import 'package:pisiit/utils/signin_showpopup.dart';
 import 'package:pisiit/widgets/custom_button.dart';
 
 class OtpVerificationScreen extends StatefulWidget {
@@ -86,52 +89,70 @@ class _OtpVerificationScreenState extends State<OtpVerificationScreen> {
                       otp4Controller.text +
                       otp5Controller.text +
                       otp6Controller.text))
-                Center(
-                  child: Text(
-                    "OTP not Valid Rewrite or click below for resend",
-                    style: textStyleTextBold.copyWith(color: Colors.red),
-                  ),
-                ),
-              TextButton(
-                onPressed: () {
-                  var newotp = generateOTP();
-                  updateOTP(newotp);
-                  sendOTPToEmail(
-                    widget.emailController.text,
-                    newotp,
-                  );
-                },
-                child: Text("Resend OTP"),
-              ),
-              largePaddingVert,
-              CustomButton(
-                colorText: purpleColor,
-                textButton: "Continue",
-                onPressed: () {
-                  if(verifOTP(
-                      widget.otp[0],
-                      otp1Controller.text +
-                          otp2Controller.text +
-                          otp3Controller.text +
-                          otp4Controller.text +
-                          otp5Controller.text +
-                          otp6Controller.text)){
-                            print('true');
-                             Navigator.pushNamed(
-                      context,
-                      NewPasswordSceen.routeName,
-                      arguments: {
-                        'emailController': widget.emailController.text ,
+                // Center(
+                //   child: Text(
+                //     "OTP not Valid Rewrite or click below for resend",
+                //     style: textStyleTextBold.copyWith(color: Colors.red),
+                //   ),
+                // ),
+                // TextButton(
+                //   onPressed: () {
+                //     var newotp = generateOTP();
+                //     updateOTP(newotp);
+                //     sendOTPToEmail(
+                //       widget.emailController.text,
+                //       newotp,
+                //     );
+                //   },
+                //   child: Text("Resend OTP"),
+                // ),
 
-                      },
+                OtpCounter(
+                  newotp: () {
+                    var newotp = generateOTP();
+                    updateOTP(newotp);
+                    sendOTPToEmail(
+                      widget.emailController.text,
+                      newotp,
                     );
-                            
-                          
-                }else {
-                    Text("verif ");
-                }
-                }
-              ),
+                  },
+                ),
+              mediumPaddingVert,
+              CustomButton(
+                  colorText: whiteColor,
+                  textButton: "showpop",
+                  onPressed: () {
+                    showSignInPopup(
+                        context,
+                        "Login Successfull!",
+                        "You will be directed to HomePage",
+                        Icons.lock_clock_outlined);
+                  }),
+              mediumPaddingVert,
+              CustomButton(
+                  colorText: lightColor,
+                  textButton: "Continue",
+                  onPressed: () {
+                    if (verifOTP(
+                        widget.otp[0],
+                        otp1Controller.text +
+                            otp2Controller.text +
+                            otp3Controller.text +
+                            otp4Controller.text +
+                            otp5Controller.text +
+                            otp6Controller.text)) {
+                      print('true');
+                      Navigator.pushNamed(
+                        context,
+                        NewPasswordSceen.routeName,
+                        arguments: {
+                          'emailController': widget.emailController.text,
+                        },
+                      );
+                    } else {
+                      Text("verif ");
+                    }
+                  }),
             ],
           ),
         ),
@@ -175,5 +196,99 @@ class OtpInputField extends StatelessWidget {
         ),
       ),
     );
+  }
+}
+
+class OtpCounter extends StatefulWidget {
+  final Function() newotp;
+
+  const OtpCounter({super.key, required this.newotp});
+
+  @override
+  _OtpCounterState createState() => _OtpCounterState();
+}
+
+class _OtpCounterState extends State<OtpCounter> {
+  int _counter = 30;
+  bool _showButton = false;
+  Timer? _timer;
+
+  @override
+  void initState() {
+    super.initState();
+    startCounter();
+  }
+
+  void startCounter() {
+    const oneSecond = const Duration(seconds: 1);
+    _timer = Timer.periodic(oneSecond, (Timer timer) {
+      setState(() {
+        if (_counter > 0) {
+          _counter--;
+        } else {
+          //? When the counter = 0, show the resend button and cancel the timer
+          _showButton = true;
+          _timer?.cancel();
+        }
+      });
+    });
+  }
+
+  void resetCounter() {
+    setState(() {
+      _counter = 30;
+      _showButton = false;
+    });
+    // Restart the counter
+    startCounter();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: [
+        Text(
+          "Didn't receive email?",
+          style: textStyleTextBold,
+        ),
+        RichText(
+          text: TextSpan(
+            text: 'You can resend code in ',
+            style: textStyleTextBold,
+            children: [
+              TextSpan(
+                text: '$_counter',
+                style: textStyleTextBold.copyWith(
+                    color: primaryColor, fontSize: 20),
+              ),
+              TextSpan(text: ' s', style: textStyleTextBold)
+            ],
+          ),
+        ),
+        mediumPaddingVert,
+        _showButton
+            ? ElevatedButton(
+                onPressed: () {
+                  //* Handle button click
+                  resetCounter();
+                  //* send the new otp
+                  widget.newotp();
+                },
+                child: Text(
+                  "Resend OTP",
+                  style: textStyleTextBold.copyWith(color: primaryColor),
+                ),
+              )
+            : SizedBox.shrink(),
+      ],
+    );
+  }
+
+  @override
+  void dispose() {
+    //* Cancel the timer when the widget is disposed
+    _timer?.cancel();
+    super.dispose();
   }
 }

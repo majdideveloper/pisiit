@@ -19,53 +19,55 @@ class HomeAuthScreen extends StatelessWidget {
       body: SafeArea(
         child: SingleChildScrollView(
           child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              largePaddingVert,
+              SizedBox(height: 100,),
               Center(
                 child: Image.asset(
-                  "assets/images/logo_request_active.png",
+                  "assets/images/logo_app.png",
                   height: 150,
                   width: 150,
                 ),
               ),
-              Text(
-                'Pisit',
-                style: textStyleTitle,
-              ),
+              // Text(
+              //   'Pisit',
+              //   style: textStyleTitle,
+              // ),
               Text(
                 "Let's dive in into your account",
                 style: textStyleText,
               ),
               largePaddingVert,
-              ButtonSocialMedia(
-                colorText: blackColor,
-                textButton: "Continue with Google",
-                onPressed: () {},
-              ),
-              mediumPaddingVert,
-              ButtonSocialMedia(
-                colorText: blackColor,
-                textButton: "Continue with Google",
-                onPressed: () {},
-              ),
-              mediumPaddingVert,
-              ButtonSocialMedia(
-                colorText: blackColor,
-                textButton: "Continue with Google",
-                onPressed: () {},
-              ),
-              mediumPaddingVert,
-              ButtonSocialMedia(
-                colorText: blackColor,
-                textButton: "Continue with Google",
-                onPressed: () {},
-              ),
-
+              // ButtonSocialMedia(
+              //   colorText: blackColor,
+              //   textButton: "Continue with Google",
+              //   onPressed: () {},
+              // ),
+              // mediumPaddingVert,
+              // ButtonSocialMedia(
+              //   colorText: blackColor,
+              //   textButton: "Continue with Google",
+              //   onPressed: () {},
+              // ),
+              // mediumPaddingVert,
+              // ButtonSocialMedia(
+              //   colorText: blackColor,
+              //   textButton: "Continue with Google",
+              //   onPressed: () {},
+              // ),
+              // mediumPaddingVert,
+              // ButtonSocialMedia(
+              //   colorText: blackColor,
+              //   textButton: "Continue with Google",
+              //   onPressed: () {},
+              // ),
+          
               // const Spacer(),
-              mediumPaddingVert,
+              largePaddingHor,
+              SizedBox(height: 100,),
               CustomButton(
-                colorText: whiteColor,
+                colorText: lightColor,
                 textButton: "Log in",
                 onPressed: () {
                   Navigator.pushNamed(

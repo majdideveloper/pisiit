@@ -27,8 +27,10 @@ class NewPasswordSceen extends ConsumerStatefulWidget {
 class _NewPasswordSceenState extends ConsumerState<NewPasswordSceen> {
 
   forgetPassword(String password) async {
-    ref.read(authControllerProvider).resetPasswordWithOTP(
-      email:widget.emailController.text.trim(), 
+    ref.read(authControllerProvider).
+    //updatePassword(widget.emailController.text.trim(), password.trim());
+    resetPasswordWithOTP(
+     email:widget.emailController.text.trim(), 
       newPassword: password.trim());
       
   }

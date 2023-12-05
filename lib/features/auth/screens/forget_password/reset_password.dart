@@ -1,4 +1,5 @@
 
+import 'package:email_validator/email_validator.dart';
 import 'package:flutter/material.dart';
 import 'package:pisiit/commun/functions/otp_function.dart';
 import 'package:pisiit/features/auth/screens/forget_password/otp_verification.dart';
@@ -6,19 +7,18 @@ import 'package:pisiit/features/auth/widgets/textfield_auth.dart';
 import 'package:pisiit/features/auth/widgets/widget_title.dart';
 import 'package:pisiit/utils/colors.dart';
 import 'package:pisiit/utils/helper_padding.dart';
+import 'package:pisiit/utils/signin_showpopup.dart';
 import 'package:pisiit/widgets/custom_button.dart';
 
 class resetPassword extends StatefulWidget {
   static const routeName = '/resetPassword';
   const resetPassword({super.key});
-
   @override
   State<resetPassword> createState() => _resetPasswordState();
 }
 
 class _resetPasswordState extends State<resetPassword> {
   final emailController = TextEditingController();
-
   final TextEditingController _otpcontroller = TextEditingController();
 
   @override
@@ -47,10 +47,11 @@ class _resetPasswordState extends State<resetPassword> {
                 ),
                 largePaddingVert,
                 CustomButton(
-                  colorText: purpleColor,
+                  colorText: whiteColor,
                   textButton: "continue",
                   onPressed: () async {
-                    //sendOTP(emailController.text);
+                    if (emailController.text !='' &&  EmailValidator.validate(emailController.text))
+                   { //sendOTP(emailController.text);
                     sendOTPToEmail(
                       emailController.text, otp
                     );
@@ -61,7 +62,9 @@ class _resetPasswordState extends State<resetPassword> {
                         'emailController': emailController.text ,
                         'otp': otp,
                       },
-                    );
+                    );}else{
+                      showSnackBar(context, 'email empty');
+                    }
                   },
                 ),
               ],

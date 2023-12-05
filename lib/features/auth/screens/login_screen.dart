@@ -7,6 +7,7 @@ import 'package:pisiit/features/auth/widgets/textfield_auth.dart';
 import 'package:pisiit/utils/colors.dart';
 import 'package:pisiit/utils/helper_padding.dart';
 import 'package:pisiit/utils/helper_textstyle.dart';
+import 'package:pisiit/utils/signin_showpopup.dart';
 import 'package:pisiit/widgets/custom_button.dart';
 
 class LoginScreen extends ConsumerStatefulWidget {
@@ -24,8 +25,12 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
   bool showPassword = true;
 
   logInWithEmailAndPassword() {
+    
+       
     ref.read(authControllerProvider).signInWithEmailAndPassword(
         context, emailController.text.trim(), passwordController.text.trim());
+         
+     
   }
 
   @override
@@ -51,6 +56,10 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
               TextFieldAuth(
                 controller: emailController,
                 nameTextField: "Email",
+                prefixIcon: const Icon(
+                  Icons.email,
+                  color: blackColor,
+                ),
               ),
               smallPaddingVert,
               TextFieldAuth(
@@ -63,8 +72,8 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                 ),
                 suffixIcon: IconButton(
                   icon: showPassword
-                      ? const Icon(Icons.remove_red_eye)
-                      : const Icon(Icons.event_busy),
+                      ? const Icon(Icons.visibility)
+                      : const Icon(Icons.visibility_off),
                   onPressed: () {
                     setState(() {
                       showPassword = !showPassword;
@@ -73,33 +82,20 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                   color: blackColor,
                 ),
               ),
-              mediumPaddingVert,
+
               // ! Custom this in widget to Log In
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Row(
-                    children: [
-                      Checkbox(value: false, onChanged: (value) {}),
-                      Text(
-                        'Remember me',
-                        style: textStyleText.copyWith(
-                          fontWeight: FontWeight.w900,
-                        ),
-                      ),
-                    ],
-                  ),
-                  TextButton(
-                      onPressed:(){
-                        Navigator.pushNamed(context, resetPassword.routeName);
-                      } ,
-                      child: Text(
-                        "Forget Password?",
-                        style: textStyleTextBold,
-                      ))
-                ],
+              Align(
+                alignment: Alignment.topRight,
+                child: TextButton(
+                    onPressed: () {
+                      Navigator.pushNamed(context, resetPassword.routeName);
+                    },
+                    child: Text(
+                      "Forget Password?",
+                      style: textStyleTextBold.copyWith(color: primaryColor),
+                    )),
               ),
-              mediumPaddingVert,
+              smallPaddingVert,
               const Divider(
                 height: 1,
               ),
@@ -107,15 +103,20 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
               const GoToSignUp(),
               largePaddingVert,
 
+  
+              mediumPaddingVert,
               CustomButton(
-                colorText: purpleColor,
-                textButton: "log in",
+                colorText: whiteColor,
+                textButton: "Log in",
                 onPressed: logInWithEmailAndPassword,
               ),
             ],
           ),
         ),
+        
       ),
+      
     );
+    
   }
 }

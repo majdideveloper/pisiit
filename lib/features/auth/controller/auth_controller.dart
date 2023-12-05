@@ -1,9 +1,9 @@
 import 'dart:io';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:pisiit/features/auth/repository/auth_repository.dart';
 import 'package:pisiit/models/user_model.dart';
+
 
 final authControllerProvider = Provider((ref) {
   final authRepository = ref.watch(authRepositoryProvider);
@@ -43,9 +43,12 @@ class AuthController {
   }
 //! reset password
 Future<void> resetPasswordWithOTP({required String email,required String newPassword})async{
-   await resetPasswordWithOTP(email: email, newPassword: newPassword);
+   await authRepository.resetPasswordWithOTP(email: email, newPassword: newPassword);
 }
-
+///! reset 
+Future<void> updatePassword(String userEmail, String newPassword) async {
+await authRepository.updatePassword(userEmail, newPassword);
+}
 //!signup
 
   void signUpWithEmailAndPassword({

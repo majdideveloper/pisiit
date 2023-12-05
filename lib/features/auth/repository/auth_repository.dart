@@ -7,9 +7,9 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:pisiit/features/auth/screens/home_auth_screen.dart';
 import 'package:pisiit/features/home/screen/home_application_screen.dart';
 import 'package:pisiit/models/user_model.dart';
+import 'package:pisiit/utils/signin_showpopup.dart';
 import 'package:pisiit/utils/storage_firebase.dart';
-
-
+import 'package:email_validator/email_validator.dart';
 
 final authRepositoryProvider = Provider(
   (ref) => AuthRepository(
@@ -38,38 +38,87 @@ class AuthRepository {
   }
 //!reset password
 
-Future<void> resetPasswordWithOTP({required String email,required String newPassword}) async {
-  try {
-    
+  Future<void> resetPasswordWithOTP(
+      {required String email, required String newPassword}) async {
+    try {
+      FirebaseAuth.instance.currentUser?.reload();
       await auth.currentUser?.updatePassword(newPassword);
       print('Password reset successfully');
-  
-  } catch (e) {
-    print('Error resetting password: $e');
+    } catch (e) {
+      print('Error resetting password: $e');
+    }
   }
-}
+//! update password
+
+  Future<void> updatePassword(String userEmail, String newPassword) async {
+    if (userEmail == null || userEmail.isEmpty) {
+      print('Please provide the user\'s email');
+      return;
+    }
+
+    if (newPassword == null || newPassword.isEmpty) {
+      print('Please enter a new password');
+      return;
+    }
+
+    if (!EmailValidator.validate(newPassword)) {
+      print('Please enter a valid new password');
+      return;
+    }
+
+    try {
+      // Retrieve the user by email
+      UserCredential userCredential = await FirebaseAuth.instance
+          .signInWithEmailAndPassword(
+              email: userEmail, password: "dummyPassword");
+
+      // Reauthenticate the user before updating the password
+      AuthCredential credential = EmailAuthProvider.credential(
+          email: userEmail, password: "dummyPassword");
+      await userCredential.user!.reauthenticateWithCredential(credential);
+      // Update the password with the new password
+      await userCredential.user!.updatePassword(newPassword);
+      print('Password updated successfully');
+    } on FirebaseAuthException catch (e) {
+      if (e.code == 'wrong-password') {
+        print('Wrong password provided for reauthentication.');
+      } else {
+        print('Error updating password: $e');
+      }
+    } catch (e) {
+      print('Unexpected error updating password: $e');
+    }
+  }
 
 // ! this function LogIn
   void signInWithEmailAndPassword(
-      BuildContext context, String email, String password) async {
+      BuildContext context, String email, String password)  async{
     try {
       await auth.signInWithEmailAndPassword(
         email: email,
         password: password,
       );
-
-      UserModel? userModel = await getCurrentUserData();
-
-      Navigator.pushAndRemoveUntil(
-        context,
-        MaterialPageRoute(
-          builder: (context) => HomeApplicationScreen(
-            userModel: userModel,
-          ),
-        ),
-        (route) => false,
-      );
+      
+showPopUp(
+    context,
+    "Login Successful!",
+    "You will be directed to HomePage",
+    Icons.lock_clock_outlined,
+    Duration(seconds: 100)
+  );
+  UserModel? userModel = await getCurrentUserData();
+   
+       Navigator.pushAndRemoveUntil(
+         context,
+         MaterialPageRoute(
+           builder: (context) => HomeApplicationScreen(
+             userModel: userModel,
+           ),
+         ),
+         (route) => false,
+       );
     } catch (error) {
+      showSnackBar(context, "email or password inccorect $error");
       print("Error signing in: $error");
       return null;
     }
