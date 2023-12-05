@@ -82,7 +82,6 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                   color: blackColor,
                 ),
               ),
-
               // ! Custom this in widget to Log In
               Align(
                 alignment: Alignment.topRight,
@@ -101,9 +100,7 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
               ),
               mediumPaddingVert,
               const GoToSignUp(),
-              largePaddingVert,
-
-  
+              largePaddingVert, 
               mediumPaddingVert,
               CustomButton(
                 colorText: whiteColor,

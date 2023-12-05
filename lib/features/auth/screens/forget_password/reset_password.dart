@@ -68,7 +68,8 @@ class _resetPasswordState extends State<resetPassword> {
                   },
                 ),
               ],
-            )),
+            ),
+            ),
       ),
     );
   }
