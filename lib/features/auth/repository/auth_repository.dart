@@ -104,11 +104,11 @@ showPopUp(
     "Login Successful!",
     "You will be directed to HomePage",
     Icons.lock_clock_outlined,
-    Duration(seconds: 100)
+    Duration(seconds: 20)
   );
   UserModel? userModel = await getCurrentUserData();
    
-       Navigator.pushAndRemoveUntil(
+      await Navigator.pushAndRemoveUntil(
          context,
          MaterialPageRoute(
            builder: (context) => HomeApplicationScreen(

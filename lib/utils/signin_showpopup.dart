@@ -18,46 +18,42 @@ void showPopUp(BuildContext context, String title, String message, IconData icon
     context: context,
     builder: (BuildContext context) {
       return AlertDialog(
-        title: Row(
-          children: [
-           Container(
-          height: 400,
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-            Container(
-              width: 200,
-              height: 150,
-              decoration: const BoxDecoration(
-                //shape: BoxShape.circle,
-                image: DecorationImage(
-                  fit: BoxFit.cover,
-                  image: AssetImage("assets/images/bgicons.png",),
+        title: Container(
+                  height: 500,
+                  child: Column(
+         mainAxisAlignment: MainAxisAlignment.center,
+         crossAxisAlignment: CrossAxisAlignment.center,
+         children: [
+         Container(
+           width: 150,
+           height: 150,
+           decoration: const BoxDecoration(
+             //shape: BoxShape.circle,
+             image: DecorationImage(
+               fit: BoxFit.cover,
+               image: AssetImage("assets/images/bgicons.png",),
+             ),
+           ),
+           child:  Icon(
+             icon,
+             size: 40,
+             color: whiteColor,
+           ),
+         ),
+         mediumPaddingHor,
+         Text(title ,style: textStyleSubtitle.copyWith(color: primaryColor),textAlign: TextAlign.center,),
+         smallPaddingVert,
+         Text("Please Wait", style: textStyleText,),
+        smallPaddingVert,
+         Text(message , style: textStyleText,textAlign: TextAlign.center,),
+         mediumPaddingVert,
+        const CircularProgressIndicator(
+           backgroundColor:primaryColor ,
+           color: lightColor,
+           strokeWidth: 6,
+         )
+                  ]),
                 ),
-              ),
-              child:  Icon(
-                icon,
-                size: 60,
-                color: whiteColor,
-              ),
-            ),
-            mediumPaddingHor,
-            Text(title ,style: textStyleSubtitle.copyWith(color: primaryColor),textAlign: TextAlign.center,),
-            smallPaddingVert,
-            Text("Please Wait", style: textStyleText,),
-smallPaddingVert,
-            Text(message , style: textStyleText,textAlign: TextAlign.center,),
-            mediumPaddingVert,
-           const CircularProgressIndicator(
-              backgroundColor:primaryColor ,
-              color: lightColor,
-              strokeWidth: 6,
-            )
-          ]),
-        ),
-          ],
-        ),
       );
     },
   );
