@@ -4,11 +4,9 @@ import 'package:pisiit/features/auth/controller/auth_controller.dart';
 import 'package:pisiit/features/auth/screens/forget_password/reset_password.dart';
 import 'package:pisiit/features/auth/widgets/custom_validat_textfield.dart';
 import 'package:pisiit/features/auth/widgets/goto_signup.dart';
-import 'package:pisiit/features/auth/widgets/textfield_auth.dart';
 import 'package:pisiit/utils/colors.dart';
 import 'package:pisiit/utils/helper_padding.dart';
 import 'package:pisiit/utils/helper_textstyle.dart';
-import 'package:pisiit/utils/signin_showpopup.dart';
 import 'package:pisiit/widgets/custom_button.dart';
 
 class LoginScreen extends ConsumerStatefulWidget {

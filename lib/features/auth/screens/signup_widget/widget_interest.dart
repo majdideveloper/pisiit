@@ -113,10 +113,10 @@ class _CustomTextContainerState extends State<CustomTextContainer> {
         padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
         decoration: BoxDecoration(
           color: widget.listInteresrt.contains(widget.text)
-              ? purpleColor
+              ? primaryColor
               : whiteColor,
           border: Border.all(
-            color: purpleColor,
+            color: lightColor,
             width: 2.0,
           ),
           borderRadius: BorderRadius.circular(20),

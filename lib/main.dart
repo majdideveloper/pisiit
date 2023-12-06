@@ -31,7 +31,7 @@ class MyApp extends ConsumerWidget {
         appBarTheme: AppBarTheme(
           backgroundColor: whiteColor,
         ),
-        colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
+        colorScheme: ColorScheme.fromSeed(seedColor: primaryColor),
         useMaterial3: true,
       ),
       onGenerateRoute: (settings) => generateRoute(settings),

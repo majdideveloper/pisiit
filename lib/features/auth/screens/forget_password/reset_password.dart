@@ -3,6 +3,7 @@ import 'package:email_validator/email_validator.dart';
 import 'package:flutter/material.dart';
 import 'package:pisiit/commun/functions/otp_function.dart';
 import 'package:pisiit/features/auth/screens/forget_password/otp_verification.dart';
+import 'package:pisiit/features/auth/widgets/custom_validat_textfield.dart';
 import 'package:pisiit/features/auth/widgets/textfield_auth.dart';
 import 'package:pisiit/features/auth/widgets/widget_title.dart';
 import 'package:pisiit/utils/colors.dart';
@@ -37,14 +38,14 @@ class _resetPasswordState extends State<resetPassword> {
                     subTitle:
                         "Please ener your email and we will send on OTP code in the next step to reset your password."),
                 mediumPaddingVert,
-                TextFieldAuth(
-                  prefixIcon: const Icon(
-                    Icons.email,
-                    color: blackColor,
-                  ),
-                  controller: emailController,
-                  nameTextField: "Email",
-                ),
+                CustomValidateTextField(
+                    controller: emailController,
+                    nameTextField: "Email",
+                    prefixIcon: const Icon(
+                      Icons.email,
+                      color: blackColor,
+                    ),                 
+                    ),
                 largePaddingVert,
                 CustomButton(
                   colorText: whiteColor,

@@ -26,60 +26,62 @@ class WidgetBirthday extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: [
-        const WidgetTitle(
-          title: "Let's celebrate you 🎂",
-          subTitle:
-              "Tell us your birthdate. your profile does not display birthdate only your age",
-        ),
-        mediumPaddingVert,
-        Image.asset(
-          "assets/images/birthday.png",
-          height: 200,
-          width: 200,
-        ),
-        mediumPaddingVert,
-        //!  a complete after ...
-        Row(
-          children: [
-            Expanded(
-              child: CustomTextField(
-                hintText: "DD",
-                controller: dayController,
-                maxLength: 2,
-                keyboardType: TextInputType.number,
-                focusNode: dayfocusNode,
+    return SingleChildScrollView(
+      child: Column(
+        children: [
+          const WidgetTitle(
+            title: "Let's celebrate you 🎂",
+            subTitle:
+                "Tell us your birthdate. your profile does not display birthdate only your age",
+          ),
+          mediumPaddingVert,
+          Image.asset(
+            "assets/images/birthday.png",
+            height: 200,
+            width: 200,
+          ),
+          mediumPaddingVert,
+          //!  a complete after ...
+          Row(
+            children: [
+              Expanded(
+                child: CustomTextField(
+                  hintText: "DD",
+                  controller: dayController,
+                  maxLength: 2,
+                  keyboardType: TextInputType.number,
+                  focusNode: dayfocusNode,
+                ),
               ),
-            ),
-            const VerticalDivider(
-              width: 2,
-            ),
-            Expanded(
-              child: CustomTextField(
-                hintText: "MM",
-                controller: monthController,
-                maxLength: 2,
-                keyboardType: TextInputType.number,
-                focusNode: monthfocusNode,
+              const VerticalDivider(
+                width: 2,
               ),
-            ),
-            const VerticalDivider(
-              width: 2,
-            ),
-            Expanded(
-              flex: 2,
-              child: CustomTextField(
-                hintText: "YYYY",
-                controller: yearController,
-                maxLength: 4,
-                keyboardType: TextInputType.number,
-                focusNode: yearfocusNode,
+              Expanded(
+                child: CustomTextField(
+                  hintText: "MM",
+                  controller: monthController,
+                  maxLength: 2,
+                  keyboardType: TextInputType.number,
+                  focusNode: monthfocusNode,
+                ),
               ),
-            ),
-          ],
-        )
-      ],
+              const VerticalDivider(
+                width: 2,
+              ),
+              Expanded(
+                flex: 2,
+                child: CustomTextField(
+                  hintText: "YYYY",
+                  controller: yearController,
+                  maxLength: 4,
+                  keyboardType: TextInputType.number,
+                  focusNode: yearfocusNode,
+                ),
+              ),
+            ],
+          )
+        ],
+      ),
     );
   }
 }

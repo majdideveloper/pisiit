@@ -84,7 +84,7 @@ class _RealtionSelectionScreenState extends State<RealtionSelectionScreen> {
         margin: const EdgeInsets.all(10),
         decoration: BoxDecoration(
           border: Border.all(
-            color: isSelected ? purpleColor : greyColor.shade300,
+            color: isSelected ? primaryColor : greyColor.shade300,
             width: 2.0,
           ),
           borderRadius: BorderRadius.circular(8),

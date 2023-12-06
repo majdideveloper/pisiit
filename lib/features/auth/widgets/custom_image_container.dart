@@ -1,5 +1,4 @@
 import 'dart:io';
-
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:pisiit/utils/colors.dart';
@@ -60,7 +59,7 @@ class _CustomImageContainerState extends State<CustomImageContainer> {
               ? const Center(
                   child: Icon(
                     Icons.add,
-                    color: purpleColor,
+                    color: primaryColor,
                   ),
                 )
               : Stack(
@@ -80,7 +79,7 @@ class _CustomImageContainerState extends State<CustomImageContainer> {
                       top: -5,
                       child: CircleAvatar(
                         radius: 16,
-                        backgroundColor: Colors.red,
+                        backgroundColor: primaryColor,
                         child: IconButton(
                           icon: const Icon(
                             Icons.close,

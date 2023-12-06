@@ -46,6 +46,7 @@ class _SignUpScreenState extends ConsumerState<SignUpScreen> {
   List<File> listImages = [];
   List<String> interests = [];
   List<String> country = [""];
+  bool isChecked = false;
 
   bool isLoading = false;
   @override
@@ -80,6 +81,7 @@ class _SignUpScreenState extends ConsumerState<SignUpScreen> {
       TabController tabController, PageController pageController) {
     String email = emailController.text.trim();
     String password = passwordController.text.trim();
+ 
     print(password);
 
     if (email.isNotEmpty && password.isNotEmpty) {
@@ -134,7 +136,7 @@ class _SignUpScreenState extends ConsumerState<SignUpScreen> {
                           backgroundColor: greyColor,
                           color: blueColor,
                           valueColor:
-                              const AlwaysStoppedAnimation<Color>(blueColor),
+                              const AlwaysStoppedAnimation<Color>(primaryColor),
                           value: (tabController.index / 6).toDouble(),
                         )
                       : const SizedBox(),
@@ -154,6 +156,7 @@ class _SignUpScreenState extends ConsumerState<SignUpScreen> {
                     tabController: tabController,
                     emailController: emailController,
                     passwordController: passwordController,
+                    isChecked: isChecked,
                   ),
                   WidgetNickName(
                       tabController: tabController,
@@ -198,7 +201,7 @@ class _SignUpScreenState extends ConsumerState<SignUpScreen> {
                       children: [
                         Expanded(
                           child: CustomButton(
-                            colorText: purpleColor,
+                            colorText: whiteColor,
                             textButton:
                                 tabController.index == 0 ? "Sign " : "Prev",
                             onPressed: () {
@@ -216,7 +219,7 @@ class _SignUpScreenState extends ConsumerState<SignUpScreen> {
                         ),
                         Expanded(
                           child: CustomButton(
-                            colorText: purpleColor,
+                            colorText: whiteColor,
                             textButton: tabController.index == 0
                                 ? "Sign Up"
                                 : "Continue",
@@ -236,7 +239,7 @@ class _SignUpScreenState extends ConsumerState<SignUpScreen> {
                       ],
                     )
                   : CustomButton(
-                      colorText: purpleColor,
+                      colorText: whiteColor,
                       textButton: tabController.index == 0
                           ? "Sign up"
                           : tabController.index == 5

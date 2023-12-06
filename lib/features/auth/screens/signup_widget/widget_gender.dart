@@ -62,7 +62,7 @@ class _CustomShapesState extends State<CustomShapes> {
                 shapeData: entry.value,
                 color: selectedShapeIndex == entry.key ||
                         widget.gender[0] == shapes[entry.key].text
-                    ? purpleColor
+                    ? primaryColor
                     : greyColor.shade300,
                 onShapeSelected: () {
                   _handleShapeSelected(
