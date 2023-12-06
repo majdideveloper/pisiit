@@ -1,7 +1,8 @@
 import 'dart:io';
+
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:pisiit/commun/verif_mail.dart';
 import 'package:pisiit/features/auth/controller/auth_controller.dart';
 import 'package:pisiit/features/auth/screens/signup_widget/widget_birthday.dart';
 import 'package:pisiit/features/auth/screens/signup_widget/widget_email.dart';
@@ -49,9 +50,7 @@ class _SignUpScreenState extends ConsumerState<SignUpScreen> {
 
   bool isLoading = false;
 
-  //! key form for ech setep in tabview
-  final GlobalKey<FormState> _formKeyemail = GlobalKey<FormState>();
-  final GlobalKey<FormState> _formKeyname = GlobalKey<FormState>();
+
 
   @override
   void initState() {
@@ -80,13 +79,13 @@ class _SignUpScreenState extends ConsumerState<SignUpScreen> {
     yearfocusNode.dispose();
     super.dispose();
   }
+//! register with email password
 
-//! function signup
   void registerWithEmailAndPassword(BuildContext context,
       TabController tabController, PageController pageController) {
     String email = emailController.text.trim();
     String password = passwordController.text.trim();
-
+ 
     print(password);
 
     if (email.isNotEmpty && password.isNotEmpty) {
@@ -118,86 +117,6 @@ class _SignUpScreenState extends ConsumerState<SignUpScreen> {
     }
   }
 
-//! function for tabview confirm befor continue
-  void FunctionTabview(
-      TabController tabController, PageController pageController) {
-    bool isFormValid = false;
-    bool isEmail;
-
-    switch (tabController.index) {
-      case 0:
-        isFormValid = _formKeyemail.currentState?.validate() ?? false;
-        if (!emailController.text.isEmpty ||
-            !passwordController.text.isEmpty ||
-            !isChecked) {
-          isEmailAvailable(emailController.text).then((bool result) {
-            if (!result) {
-              showSnackBar(
-                  context, 'Email is not available  mail had accoount');
-              print('Email is not available mail had accoount');
-            }
-            //showSnackBar(context, 'Email is available');
-            print('Email is available');
-          });
-        } else {
-          showSnackBar(context, "error check and email password empty");
-          return;
-        }
-        break;
-      case 1:
-        isFormValid = _formKeyname.currentState?.validate() ?? false;
-        if (_nameController.text.isEmpty || _nameController.text.length < 3) {
-          showSnackBar(context, "error name");
-          return;
-        }
-        break;
-      case 2:
-        String day = dayController.text;
-        String month = monthController.text;
-        String year = yearController.text;
-        if (day == "" || month == "" || year == "") {
-          showSnackBar(context, "error birthday");
-          return;
-        }
-        break;
-      case 3:
-        if (gender[0].isEmpty ) {
-          showSnackBar(context, "error gender");
-          return;
-        }
-        break;
-      case 4:
-        if (relationGoals[0].isEmpty ) {
-          showSnackBar(context, "error relation goals");
-          return;
-        }
-        break;
-      case 5:
-        if (interests.length < 5 ) {
-          showSnackBar(context, "select 5 interset");
-          return;
-        }
-        break;
-      case 6:
-
-      case 7:
-        registerWithEmailAndPassword(
-          context,
-          tabController,
-          pageController,
-        );
-        return;
-    }
-    // If no validation errors, proceed to the next tab with animation
-    setState(() {
-      tabController.animateTo(tabController.index + 1);
-      pageController.animateToPage(
-        tabController.index,
-        duration: const Duration(milliseconds: 500),
-        curve: Curves.easeInOut,
-      );
-    });
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -238,14 +157,11 @@ class _SignUpScreenState extends ConsumerState<SignUpScreen> {
                 },
                 // physics: const NeverScrollableScrollPhysics(),
                 children: [
-                  Form(
-                    key: _formKeyemail,
-                    child: WidgetEmail(
-                      tabController: tabController,
-                      emailController: emailController,
-                      passwordController: passwordController,
-                      isChecked: isChecked,
-                    ),
+                  WidgetEmail(
+                    tabController: tabController,
+                    emailController: emailController,
+                    passwordController: passwordController,
+                    isChecked: isChecked,
                   ),
                   WidgetNickName(
                       tabController: tabController,
@@ -285,44 +201,76 @@ class _SignUpScreenState extends ConsumerState<SignUpScreen> {
             ),
             bottomNavigationBar: Padding(
               padding: const EdgeInsets.only(bottom: 25.0),
-              child:
-                  // kIsWeb
-                  //     ? Row(
-                  //         children: [
-                  //           Expanded(
-                  //             child: CustomButton(
-                  //               colorText: whiteColor,
-                  //               textButton:
-                  //                   tabController.index == 0 ? "Sign " : "Prev",
-                  //               onPressed: () {
-                  //                 setState(() {
-                  //                   tabController
-                  //                       .animateTo(tabController.index - 1);
-                  //                   pageController.animateToPage(
-                  //                     tabController.index,
-                  //                     duration: const Duration(milliseconds: 500),
-                  //                     curve: Curves.easeInOut,
-                  //                   );
-                  //                 });
-                  //               },
-                  //             ),
-                  //           ),
-                  Expanded(
-                child: CustomButton(
-                    colorText: whiteColor,
-                    textButton: tabController.index == 0
-                        ? "Sign Up"
-                        : tabController.index == 5
-                            ? "Continue (${interests.length}/5)"
-                            : "Continue",
-                    onPressed: () {
-                      FunctionTabview(tabController, pageController);
-                    }),
-              ),
+              child: kIsWeb
+                  ? Row(
+                      children: [
+                        Expanded(
+                          child: CustomButton(
+                            colorText: whiteColor,
+                            textButton:
+                                tabController.index == 0 ? "Sign " : "Prev",
+                            onPressed: () {
+                              setState(() {
+                                tabController
+                                    .animateTo(tabController.index - 1);
+                                pageController.animateToPage(
+                                  tabController.index,
+                                  duration: const Duration(milliseconds: 500),
+                                  curve: Curves.easeInOut,
+                                );
+                              });
+                            },
+                          ),
+                        ),
+                        Expanded(
+                          child: CustomButton(
+                            colorText: whiteColor,
+                            textButton: tabController.index == 0
+                                ? "Sign Up"
+                                : "Continue",
+                            onPressed: () {
+                              setState(() {
+                                tabController
+                                    .animateTo(tabController.index + 1);
+                                pageController.animateToPage(
+                                  tabController.index,
+                                  duration: const Duration(milliseconds: 500),
+                                  curve: Curves.easeInOut,
+                                );
+                              });
+                            },
+                          ),
+                        ),
+                      ],
+                    )
+                  : CustomButton(
+                      colorText: whiteColor,
+                      textButton: tabController.index == 0
+                          ? "Sign up"
+                          : tabController.index == 5
+                              ? "Continue (${interests.length}/5)"
+                              : "Continue",
+                      onPressed: () {
+                        print(tabController.index);
+                        if (tabController.index == 7) {
+                          registerWithEmailAndPassword(
+                              context, tabController, pageController);
+                        } else {
+                          setState(() {
+                            tabController.animateTo(tabController.index + 1);
+                            pageController.animateToPage(
+                              tabController.index,
+                              duration: const Duration(milliseconds: 500),
+                              curve: Curves.easeInOut,
+                            );
+                          });
+                        }
+                      },
+                    ),
             ),
           );
         },
       ),
     );
-  }
+  } 
 }
