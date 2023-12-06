@@ -99,13 +99,13 @@ class AuthRepository {
         password: password,
       );
       
-showPopUp(
-    context,
-    "Login Successful!",
-    "You will be directed to HomePage",
-    Icons.lock_clock_outlined,
-    Duration(seconds: 20)
-  );
+ showPopUp(
+     context,
+     "Login Successful!",
+     "You will be directed to HomePage",
+     Icons.lock_clock_outlined,
+     Duration(seconds: 20)
+   );
   UserModel? userModel = await getCurrentUserData();
    
       await Navigator.pushAndRemoveUntil(

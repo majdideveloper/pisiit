@@ -41,12 +41,11 @@ class _SignUpScreenState extends ConsumerState<SignUpScreen> {
   FocusNode yearfocusNode = FocusNode();
 
   List<String> gender = [""];
-  List<String> relationGoals = [" "];
+  List<String> relationGoals = [""];
   List<File> listImages = [];
   List<String> interests = [];
   List<String> country = [""];
   bool isChecked = false;
-
   bool isLoading = false;
 
   //! key form for ech setep in tabview

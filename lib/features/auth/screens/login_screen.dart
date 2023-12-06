@@ -25,6 +25,9 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
   bool showPassword = true;
 
   logInWithEmailAndPassword() {
+    if (_formKey.currentState!.validate()) {
+         _formKey.currentState!.save();
+    }
     ref.read(authControllerProvider).signInWithEmailAndPassword(
         context, emailController.text.trim(), passwordController.text.trim());
   }
@@ -121,12 +124,15 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                 CustomButton(
                     colorText: whiteColor,
                     textButton: "Log in",
-                    onPressed: () {
-                      if (_formKey.currentState!.validate()) {
-                        _formKey.currentState!.save();
-                      }
-                      logInWithEmailAndPassword;
-                    }),
+                    onPressed: logInWithEmailAndPassword
+                    // () {
+                      // if (!_formKey.currentState!.validate()) {
+                      //   _formKey.currentState!.save();
+                        
+                      // }
+                      //logInWithEmailAndPassword;
+                   // }
+                    ),
               ],
             ),
           ),
