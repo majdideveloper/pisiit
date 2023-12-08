@@ -1,16 +1,18 @@
 import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:pisiit/commun/functions/otp_function.dart';
 import 'package:pisiit/commun/verif_mail.dart';
 import 'package:pisiit/features/auth/controller/auth_controller.dart';
+import 'package:pisiit/features/auth/screens/forget_password/otp_verif_widgets.dart';
 import 'package:pisiit/features/auth/screens/signup_widget/widget_birthday.dart';
+import 'package:pisiit/features/auth/screens/signup_widget/widget_country.dart';
 import 'package:pisiit/features/auth/screens/signup_widget/widget_email.dart';
 import 'package:pisiit/features/auth/screens/signup_widget/widget_gender.dart';
 import 'package:pisiit/features/auth/screens/signup_widget/widget_images.dart';
 import 'package:pisiit/features/auth/screens/signup_widget/widget_info.dart';
 import 'package:pisiit/features/auth/screens/signup_widget/widget_interest.dart';
 import 'package:pisiit/features/auth/screens/signup_widget/widget_nickname.dart';
-
 import 'package:pisiit/features/auth/screens/signup_widget/widget_relationgoals.dart';
 
 import 'package:pisiit/utils/colors.dart';
@@ -32,6 +34,21 @@ class _SignUpScreenState extends ConsumerState<SignUpScreen> {
 
   final TextEditingController _nameController = TextEditingController();
   final TextEditingController _jobController = TextEditingController();
+
+  /// otp
+  final otp1Controller = TextEditingController();
+  final otp2Controller = TextEditingController();
+  final otp3Controller = TextEditingController();
+  final otp4Controller = TextEditingController();
+  final otp5Controller = TextEditingController();
+  final otp6Controller = TextEditingController();
+  List<String> otp = [];
+  List<String> newotp = [];
+  void updateOTP(List<String> newOTP) {
+    setState(() {
+      otp = newOTP;
+    });
+  }
 
   final dayController = TextEditingController();
   final monthController = TextEditingController();
@@ -55,6 +72,7 @@ class _SignUpScreenState extends ConsumerState<SignUpScreen> {
   @override
   void initState() {
     super.initState();
+
     dayfocusNode.addListener(() {
       if (!dayfocusNode.hasFocus && dayController.text.length == 2) {
         // Move focus to the next field when the user has entered 2 characters
@@ -119,38 +137,56 @@ class _SignUpScreenState extends ConsumerState<SignUpScreen> {
 
 //! function for tabview confirm befor continue
   void FunctionTabview(
-      TabController tabController, PageController pageController) {
+      TabController tabController, PageController pageController) async {
     bool isFormValid = false;
     bool isEmail;
 
     switch (tabController.index) {
       case 0:
         isFormValid = _formKeyemail.currentState?.validate() ?? false;
-        if (!emailController.text.isEmpty ||
-            !passwordController.text.isEmpty ||
-            !isChecked) {
-          isEmailAvailable(emailController.text).then((bool result) {
-            if (!result) {
-              showSnackBar(
-                  context, 'Email is not available  mail had accoount');
-              print('Email is not available mail had accoount');
-            }
-            //showSnackBar(context, 'Email is available');
-            print('Email is available');
-          });
-        } else {
-          showSnackBar(context, "error check and email password empty");
+        if (!isFormValid || !isChecked) {
+          showSnackBar(context, "error check i agree $isChecked");
           return;
+        } else {
+          bool isEmailAvailableResult =
+              await isEmailAvailable(emailController.text);
+          print(isEmailAvailableResult);
+          if (!isEmailAvailableResult) {
+            showSnackBar(context, 'Email is not available mail had accoount');
+            print('Email is not available mail had accoount');
+            return;
+          } else {
+            print('Email is available');
+            // continue to the next case
+            //send otp
+            otp = generateOTP();
+            sendOTPToEmail(emailController.text, otp);
+          }
         }
         break;
       case 1:
+        String otpwriten = otp1Controller.text +
+            otp2Controller.text +
+            otp3Controller.text +
+            otp4Controller.text +
+            otp5Controller.text +
+            otp6Controller.text;
+        if (otp[0] != otpwriten) {
+          showSnackBar(context, 'otp non valid verif code');
+          return;
+        }
+      break;
+
+
+      case 2:
         isFormValid = _formKeyname.currentState?.validate() ?? false;
         if (_nameController.text.isEmpty || _nameController.text.length < 3) {
           showSnackBar(context, "error name");
           return;
         }
         break;
-      case 2:
+
+      case 3:
         String day = dayController.text;
         String month = monthController.text;
         String year = yearController.text;
@@ -159,32 +195,47 @@ class _SignUpScreenState extends ConsumerState<SignUpScreen> {
           return;
         }
         break;
-      case 3:
-        if (gender[0].isEmpty ) {
+      case 4:
+        if (gender[0].isEmpty) {
           showSnackBar(context, "error gender");
           return;
         }
         break;
-      case 4:
-        if (relationGoals[0].isEmpty ) {
+      case 5:
+        if (relationGoals[0].isEmpty) {
           showSnackBar(context, "error relation goals");
           return;
         }
         break;
-      case 5:
-        if (interests.length < 5 ) {
+      case 6:
+        if (interests.length < 5) {
           showSnackBar(context, "select 5 interset");
           return;
         }
         break;
-      case 6:
-
       case 7:
-        registerWithEmailAndPassword(
-          context,
-          tabController,
-          pageController,
-        );
+        if (country[0].isEmpty){
+          showSnackBar(context, "select country");
+          return;
+        }
+        break;
+      case 8:
+       if (_jobController.text.isEmpty || _jobController.text.length < 4 ){
+          showSnackBar(context, "write job");
+          return;
+        }
+        break;
+
+      case 9:
+        if (listImages.length >= 1) {
+          registerWithEmailAndPassword(
+            context,
+            tabController,
+            pageController,
+          );
+          return;
+        }
+        showSnackBar(context, "upload image");
         return;
     }
     // If no validation errors, proceed to the next tab with animation
@@ -201,7 +252,7 @@ class _SignUpScreenState extends ConsumerState<SignUpScreen> {
   @override
   Widget build(BuildContext context) {
     return DefaultTabController(
-      length: 8,
+      length: 10,
       child: Builder(
         builder: (BuildContext context) {
           final TabController tabController = DefaultTabController.of(context);
@@ -235,7 +286,7 @@ class _SignUpScreenState extends ConsumerState<SignUpScreen> {
                     tabController.index = index;
                   });
                 },
-                // physics: const NeverScrollableScrollPhysics(),
+                physics: const NeverScrollableScrollPhysics(),
                 children: [
                   Form(
                     key: _formKeyemail,
@@ -244,8 +295,23 @@ class _SignUpScreenState extends ConsumerState<SignUpScreen> {
                       emailController: emailController,
                       passwordController: passwordController,
                       isChecked: isChecked,
+                      onChanged: (value) {
+                        setState(() {
+                          isChecked = value!;
+                          print(isChecked);
+                        });
+                      },
                     ),
                   ),
+                  OtpVerifWWidget(
+                      emailController: emailController,
+                      otp: otp,
+                      otp1Controller: otp1Controller,
+                      otp2Controller: otp2Controller,
+                      otp3Controller: otp3Controller,
+                      otp4Controller: otp4Controller,
+                      otp5Controller: otp5Controller,
+                      otp6Controller: otp6Controller),
                   WidgetNickName(
                       tabController: tabController,
                       nameController: _nameController),
@@ -270,8 +336,13 @@ class _SignUpScreenState extends ConsumerState<SignUpScreen> {
                     tabController: tabController,
                     interests: interests,
                   ),
-                  InfoWidget(
+                  WidgetCountry(
                     country: country,
+                    tabController: tabController,
+                    
+                  ),
+                  InfoWidget(
+                 
                     tabController: tabController,
                     jobController: _jobController,
                   ),
@@ -306,17 +377,44 @@ class _SignUpScreenState extends ConsumerState<SignUpScreen> {
                   //               },
                   //             ),
                   //           ),
+                  Row(
+                children: [
+                  // prev button
                   Expanded(
-                child: CustomButton(
-                    colorText: whiteColor,
-                    textButton: tabController.index == 0
-                        ? "Sign Up"
-                        : tabController.index == 5
-                            ? "Continue (${interests.length}/5)"
-                            : "Continue",
-                    onPressed: () {
-                      FunctionTabview(tabController, pageController);
-                    }),
+                    child: tabController.index != 0  
+                        ? CustomButton(
+                            colorText: whiteColor,
+                            textButton: "Prev",
+                            onPressed: () {
+                              setState(() {
+                                tabController
+                                    .animateTo(tabController.index - 1);
+                                pageController.animateToPage(
+                                  tabController.index,
+                                  duration: const Duration(milliseconds: 500),
+                                  curve: Curves.easeInOut,
+                                );
+                              });
+                            },
+                          )
+                        :SizedBox(
+                            width: 10,
+                          ),
+                  ),
+                  
+                  Expanded(
+                    child: CustomButton(
+                        colorText: whiteColor,
+                        textButton: tabController.index == 0
+                            ? "Sign Up"
+                            : tabController.index == 6
+                                ? "Continue (${interests.length}/5)"
+                                : "Continue",
+                        onPressed: () {
+                          FunctionTabview(tabController, pageController);
+                        }),
+                  ),
+                ],
               ),
             ),
           );

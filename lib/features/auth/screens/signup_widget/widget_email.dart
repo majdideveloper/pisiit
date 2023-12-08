@@ -12,13 +12,14 @@ class WidgetEmail extends StatefulWidget {
   final TextEditingController emailController;
   final TextEditingController passwordController;
   final TabController tabController;
-  final bool isChecked;
-  const WidgetEmail({
+  final void Function(bool?)?onChanged;
+  bool isChecked = false;
+   WidgetEmail({
     Key? key,
     required this.emailController,
     required this.passwordController,
     required this.tabController, 
-    required this.isChecked,
+    required this.isChecked, required this.onChanged,
   }) : super(key: key);
 
   @override
@@ -28,77 +29,79 @@ class WidgetEmail extends StatefulWidget {
 
 class _WidgetEmailState extends State<WidgetEmail> {
   GlobalKey<FormState> _formKey = GlobalKey<FormState>();
-bool isChecked = false;
+
 
   @override
   Widget build(BuildContext context) {
     return SingleChildScrollView(
       child: Padding(
         padding: const EdgeInsets.all(16.0),
-        child: Form(
-          key: _formKey,
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text(
-                "Create an account 👩‍💻",
-                style: textStyleSubtitle,
-              ),
-              smallPaddingVert,
-              Text(
-                "Create your account in Seconds. We'll help you find your perfect match",
-                style: textStyleText,
-              ),
-              smallPaddingVert,
-              CustomValidateTextField(
-                    controller: widget.emailController,
-                    nameTextField: "Email",
-                    prefixIcon: const Icon(
-                      Icons.email,
-                      color: blackColor,
-                    ),                 
-                    ),
-              
-              smallPaddingVert,
-              CustomValidateTextField(
-                  isPassword: true,
-                    nameTextField: "Password",
-                  controller: widget.passwordController,
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text(
+              "Create an account 👩‍💻",
+              style: textStyleSubtitle,
+            ),
+            smallPaddingVert,
+            Text(
+              "Create your account in Seconds. We'll help you find your perfect match",
+              style: textStyleText,
+            ),
+            smallPaddingVert,
+            CustomValidateTextField(
+              keyboardType:TextInputType.emailAddress,
+                  controller: widget.emailController,
+                  nameTextField: "Email",
                   prefixIcon: const Icon(
-                    Icons.lock,
+                    Icons.email,
                     color: blackColor,
+                  ),                 
                   ),
-                    ),
-              mediumPaddingVert,
-              // ! Custom this in widget
-              Row(
-                children: [
-                  Checkbox(
-                    value: isChecked, 
-                    onChanged: (value) {
-                      setState(() {
-                        isChecked = value!;
-                      });
-                    }
-                    
-                    ),
-                  Text(
-                    'I agree to Pesst',
-                    style: textStyleText.copyWith(
-                      fontWeight: FontWeight.w900,
-                    ),
+            
+            smallPaddingVert,
+            CustomValidateTextField(
+                isPassword: true,
+                  nameTextField: "Password",
+                controller: widget.passwordController,
+                prefixIcon: const Icon(
+                  Icons.lock,
+                  color: blackColor,
+                ),
                   ),
-                  TextButton(
-                    onPressed: () {},
-                    child: Text(
-                      'Privacy Policy',
-                      style: textStyleTextBold.copyWith(color: primaryColor),
-                    ),
-                  )
-                ],
-              ),
-            ],
-          ),
+            mediumPaddingVert,
+            // ! Custom this in widget
+            Row(
+              children: [
+                Checkbox(
+                  value: widget.isChecked, 
+                
+                  onChanged:widget.onChanged,
+
+                  // (value) {
+                  //   setState(() {
+                  //     widget.isChecked = value!;
+                  //     print(widget.isChecked);
+                  //   });
+                      
+                  // }
+                  ),
+                Text(
+                  'I agree to Pesst',
+                  style: textStyleText.copyWith(
+                    fontWeight: FontWeight.w900,
+                  ),
+                ),
+                TextButton(
+                  onPressed: () {},
+                  child: Text(
+                    'Privacy Policy',
+                    style: textStyleTextBold.copyWith(color: primaryColor),
+                  ),
+                )
+              ],
+            ),
+          ],
         ),
       ),
     );

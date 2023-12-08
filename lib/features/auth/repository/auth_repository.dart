@@ -164,7 +164,13 @@ class AuthRepository {
           noteAccount: 0,
           numberPisit: 10,
         );
-
+ showPopUp(
+     context,
+     "Register Successful!",
+     "You will be directed to HomePage",
+     Icons.lock_clock_outlined,
+     Duration(seconds: 20)
+   );
         await firestore
             .collection('Users')
             .doc(user.user!.uid)

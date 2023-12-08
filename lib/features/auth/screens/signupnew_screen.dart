@@ -4,6 +4,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:pisiit/features/auth/controller/auth_controller.dart';
+import 'package:pisiit/features/auth/screens/forget_password/otp_verif_widgets.dart';
 import 'package:pisiit/features/auth/screens/signup_widget/widget_birthday.dart';
 import 'package:pisiit/features/auth/screens/signup_widget/widget_email.dart';
 import 'package:pisiit/features/auth/screens/signup_widget/widget_gender.dart';
@@ -40,6 +41,9 @@ class _SignUpScreenState extends ConsumerState<SignUpScreen> {
   FocusNode dayfocusNode = FocusNode();
   FocusNode monthfocusNode = FocusNode();
   FocusNode yearfocusNode = FocusNode();
+
+
+
 
   List<String> gender = [""];
   List<String> relationGoals = [" "];
@@ -162,7 +166,14 @@ class _SignUpScreenState extends ConsumerState<SignUpScreen> {
                     emailController: emailController,
                     passwordController: passwordController,
                     isChecked: isChecked,
+                    onChanged:(value) {
+                        setState(() {
+                          isChecked = value!;
+                          print(isChecked);
+                        });
+                      },
                   ),
+                  
                   WidgetNickName(
                       tabController: tabController,
                       nameController: _nameController),
@@ -188,7 +199,7 @@ class _SignUpScreenState extends ConsumerState<SignUpScreen> {
                     interests: interests,
                   ),
                   InfoWidget(
-                    country: country,
+                   // country: country,
                     tabController: tabController,
                     jobController: _jobController,
                   ),

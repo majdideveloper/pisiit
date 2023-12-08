@@ -46,6 +46,7 @@ Route<dynamic> generateRoute(RouteSettings settings) {
       return MaterialPageRoute(
         builder: (context) => const SignUpScreen(),
       );
+      
     case UserProfile.routeName:
       final arguments = settings.arguments as Map<String, dynamic>;
 
