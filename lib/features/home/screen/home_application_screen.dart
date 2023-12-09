@@ -70,7 +70,7 @@ class _HomeApplicationScreenState extends State<HomeApplicationScreen> {
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.message),
-            label: "Chats",
+            label: "3",
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.person),

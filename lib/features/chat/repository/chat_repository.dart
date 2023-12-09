@@ -71,7 +71,7 @@ class ChatRepository {
     var requestId = const Uuid().v1();
 
     final RequestModel request = RequestModel(
-        uid: requestId,
+        uid: currentUserId,
         currentUserUid: currentUserId,
         recepieUserUid: recieverUserId,
         senderRequest: senderUserModel,
@@ -84,7 +84,7 @@ class ChatRepository {
         .collection("Users")
         .doc(recieverUserId)
         .collection("Requests")
-        .doc(requestId)
+        .doc(currentUserId)
         .set(request.toMap());
     firestore
         .collection("Users")
