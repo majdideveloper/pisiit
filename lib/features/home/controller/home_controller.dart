@@ -26,6 +26,10 @@ class HomeController {
     return listUser;
   }
 
+  Future<bool> canSendRequest(String userId) async {
+    return await homeRepository.canSendRequest(userId);
+  }
+
   // void sendRequest({
   //   required String recieverUserId,
   //   required String message,
@@ -39,6 +43,10 @@ class HomeController {
 
   Stream<List<UserModel>> getAllUsers() {
     return homeRepository.getAllUsers();
+  }
+
+  Stream<int> numberRequest() {
+    return homeRepository.numberRequest();
   }
 
   // Stream<List<RequestModel>> getAllRequest() {

@@ -42,7 +42,8 @@ class MyApp extends ConsumerWidget {
                   if (user == null) {
                     return const HomeAuthScreen();
                   }
-                  user;
+                  // user;
+                  print(user.uid);
                   return HomeApplicationScreen(
                     userModel: user,
                   );

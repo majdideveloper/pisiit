@@ -46,100 +46,33 @@ class HomeRepository {
           .toList();
     }
     return listUsers;
-
-    //     UserModel? user;
-    // if (userData.data() != null) {
-    //   user = UserModel.fromMap(userData.data()!);
-    // }
-    // return user;
   }
 
-  // void sendRequest({
-  //   required String recieverUserId,
-  //   required String message,
-  //   required String currentUserId,
-  // }) {
-  //   var timeSent = DateTime.now();
-  //   var requestId = const Uuid().v1();
+  Stream<int> numberRequest() {
+    return firestore
+        .collection('Users')
+        .doc(auth.currentUser!.uid)
+        .collection("Requests")
+        .snapshots()
+        .map((event) => event.size);
+  }
 
-  //   final RequestModel request = RequestModel(
-  //       uid: requestId,
-  //       currentUserUid: currentUserId,
-  //       recepieUserUid: recieverUserId,
-  //       imageSender: "",
-  //       opener: message,
-  //       timeRequest: timeSent);
+// this new function about see button send Request in two sense....
+  Future<bool> canSendRequest(String userId) async {
+    DocumentSnapshot snapshot1 = await firestore
+        .collection("Users")
+        .doc(userId) //auth.currentUser!.uid)
+        .collection('Requests')
+        .doc(auth.currentUser!.uid) //userId)
+        .get();
 
-  //   firestore
-  //       .collection("Users")
-  //       .doc(recieverUserId)
-  //       .collection("Requests")
-  //       .doc(requestId)
-  //       .set(request.toMap());
-  //   firestore
-  //       .collection("Users")
-  //       .doc(currentUserId)
-  //       .update({"numberPisit": -1});
-  // }
+    DocumentSnapshot snapshot2 = await firestore
+        .collection("Users")
+        .doc(auth.currentUser!.uid)
+        .collection('Requests')
+        .doc(userId)
+        .get();
 
-  // Stream<List<ChatContact>> getChatContacts() {
-  //   return firestore
-  //       .collection('users')
-  //       .doc(auth.currentUser!.uid)
-  //       .collection('chats')
-  //       .snapshots()
-  //       .asyncMap((event) async {
-  //     List<ChatContact> contacts = [];
-  //     for (var document in event.docs) {
-  //       var chatContact = ChatContact.fromMap(document.data());
-  //       var userData = await firestore
-  //           .collection('users')
-  //           .doc(chatContact.contactId)
-  //           .get();
-  //       var user = UserModel.fromMap(userData.data()!);
-
-  //       contacts.add(
-  //         ChatContact(
-  //           name: user.name,
-  //           profilePic: user.profilePic,
-  //           contactId: chatContact.contactId,
-  //           timeSent: chatContact.timeSent,
-  //           lastMessage: chatContact.lastMessage,
-  //         ),
-  //       );
-  //     }
-  //     return contacts;
-  //   });
-  // }
-
-  // Stream<List<RequestModel>> getAllRequest() {
-  //   return firestore
-  //       .collection('Users')
-  //       .doc(auth.currentUser!.uid)
-  //       .collection('Requests')
-  //       .snapshots()
-  //       .asyncMap(
-  //     (event) async {
-  //       List<RequestModel> requests = [];
-  //       for (var document in event.docs) {
-  //         var requestModel = RequestModel.fromMap(document.data());
-
-  //         var userData = await firestore
-  //             .collection('Users')
-  //             .doc(requestModel.currentUserUid)
-  //             .get();
-  //         var user = UserModel.fromMap(userData.data()!);
-
-  //         requests.add(RequestModel(
-  //             uid: requestModel.uid,
-  //             currentUserUid: requestModel.currentUserUid,
-  //             recepieUserUid: requestModel.recepieUserUid,
-  //             imageSender: user.imageURLs![0],
-  //             opener: requestModel.opener,
-  //             timeRequest: requestModel.timeRequest));
-  //       }
-  //       return requests;
-  //     },
-  //   );
-  // }
+    return snapshot1.exists || snapshot2.exists;
+  }
 }

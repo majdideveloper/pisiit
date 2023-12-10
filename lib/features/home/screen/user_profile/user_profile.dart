@@ -1,5 +1,7 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:pisiit/features/home/controller/home_controller.dart';
 
 import 'package:pisiit/features/home/screen/my_profile/profile_screen.dart';
 import 'package:pisiit/features/home/screen/widgets/appbar_profile_user.dart';
@@ -153,32 +155,54 @@ class UserProfile extends StatelessWidget {
             ),
           ),
           mediumPaddingHor,
-          GestureDetector(
-            onTap: () {
-              simplePisitDialog(
-                  context: context, sender: ownUserModel, recipient: userModel);
-            },
-            child: Padding(
-              padding: const EdgeInsets.all(16.0),
-              child: Container(
-                width: 80.0,
-                height: 80.0,
-                decoration: BoxDecoration(
-                  shape: BoxShape.circle,
-                  // You can set your desired color here
-                  border: Border.all(
-                    color: purpleColor,
-                    width: 2.0,
-                  ),
-                ),
-                child: Center(
-                    child: Image.asset(
-                  "assets/images/logo_request_active.png",
-                  height: 40,
-                )),
-              ),
-            ),
-          ),
+          Consumer(builder: (context, ref, child) {
+            return FutureBuilder<bool>(
+                future: ref
+                    .watch(homeControllerProvider)
+                    .canSendRequest(userModel.uid),
+                builder: (context, snapshot) {
+                  if (snapshot.connectionState == ConnectionState.waiting) {
+                    return const SizedBox(); //CircularProgressIndicator();
+                  }
+
+                  if (snapshot.hasError) {
+                    return Text('Error: ${snapshot.error}');
+                  }
+
+                  bool isUserInCollection = snapshot.data!;
+                  print(isUserInCollection);
+                  return isUserInCollection
+                      ? const SizedBox()
+                      : GestureDetector(
+                          onTap: () {
+                            simplePisitDialog(
+                                context: context,
+                                sender: ownUserModel,
+                                recipient: userModel);
+                          },
+                          child: Padding(
+                            padding: const EdgeInsets.all(16.0),
+                            child: Container(
+                              width: 80.0,
+                              height: 80.0,
+                              decoration: BoxDecoration(
+                                shape: BoxShape.circle,
+                                // You can set your desired color here
+                                border: Border.all(
+                                  color: purpleColor,
+                                  width: 2.0,
+                                ),
+                              ),
+                              child: Center(
+                                  child: Image.asset(
+                                "assets/images/logo_request_active.png",
+                                height: 40,
+                              )),
+                            ),
+                          ),
+                        );
+                });
+          })
         ],
       ),
     );

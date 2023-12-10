@@ -4,6 +4,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import 'package:pisiit/features/auth/controller/auth_controller.dart';
 import 'package:pisiit/features/chat/screens/chats_screen.dart';
+import 'package:pisiit/features/home/controller/home_controller.dart';
 import 'package:pisiit/features/home/screen/home/home_screen.dart';
 import 'package:pisiit/features/home/screen/my_profile/profile_screen.dart';
 import 'package:pisiit/models/user_model.dart';
@@ -57,27 +58,57 @@ class _HomeApplicationScreenState extends State<HomeApplicationScreen> {
           ),
         ],
       ),
-      bottomNavigationBar: BottomNavigationBar(
-        type: BottomNavigationBarType.fixed,
-        currentIndex: _currentIndex,
-        onTap: _onItemTapped,
-        backgroundColor: whiteColor,
-        elevation: 0,
-        items: const [
-          BottomNavigationBarItem(
-            icon: Icon(Icons.home),
-            label: "Home",
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.message),
-            label: "3",
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.person),
-            label: "Profile",
-          )
-        ],
-      ),
+      bottomNavigationBar: Consumer(builder: (context, ref, child) {
+        return StreamBuilder<int>(
+            stream: ref.watch(homeControllerProvider).numberRequest(),
+            builder: (context, snapshot) {
+              if (!snapshot.hasData) {
+                return BottomNavigationBar(
+                  type: BottomNavigationBarType.fixed,
+                  currentIndex: _currentIndex,
+                  onTap: _onItemTapped,
+                  backgroundColor: whiteColor,
+                  elevation: 0,
+                  items: const [
+                    BottomNavigationBarItem(
+                      icon: Icon(Icons.home),
+                      label: "Home",
+                    ),
+                    BottomNavigationBarItem(
+                      icon: Icon(Icons.message),
+                      label: "Chats",
+                    ),
+                    BottomNavigationBarItem(
+                      icon: Icon(Icons.person),
+                      label: "Profile",
+                    )
+                  ],
+                );
+              }
+              int numberOfRequests = snapshot.data!;
+              return BottomNavigationBar(
+                type: BottomNavigationBarType.fixed,
+                currentIndex: _currentIndex,
+                onTap: _onItemTapped,
+                backgroundColor: whiteColor,
+                elevation: 0,
+                items: [
+                  const BottomNavigationBarItem(
+                    icon: Icon(Icons.home),
+                    label: "Home",
+                  ),
+                  BottomNavigationBarItem(
+                    icon: Icon(Icons.message),
+                    label: "Chats $numberOfRequests",
+                  ),
+                  const BottomNavigationBarItem(
+                    icon: Icon(Icons.person),
+                    label: "Profile",
+                  )
+                ],
+              );
+            });
+      }),
     );
   }
 }
