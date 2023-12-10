@@ -61,9 +61,9 @@ class HomeRepository {
   Future<bool> canSendRequest(String userId) async {
     DocumentSnapshot snapshot1 = await firestore
         .collection("Users")
-        .doc(userId) //auth.currentUser!.uid)
+        .doc(userId)
         .collection('Requests')
-        .doc(auth.currentUser!.uid) //userId)
+        .doc(auth.currentUser!.uid)
         .get();
 
     DocumentSnapshot snapshot2 = await firestore
@@ -73,6 +73,13 @@ class HomeRepository {
         .doc(userId)
         .get();
 
-    return snapshot1.exists || snapshot2.exists;
+    DocumentSnapshot snapshot3 = await firestore
+        .collection("Users")
+        .doc(auth.currentUser!.uid)
+        .collection('Chats')
+        .doc(userId)
+        .get();
+
+    return snapshot1.exists || snapshot2.exists || snapshot3.exists;
   }
 }

@@ -170,7 +170,7 @@ class UserProfile extends StatelessWidget {
                   }
 
                   bool isUserInCollection = snapshot.data!;
-                  print(isUserInCollection);
+
                   return isUserInCollection
                       ? const SizedBox()
                       : GestureDetector(

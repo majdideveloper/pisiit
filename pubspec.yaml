@@ -44,6 +44,7 @@ dependencies:
   cloud_firestore: ^4.13.2
   firebase_storage: ^11.5.2
   uuid: ^4.2.1
+  lottie: ^2.7.0
   cached_network_image: ^3.3.0
   otp: ^3.1.4
   mailer: ^6.0.1

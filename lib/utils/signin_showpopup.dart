@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:lottie/lottie.dart';
 import 'package:pisiit/features/auth/widgets/widget_title.dart';
 import 'package:pisiit/features/chat/controller/chat_controller.dart';
 import 'package:pisiit/features/home/controller/home_controller.dart';
@@ -12,48 +13,61 @@ import 'package:pisiit/utils/helper_padding.dart';
 import 'package:pisiit/utils/helper_textstyle.dart';
 import 'package:pisiit/widgets/custom_button.dart';
 
-
-void showPopUp(BuildContext context, String title, String message, IconData icon, Duration duration) {
+void showPopUp(BuildContext context, String title, String message,
+    IconData icon, Duration duration) {
   showDialog(
     context: context,
     builder: (BuildContext context) {
       return AlertDialog(
         title: Container(
-                  height: 500,
-                  child: Column(
-         mainAxisAlignment: MainAxisAlignment.center,
-         crossAxisAlignment: CrossAxisAlignment.center,
-         children: [
-         Container(
-           width: 150,
-           height: 150,
-           decoration: const BoxDecoration(
-             //shape: BoxShape.circle,
-             image: DecorationImage(
-               fit: BoxFit.cover,
-               image: AssetImage("assets/images/bgicons.png",),
-             ),
-           ),
-           child:  Icon(
-             icon,
-             size: 40,
-             color: whiteColor,
-           ),
-         ),
-         mediumPaddingHor,
-         Text(title ,style: textStyleSubtitle.copyWith(color: primaryColor),textAlign: TextAlign.center,),
-         smallPaddingVert,
-         Text("Please Wait", style: textStyleText,),
-        smallPaddingVert,
-         Text(message , style: textStyleText,textAlign: TextAlign.center,),
-         mediumPaddingVert,
-        const CircularProgressIndicator(
-           backgroundColor:primaryColor ,
-           color: lightColor,
-           strokeWidth: 6,
-         )
-                  ]),
+          height: 500,
+          child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                Container(
+                  width: 150,
+                  height: 150,
+                  decoration: const BoxDecoration(
+                    //shape: BoxShape.circle,
+                    image: DecorationImage(
+                      fit: BoxFit.cover,
+                      image: AssetImage(
+                        "assets/images/bgicons.png",
+                      ),
+                    ),
+                  ),
+                  child: Icon(
+                    icon,
+                    size: 40,
+                    color: whiteColor,
+                  ),
                 ),
+                mediumPaddingHor,
+                Text(
+                  title,
+                  style: textStyleSubtitle.copyWith(color: primaryColor),
+                  textAlign: TextAlign.center,
+                ),
+                smallPaddingVert,
+                Text(
+                  "Please Wait",
+                  style: textStyleText,
+                ),
+                smallPaddingVert,
+                Text(
+                  message,
+                  style: textStyleText,
+                  textAlign: TextAlign.center,
+                ),
+                mediumPaddingVert,
+                const CircularProgressIndicator(
+                  backgroundColor: primaryColor,
+                  color: lightColor,
+                  strokeWidth: 6,
+                )
+              ]),
+        ),
       );
     },
   );
@@ -66,7 +80,8 @@ void showPopUp(BuildContext context, String title, String message, IconData icon
 
 ///!
 
-Future<void> showSignInPopup( BuildContext context, String Title, String subtitle, IconData icon) async {
+Future<void> showSignInPopup(
+    BuildContext context, String Title, String subtitle, IconData icon) async {
   return showDialog(
     context: context,
     barrierDismissible: false, // user must tap button!
@@ -75,40 +90,53 @@ Future<void> showSignInPopup( BuildContext context, String Title, String subtitl
         content: Container(
           height: 400,
           child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-            Container(
-              width: 200,
-              height: 150,
-              decoration: const BoxDecoration(
-                //shape: BoxShape.circle,
-                image: DecorationImage(
-                  fit: BoxFit.cover,
-                  image: AssetImage("assets/images/bgicons.png",),
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                Container(
+                  width: 200,
+                  height: 150,
+                  decoration: const BoxDecoration(
+                    //shape: BoxShape.circle,
+                    image: DecorationImage(
+                      fit: BoxFit.cover,
+                      image: AssetImage(
+                        "assets/images/bgicons.png",
+                      ),
+                    ),
+                  ),
+                  child: Icon(
+                    icon,
+                    size: 60,
+                    color: whiteColor,
+                  ),
                 ),
-              ),
-              child:  Icon(
-                icon,
-                size: 60,
-                color: whiteColor,
-              ),
-            ),
-            mediumPaddingHor,
-            Text(Title ,style: textStyleSubtitle.copyWith(color: primaryColor),textAlign: TextAlign.center,),
-            smallPaddingVert,
-            Text("Please Wait", style: textStyleText,),
-smallPaddingVert,
-            Text(subtitle , style: textStyleText,textAlign: TextAlign.center,),
-            mediumPaddingVert,
-           const CircularProgressIndicator(
-              backgroundColor:primaryColor ,
-              color: lightColor,
-              strokeWidth: 6,
-            )
-          ]),
+                mediumPaddingHor,
+                Text(
+                  Title,
+                  style: textStyleSubtitle.copyWith(color: primaryColor),
+                  textAlign: TextAlign.center,
+                ),
+                smallPaddingVert,
+                Text(
+                  "Please Wait",
+                  style: textStyleText,
+                ),
+                smallPaddingVert,
+                Text(
+                  subtitle,
+                  style: textStyleText,
+                  textAlign: TextAlign.center,
+                ),
+                mediumPaddingVert,
+                const CircularProgressIndicator(
+                  backgroundColor: primaryColor,
+                  color: lightColor,
+                  strokeWidth: 6,
+                )
+              ]),
         ),
-        
+
         // actions: [
         //   TextButton(
         //     child: const Text('close'),
@@ -132,6 +160,7 @@ void simplePisitDialog(
     builder: (BuildContext context) {
       // final DatabaseService databaseService = DatabaseService();
       TextEditingController controller = TextEditingController();
+
       return AlertDialog(
         title: Row(
           mainAxisAlignment: MainAxisAlignment.center,
@@ -156,10 +185,23 @@ void simplePisitDialog(
               ],
             ),
             mediumPaddingHor,
-            Image.asset(
-              'assets/images/logo_request_active.png',
-              height: 40,
+            //! here animation replace image
+            // Image.asset(
+            //   'assets/images/logo_request_active.png',
+            //   height: 40,
+            // ),
+
+            Expanded(
+              child: Lottie.network(
+                'https://lottie.host/3c4a994a-742d-4813-99b2-978feb9425eb/XyfXscPj7u.json',
+                //'assets/animation/animation.json',
+                width: 200,
+                height: 100,
+
+                fit: BoxFit.fill,
+              ),
             ),
+
             mediumPaddingHor,
             Column(
               crossAxisAlignment: CrossAxisAlignment.center,
@@ -211,6 +253,7 @@ void simplePisitDialog(
                         senderUserModel: sender,
                       );
 
+                  Navigator.pop(context);
                   Navigator.pop(context);
                 },
               );
@@ -515,14 +558,16 @@ class CustomTextField extends StatelessWidget {
     );
   }
 }
+
 ///! snack bar
 void showSnackBar(BuildContext context, String text) {
-    final snackBar = SnackBar(
-      backgroundColor: primaryColor,
-      content: Text(
-        text,
-        style: textStyleTextBold.copyWith(color: whiteColor),textAlign: TextAlign.center,
-      ),
-    );
-    ScaffoldMessenger.of(context).showSnackBar(snackBar);
-  }
+  final snackBar = SnackBar(
+    backgroundColor: primaryColor,
+    content: Text(
+      text,
+      style: textStyleTextBold.copyWith(color: whiteColor),
+      textAlign: TextAlign.center,
+    ),
+  );
+  ScaffoldMessenger.of(context).showSnackBar(snackBar);
+}
