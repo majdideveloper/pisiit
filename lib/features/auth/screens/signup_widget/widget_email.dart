@@ -2,11 +2,9 @@
 import 'package:flutter/material.dart';
 
 import 'package:pisiit/features/auth/widgets/custom_validat_textfield.dart';
-import 'package:pisiit/features/auth/widgets/textfield_auth.dart';
 import 'package:pisiit/utils/colors.dart';
 import 'package:pisiit/utils/helper_padding.dart';
 import 'package:pisiit/utils/helper_textstyle.dart';
-import 'package:pisiit/widgets/custom_button.dart';
 
 class WidgetEmail extends StatefulWidget {
   final TextEditingController emailController;
@@ -71,19 +69,17 @@ class _WidgetEmailState extends State<WidgetEmail> {
                   ),
             mediumPaddingVert,
             // ! Custom this in widget
+          
             Row(
               children: [
                 Checkbox(
-                  value: widget.isChecked, 
-                
+                  value: widget.isChecked,                
                   onChanged:widget.onChanged,
-
                   // (value) {
                   //   setState(() {
                   //     widget.isChecked = value!;
                   //     print(widget.isChecked);
-                  //   });
-                      
+                  //   });                     
                   // }
                   ),
                 Text(
