@@ -75,8 +75,9 @@ class ChatController {
     String recieverUserId,
   ) async {
     final messageReply = ref.read(messageReplyProvider);
-    final senderMessage =
-        await ref.watch(authControllerProvider).getCurrentUserInfo();
+    final senderMessage = await ref
+        .watch(authControllerProvider)
+        .getCurrentUserInfo(); //.whenComplete(() => null);
     ref.read(userDataAuthProvider).whenData((value) {
       print("${value!.uid}+++++++++++++++++++++++++++++++++++++++++++++++++++");
       chatRepository.sendTextMessage(
