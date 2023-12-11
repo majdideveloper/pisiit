@@ -5,6 +5,7 @@ import 'package:pisiit/features/auth/screens/forget_password/reset_password.dart
 import 'package:pisiit/features/auth/screens/login_screen.dart';
 import 'package:pisiit/features/auth/screens/signup_screen.dart';
 import 'package:pisiit/features/chat/screens/chat_contact_screen.dart';
+import 'package:pisiit/features/home/screen/my_profile/edit_profile.dart';
 import 'package:pisiit/features/home/screen/user_profile/user_profile.dart';
 import 'package:pisiit/models/chat_contact_model.dart';
 import 'package:pisiit/models/user_model.dart';
@@ -66,7 +67,10 @@ Route<dynamic> generateRoute(RouteSettings settings) {
           idContact: arguments['idContact'] as String,
         ),
       );
-
+case  EditProfile.routeName:
+return MaterialPageRoute(
+ builder: (context) => EditProfile()
+ );
     default:
       return MaterialPageRoute(
         builder: (context) => Scaffold(

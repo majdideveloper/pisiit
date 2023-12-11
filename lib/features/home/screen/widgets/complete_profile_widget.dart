@@ -11,30 +11,12 @@ class CompleteProfileWidget extends StatelessWidget {
     return Container(
       padding: const EdgeInsets.all(16),
       decoration: const BoxDecoration(
-          color: purpleColor,
+          color: primaryColor,
           borderRadius: BorderRadius.all(Radius.circular(12))),
       height: 140,
       child: Row(
         children: [
-          Stack(
-            alignment: Alignment.center,
-            children: [
-              Text(
-                "15%",
-                style: textStyleSubtitle.copyWith(color: whiteColor),
-              ),
-              SizedBox(
-                height: 80,
-                width: 80,
-                child: CircularProgressIndicator(
-                  value: 0.1,
-                  color: whiteColor,
-                  backgroundColor: whiteColor.withOpacity(0.2),
-                  strokeWidth: 4,
-                ),
-              ),
-            ],
-          ),
+          CompletProgreseProfile(),
           mediumPaddingHor,
           Column(
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -52,6 +34,35 @@ class CompleteProfileWidget extends StatelessWidget {
           )
         ],
       ),
+    );
+  }
+}
+
+class CompletProgreseProfile extends StatelessWidget {
+  const CompletProgreseProfile({
+    super.key,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Stack(
+      alignment: Alignment.center,
+      children: [
+        Text(
+          "15%",
+          style: textStyleSubtitle.copyWith(color: whiteColor),
+        ),
+        SizedBox(
+          height: 80,
+          width: 80,
+          child: CircularProgressIndicator(
+            value: 0.1,
+            color: whiteColor,
+            backgroundColor: whiteColor.withOpacity(0.2),
+            strokeWidth: 4,
+          ),
+        ),
+      ],
     );
   }
 }

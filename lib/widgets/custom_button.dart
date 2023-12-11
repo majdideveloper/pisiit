@@ -7,12 +7,15 @@ import 'package:pisiit/utils/helper_textstyle.dart';
 class CustomButton extends StatelessWidget {
   final Color? colorText;
   final String textButton;
+  Color? color;
+
   final void Function()? onPressed;
   CustomButton({
     Key? key,
     required this.colorText,
     required this.textButton,
     this.onPressed,
+    this.color,
   }) : super(key: key);
 
   @override
@@ -26,7 +29,7 @@ class CustomButton extends StatelessWidget {
         style: ButtonStyle(
           minimumSize:
               MaterialStateProperty.all(const Size(double.infinity, 48.0)),
-          backgroundColor: MaterialStateProperty.all(primaryColor),
+          backgroundColor: MaterialStateProperty.all(color ?? primaryColor),
         ),
         child: Text(
           textButton,

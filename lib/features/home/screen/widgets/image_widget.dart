@@ -20,7 +20,7 @@ class ImageWidget extends StatelessWidget {
         imageUrl,
         height: 400,
         width: double.infinity,
-        fit: BoxFit.cover,
+        fit: BoxFit.fill,
       ),
     );
   }

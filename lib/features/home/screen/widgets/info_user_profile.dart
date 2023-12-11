@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:pisiit/features/home/screen/my_profile/edit_profile.dart';
 import 'package:pisiit/utils/helper_padding.dart';
 import 'package:pisiit/utils/helper_textstyle.dart';
 
@@ -36,7 +37,9 @@ class InfoUserWidget extends ConsumerWidget {
         ),
         Center(
             child: TextButton(
-          onPressed: () {},
+          onPressed: () {
+           Navigator.pushNamed(context, EditProfile.routeName);
+          },
           child: Text(
             "Edit Profile",
             style: textStyleTextBold
@@ -51,7 +54,7 @@ class InfoUserWidget extends ConsumerWidget {
                 ? const ItemInfoUser(
                     icon: Icons.female, textDescription: "Woman")
                 : const ItemInfoUser(
-                    icon: Icons.female, textDescription: "Other"),
+                    icon: Icons.transgender_sharp, textDescription: "Other"),
         smallPaddingVert,
         ItemInfoUser(icon: Icons.work, textDescription: jobTitle),
         smallPaddingVert,

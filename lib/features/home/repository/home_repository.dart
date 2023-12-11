@@ -82,4 +82,29 @@ class HomeRepository {
 
     return snapshot1.exists || snapshot2.exists || snapshot3.exists;
   }
+  ///! function for edit profile
+  
+  Future<void> updateUser(UserModel user) async {
+  try {
+    final CollectionReference usersCollection =
+        FirebaseFirestore.instance.collection('users');
+
+    await usersCollection.doc(user.uid).update({
+      'name': user.name,
+      'age': user.age,
+      'birthday': user.birthday,
+      'gender': user.gender,
+      'relationGoals': user.relationGoals,
+      'imageURLs': user.imageURLs,
+      'interests': user.interests,
+      'bio': user.bio,
+      'jobTitle': user.jobTitle,
+      'country': user.country,
+
+    });
+  } catch (e) {
+    // Handle the exception, e.g., log an error
+    print('Error updating user: $e');
+  }
+}
 }

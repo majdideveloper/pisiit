@@ -8,8 +8,6 @@ import 'package:pisiit/features/home/screen/widgets/complete_profile_widget.dart
 import 'package:pisiit/features/home/screen/widgets/image_widget.dart';
 import 'package:pisiit/features/home/screen/widgets/info_user_profile.dart';
 import 'package:pisiit/features/home/screen/widgets/show_list_item.dart';
-import 'package:pisiit/features/home/screen/widgets/visibility_image.dart';
-import 'package:pisiit/main.dart';
 import 'package:pisiit/models/user_model.dart';
 import 'package:pisiit/utils/helper_padding.dart';
 import 'package:pisiit/utils/helper_textstyle.dart';
@@ -36,7 +34,7 @@ class ProfileScreen extends StatelessWidget {
       body: Consumer(builder: (context, ref, child) {
         for (int index = 2; index <= 5; index++) {
           if (userModel.imageURLs!.length > index) {
-            print(userModel.imageURLs!.length);
+           print(userModel.imageURLs!.length);
 
             listBoolPictures[index] = true;
           } else {
@@ -54,6 +52,7 @@ class ProfileScreen extends StatelessWidget {
                 mediumPaddingVert,
                 ImageWidget(
                   imageUrl: userModel.imageURLs![0],
+                
                 ),
                 smallPaddingVert,
                 InfoUserWidget(
