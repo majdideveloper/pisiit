@@ -73,17 +73,20 @@ class ChatController {
     BuildContext context,
     String text,
     String recieverUserId,
-  ) {
+  ) async {
     final messageReply = ref.read(messageReplyProvider);
-    ref.read(userDataAuthProvider).whenData(
-          (value) => chatRepository.sendTextMessage(
-            context: context,
-            text: text,
-            recieverUserId: recieverUserId,
-            senderUserData: value!,
-            messageReply: messageReply,
-          ),
-        );
+    final senderMessage =
+        await ref.watch(authControllerProvider).getCurrentUserInfo();
+    ref.read(userDataAuthProvider).whenData((value) {
+      print("${value!.uid}+++++++++++++++++++++++++++++++++++++++++++++++++++");
+      chatRepository.sendTextMessage(
+        context: context,
+        text: text,
+        recieverUserId: recieverUserId,
+        senderUserData: senderMessage!, //value!,
+        messageReply: messageReply,
+      );
+    });
     print(text);
     ref.read(messageReplyProvider.state).update((state) => null);
   }

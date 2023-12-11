@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import 'package:pisiit/features/auth/controller/auth_controller.dart';
+import 'package:badges/badges.dart' as badges;
 import 'package:pisiit/features/chat/screens/chats_screen.dart';
 import 'package:pisiit/features/home/controller/home_controller.dart';
 import 'package:pisiit/features/home/screen/home/home_screen.dart';
@@ -43,6 +44,9 @@ class _HomeApplicationScreenState extends State<HomeApplicationScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        title: Text(widget.userModel!.uid),
+      ),
       body: PageView(
         controller: _pageController,
         onPageChanged: _onPageChanged,
@@ -98,8 +102,11 @@ class _HomeApplicationScreenState extends State<HomeApplicationScreen> {
                     label: "Home",
                   ),
                   BottomNavigationBarItem(
-                    icon: Icon(Icons.message),
-                    label: "Chats $numberOfRequests",
+                    icon: badges.Badge(
+                      badgeContent: Text(numberOfRequests.toString()),
+                      child: const Icon(Icons.message),
+                    ),
+                    label: "Chats",
                   ),
                   const BottomNavigationBarItem(
                     icon: Icon(Icons.person),

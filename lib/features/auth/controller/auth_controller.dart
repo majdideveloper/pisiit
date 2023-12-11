@@ -4,13 +4,12 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:pisiit/features/auth/repository/auth_repository.dart';
 import 'package:pisiit/models/user_model.dart';
 
-
 final authControllerProvider = Provider((ref) {
   final authRepository = ref.watch(authRepositoryProvider);
   return AuthController(authRepository: authRepository, ref: ref);
 });
 
-final userDataAuthProvider = FutureProvider((ref) {
+final userDataAuthProvider = FutureProvider.autoDispose((ref) {
   final authController = ref.watch(authRepositoryProvider);
   return authController.getCurrentUserData();
 });
@@ -41,14 +40,18 @@ class AuthController {
       password,
     );
   }
+
 //! reset password
-Future<void> resetPasswordWithOTP({required String email,required String newPassword})async{
-   await authRepository.resetPasswordWithOTP(email: email, newPassword: newPassword);
-}
-///! reset 
-Future<void> updatePassword(String userEmail, String newPassword) async {
-await authRepository.updatePassword(userEmail, newPassword);
-}
+  Future<void> resetPasswordWithOTP(
+      {required String email, required String newPassword}) async {
+    await authRepository.resetPasswordWithOTP(
+        email: email, newPassword: newPassword);
+  }
+
+  ///! reset
+  Future<void> updatePassword(String userEmail, String newPassword) async {
+    await authRepository.updatePassword(userEmail, newPassword);
+  }
 //!signup
 
   void signUpWithEmailAndPassword({
