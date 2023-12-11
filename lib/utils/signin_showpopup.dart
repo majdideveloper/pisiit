@@ -186,21 +186,21 @@ void simplePisitDialog(
             ),
             mediumPaddingHor,
             //! here animation replace image
-            // Image.asset(
-            //   'assets/images/logo_request_active.png',
-            //   height: 40,
-            // ),
-
-            Expanded(
-              child: Lottie.network(
-                'https://lottie.host/3c4a994a-742d-4813-99b2-978feb9425eb/XyfXscPj7u.json',
-                //'assets/animation/animation.json',
-                width: 200,
-                height: 100,
-
-                fit: BoxFit.fill,
-              ),
+            Image.asset(
+              'assets/images/logo_request_active.png',
+              height: 40,
             ),
+
+            // Expanded(
+            //   child: Lottie.network(
+            //     'https://lottie.host/3c4a994a-742d-4813-99b2-978feb9425eb/XyfXscPj7u.json',
+            //     //'assets/animation/animation.json',
+            //     width: 200,
+            //     height: 100,
+
+            //     fit: BoxFit.fill,
+            //   ),
+            // ),
 
             mediumPaddingHor,
             Column(
