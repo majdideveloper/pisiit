@@ -44,6 +44,9 @@ class _HomeApplicationScreenState extends State<HomeApplicationScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        title: Text(widget.userModel!.uid),
+      ),
       body: PageView(
         controller: _pageController,
         onPageChanged: _onPageChanged,

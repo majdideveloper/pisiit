@@ -18,7 +18,7 @@ class ChatContactScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(nameContact),
+        title: Text("$nameContact $idContact"),
       ),
       body: Column(
         children: [
