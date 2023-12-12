@@ -123,7 +123,11 @@ class _CustomTextContainerState extends State<CustomTextContainer> {
         ),
         child: Text(
           widget.text,
-          style: textStyleTextBold,
+          style: textStyleTextBold.copyWith(
+            color: widget.listInteresrt.contains(widget.text)
+                ? whiteColor
+                : blackColor,
+          ),
         ),
       ),
     );

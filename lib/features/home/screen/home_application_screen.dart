@@ -102,10 +102,12 @@ class _HomeApplicationScreenState extends State<HomeApplicationScreen> {
                     label: "Home",
                   ),
                   BottomNavigationBarItem(
-                    icon: badges.Badge(
-                      badgeContent: Text(numberOfRequests.toString()),
-                      child: const Icon(Icons.message),
-                    ),
+                    icon: numberOfRequests == 0
+                        ? const Icon(Icons.message)
+                        : badges.Badge(
+                            badgeContent: Text(numberOfRequests.toString()),
+                            child: const Icon(Icons.message),
+                          ),
                     label: "Chats",
                   ),
                   const BottomNavigationBarItem(
