@@ -10,13 +10,29 @@ import 'package:pisiit/models/user_model.dart';
 import 'package:pisiit/utils/colors.dart';
 import 'package:pisiit/utils/helper_padding.dart';
 import 'package:pisiit/utils/helper_textstyle.dart';
+import 'package:pisiit/utils/modalBottomSheet.dart';
 
-class HomeScreen extends StatelessWidget {
+class HomeScreen extends StatefulWidget {
   final UserModel userModel;
   const HomeScreen({
     Key? key,
     required this.userModel,
   }) : super(key: key);
+
+  @override
+  State<HomeScreen> createState() => _HomeScreenState();
+}
+
+class _HomeScreenState extends State<HomeScreen> {
+  void _showAgeRangePicker(BuildContext context) {
+    showModalBottomSheet(
+      context: context,
+      isScrollControlled: true,
+      builder: (BuildContext context) {
+        return const ModalBottomSheet();
+      },
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -39,18 +55,20 @@ class HomeScreen extends StatelessWidget {
           CircleAvatar(
             backgroundColor: purpleColor,
             child: Text(
-              userModel.numberPisit.toString(),
+              widget.userModel.numberPisit.toString(),
               style: textStyleTextBold,
             ),
           ),
           IconButton(
-            onPressed: () {},
+            onPressed: () {
+              _showAgeRangePicker(context);
+            },
             icon: const Icon(Icons.edit),
           ),
         ],
       ),
       body: BodyHomeScreen(
-        ownUserModel: userModel,
+        ownUserModel: widget.userModel,
       ),
     );
   }

@@ -62,7 +62,6 @@ class _RealtionSelectionScreenState extends State<RealtionSelectionScreen> {
         buildSelectableContainer('Serious Relationship 💍',
             'Ready for commitment and a lasting partnership? Pick serious relationship'),
         mediumPaddingVert,
-        Text('Selected Value: ${widget.relationGoals[0]}'),
       ],
     );
   }
