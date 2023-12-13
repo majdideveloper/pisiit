@@ -56,6 +56,7 @@ class ProfileScreen extends StatelessWidget {
                 ),
                 smallPaddingVert,
                 InfoUserWidget(
+                  userid: userModel.uid,
                   name: userModel.name,
                   age: userModel.age,
                   gender: userModel.gender,

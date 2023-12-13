@@ -84,24 +84,35 @@ class HomeRepository {
   }
   ///! function for edit profile
   
-  Future<void> updateUser(UserModel user) async {
+  Future<void> updateUser(String userid, String name) async {
+    
   try {
     final CollectionReference usersCollection =
         FirebaseFirestore.instance.collection('users');
 
-    await usersCollection.doc(user.uid).update({
-      'name': user.name,
-      'age': user.age,
-      'birthday': user.birthday,
-      'gender': user.gender,
-      'relationGoals': user.relationGoals,
-      'imageURLs': user.imageURLs,
-      'interests': user.interests,
-      'bio': user.bio,
-      'jobTitle': user.jobTitle,
-      'country': user.country,
 
-    });
+ await usersCollection.doc(userid).set(
+      {
+        'name': name,
+      },
+     
+    );
+
+    print('User information updated successfully');
+    //await usersCollection.doc(userid).update({
+     // 'name': name,
+      // 'age': user.age,
+      // 'birthday': user.birthday,
+      // 'gender': user.gender,
+      // 'relationGoals': user.relationGoals,
+      // 'imageURLs': user.imageURLs,
+      // 'interests': user.interests,
+      // 'bio': user.bio,
+      // 'jobTitle': user.jobTitle,
+      // 'country': user.country,
+
+    //}
+   //);
   } catch (e) {
     // Handle the exception, e.g., log an error
     print('Error updating user: $e');

@@ -49,7 +49,11 @@ class HomeController {
     return homeRepository.numberRequest();
   }
 
+
   // Stream<List<RequestModel>> getAllRequest() {
   //   return homeRepository.getAllRequest();
   // }
+  Future<void> updateUser(String userid ,String name) async {
+    homeRepository.updateUser(userid, name);
+  }
 }

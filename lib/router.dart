@@ -68,8 +68,12 @@ Route<dynamic> generateRoute(RouteSettings settings) {
         ),
       );
 case  EditProfile.routeName:
+
+final arguments = settings.arguments as Map<String, dynamic>;
 return MaterialPageRoute(
- builder: (context) => EditProfile()
+ builder: (context) => EditProfile(
+ userid: arguments['userid'] as String,
+ )
  );
     default:
       return MaterialPageRoute(

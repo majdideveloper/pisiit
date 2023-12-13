@@ -5,6 +5,7 @@ import 'package:pisiit/utils/helper_padding.dart';
 import 'package:pisiit/utils/helper_textstyle.dart';
 
 class InfoUserWidget extends ConsumerWidget {
+  final String userid;
   final String name;
   final String age;
   final String gender;
@@ -16,6 +17,7 @@ class InfoUserWidget extends ConsumerWidget {
     required this.gender,
     required this.jobTitle,
     required this.country,
+    required this.userid
   });
 
   @override
@@ -38,7 +40,9 @@ class InfoUserWidget extends ConsumerWidget {
         Center(
             child: TextButton(
           onPressed: () {
-           Navigator.pushNamed(context, EditProfile.routeName);
+           Navigator.pushNamed(context, EditProfile.routeName, arguments: {
+            'userid': userid
+           });
           },
           child: Text(
             "Edit Profile",
