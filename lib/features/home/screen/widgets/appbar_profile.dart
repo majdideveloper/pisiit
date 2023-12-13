@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:pisiit/utils/colors.dart';
+import 'package:pisiit/utils/custom_bottomsheet.dart';
 import 'package:pisiit/utils/helper_textstyle.dart';
 
 class AppBarProfile extends StatelessWidget implements PreferredSizeWidget {
@@ -33,7 +34,15 @@ class AppBarProfile extends StatelessWidget implements PreferredSizeWidget {
         //   child: UpgradeWidget(),
         // ),
         IconButton(
-          onPressed: () {},
+          onPressed: () {
+
+            showModalBottomSheet(
+              context: context,
+              builder: (BuildContext context) {
+                return CustomBottomSheet();
+              },
+            );
+          },
           icon: const Icon(
             Icons.logout,
             color: primaryColor,

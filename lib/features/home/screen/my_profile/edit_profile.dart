@@ -14,9 +14,6 @@ class EditProfile extends ConsumerStatefulWidget {
 
   @override
   ConsumerState<EditProfile> createState() => _EditProfileState();
-
-
-
 }
 
 class _EditProfileState extends ConsumerState<EditProfile> {

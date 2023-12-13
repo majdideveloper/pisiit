@@ -88,7 +88,7 @@ class HomeRepository {
     
   try {
     final CollectionReference usersCollection =
-        FirebaseFirestore.instance.collection('users');
+        FirebaseFirestore.instance.collection('Users');
 
 
  await usersCollection.doc(userid).set(
