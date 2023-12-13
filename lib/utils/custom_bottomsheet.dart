@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:pisiit/features/auth/controller/auth_controller.dart';
 import 'package:pisiit/utils/colors.dart';
 import 'package:pisiit/utils/helper_padding.dart';
 import 'package:pisiit/widgets/custom_button.dart';
 
-class CustomBottomSheet extends StatelessWidget {
+class CustomBottomSheet extends ConsumerWidget {
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     return Container(
       padding: EdgeInsets.all(16.0),
       child: Column(
@@ -31,7 +33,9 @@ class CustomBottomSheet extends StatelessWidget {
                   Expanded(
                   child: CustomButton(
                   colorText: whiteColor, textButton: "save",
-                  onPressed:(){},
+                  onPressed:(){
+                    ref.read(authControllerProvider).signOut(context);
+                  },
                   
                   )),
                 ],
