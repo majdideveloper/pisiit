@@ -31,7 +31,7 @@ class ChatsScreen extends StatelessWidget {
             vertical: 16.0,
           ),
           child: Image.asset(
-            "assets/images/logo_request_active.png",
+            "assets/images/logo.png",
             height: 30,
             width: 30,
           ),

@@ -41,29 +41,33 @@ class _HomeScreenState extends State<HomeScreen> {
         leading: Padding(
           padding: const EdgeInsets.all(8.0),
           child: Image.asset(
-            "assets/images/logo_request_active.png",
+            "assets/images/logo.png",
             height: 30,
             width: 30,
           ),
         ),
         title: Text(
-          "Pissit",
+          "Pesst",
           style: textStyleSubtitle,
         ),
         centerTitle: true,
         actions: [
-          CircleAvatar(
-            backgroundColor: purpleColor,
-            child: Text(
-              widget.userModel.numberPisit.toString(),
-              style: textStyleTextBold,
-            ),
-          ),
+          // CircleAvatar(
+          //   backgroundColor: purpleColor,
+          //   child: Text(
+          //     widget.userModel.numberPisit.toString(),
+          //     style: textStyleTextBold,
+          //   ),
+          // ),
           IconButton(
             onPressed: () {
               _showAgeRangePicker(context);
             },
-            icon: const Icon(Icons.edit),
+            icon: const Icon(
+              Icons.add_road_sharp,
+              color: primaryColor,
+              size: 30,
+            ),
           ),
         ],
       ),

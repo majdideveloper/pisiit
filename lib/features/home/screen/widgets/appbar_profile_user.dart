@@ -11,15 +11,17 @@ class AppBarProfileUser extends StatelessWidget implements PreferredSizeWidget {
   @override
   Widget build(BuildContext context) {
     return AppBar(
-      leading: IconButton(
-        onPressed: () {
-          Navigator.pop(context);
-        },
-        icon: const Icon(
-          Icons.close,
-          size: 24,
-        ),
-      ),
+      //leading:
+      //IconButton(
+      //   onPressed: () {
+      //     Navigator.pop(context);
+      //   },
+      //   icon: const Icon(
+      //     Icons.close,
+      //     size: 24,
+      //   ),
+      // ),
+
       title: Text(
         "Profile",
         style: textStyleSubtitle,

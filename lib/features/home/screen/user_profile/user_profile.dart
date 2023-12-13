@@ -137,7 +137,7 @@ class UserProfile extends StatelessWidget {
                 shape: BoxShape.circle,
                 // You can set your desired color here
                 border: Border.all(
-                  color: Colors.red,
+                  color: primaryColor,
                   width: 2.0,
                 ),
               ),
@@ -149,7 +149,7 @@ class UserProfile extends StatelessWidget {
                   icon: Icon(
                     Icons.close,
                     size: 50,
-                    color: Colors.red,
+                    color: primaryColor,
                   ),
                 ),
               ),
@@ -190,13 +190,13 @@ class UserProfile extends StatelessWidget {
                                 shape: BoxShape.circle,
                                 // You can set your desired color here
                                 border: Border.all(
-                                  color: purpleColor,
+                                  color: primaryColor,
                                   width: 2.0,
                                 ),
                               ),
                               child: Center(
                                   child: Image.asset(
-                                "assets/images/logo_request_active.png",
+                                "assets/images/logo.png",
                                 height: 40,
                               )),
                             ),
