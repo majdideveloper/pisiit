@@ -29,7 +29,7 @@ class _HomeScreenState extends State<HomeScreen> {
       context: context,
       isScrollControlled: true,
       builder: (BuildContext context) {
-        return const ModalBottomSheet();
+        return ModalBottomSheet();
       },
     );
   }

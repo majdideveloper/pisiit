@@ -6,7 +6,8 @@ import 'package:pisiit/utils/helper_textstyle.dart';
 import 'package:pisiit/widgets/custom_button.dart';
 
 class ModalBottomSheet extends StatefulWidget {
-  const ModalBottomSheet({super.key});
+  List<String> goalRelation = [];
+  ModalBottomSheet({super.key});
 
   @override
   State<ModalBottomSheet> createState() => _ModalBottomSheetState();
@@ -41,6 +42,8 @@ class _ModalBottomSheetState extends State<ModalBottomSheet> {
                   style: textStyleTextBold.copyWith(fontSize: 24)),
             ],
           ),
+          divider,
+          smallPaddingVert,
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
@@ -67,6 +70,8 @@ class _ModalBottomSheetState extends State<ModalBottomSheet> {
             },
           ),
           mediumPaddingVert,
+          divider,
+          smallPaddingVert,
           Text(
             'Show Me',
             style: textStyleTextBold,
@@ -130,6 +135,8 @@ class _ModalBottomSheetState extends State<ModalBottomSheet> {
             ],
           ),
           mediumPaddingVert,
+          divider,
+          smallPaddingVert,
           Text(
             'Relationship Goals',
             style: textStyleTextBold,
@@ -141,36 +148,37 @@ class _ModalBottomSheetState extends State<ModalBottomSheet> {
             runSpacing: 10,
             spacing: 5,
             children: [
-              CustomTextContainer(listInteresrt: [], text: "Travel 🛩️"),
-              CustomTextContainer(listInteresrt: [], text: "Cooking 🍳"),
-              CustomTextContainer(listInteresrt: [], text: "Photography 📸"),
-              CustomTextContainer(listInteresrt: [], text: "Hiking 🧗‍♀️"),
+              CustomTextContainer(
+                  listInteresrt: widget.goalRelation, text: 'Dating 👩‍❤️‍👨'),
+              CustomTextContainer(
+                  listInteresrt: widget.goalRelation, text: 'Friendship 🙌'),
+              CustomTextContainer(
+                  listInteresrt: widget.goalRelation, text: 'Casual 😀'),
+              CustomTextContainer(
+                  listInteresrt: widget.goalRelation,
+                  text: 'Serious Relationship 💍'),
             ],
           ),
           mediumPaddingVert,
+          divider,
+          smallPaddingVert,
           Row(
             children: [
               Expanded(
                   child: CustomButton(
                 colorText: primaryColor,
-                textButton: "cancel",
-                //  color: lightColor,
+                textButton: "Reset",
+                color: lightColor,
                 onPressed: () {
                   Navigator.pop(context);
                 },
               )),
               Expanded(
                   child:
-                      CustomButton(colorText: whiteColor, textButton: "save")),
+                      CustomButton(colorText: whiteColor, textButton: "Apply")),
             ],
           ),
-          ElevatedButton(
-            onPressed: () {
-              print('Selected Age Range: $_startValue - $_endValue');
-              Navigator.pop(context); // Close the bottom sheet
-            },
-            child: Text('Apply'),
-          ),
+          mediumPaddingVert,
         ],
       ),
     );
