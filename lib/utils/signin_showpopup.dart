@@ -163,31 +163,32 @@ void simplePisitDialog(
 
       return AlertDialog(
         title: Row(
-          mainAxisAlignment: MainAxisAlignment.center,
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             Column(
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
-                ClipRRect(
-                  borderRadius: const BorderRadius.all(Radius.circular(12)),
-                  child: Image.network(
-                    sender.imageURLs![0],
-                    height: 80,
-                    width: 80,
-                    fit: BoxFit.cover,
-                  ),
-                ),
+                Avaatar(urlPic: sender.imageURLs![0]),
+                // ClipRRect(
+                //   borderRadius: const BorderRadius.all(Radius.circular(70)),
+                //   child: Image.network(
+                //     sender.imageURLs![0],
+                //     height: 60,
+                //     width: 60,
+                //     fit: BoxFit.cover,
+                //   ),
+                // ),
                 smallPaddingVert,
                 Text(
                   sender.name,
-                  style: Theme.of(context).textTheme.bodyLarge,
+                  style: textStyleTextBold,
                 )
               ],
             ),
-            mediumPaddingHor,
+
             //! here animation replace image
             Image.asset(
-              'assets/images/logo_request_active.png',
+              'assets/images/logo.png',
               height: 40,
             ),
 
@@ -202,48 +203,45 @@ void simplePisitDialog(
             //   ),
             // ),
 
-            mediumPaddingHor,
             Column(
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
-                ClipRRect(
-                  borderRadius: const BorderRadius.all(Radius.circular(12)),
-                  child: Image.network(
-                    recipient.imageURLs![0],
-                    height: 80,
-                    width: 80,
-                    fit: BoxFit.cover,
-                  ),
+                Avaatar(
+                  urlPic: recipient.imageURLs![0],
                 ),
+                // ClipRRect(
+                //   borderRadius: const BorderRadius.all(Radius.circular(70)),
+                //   child: Image.network(
+                //     recipient.imageURLs![0],
+                //     height: 60,
+                //     width: 60,
+                //     fit: BoxFit.cover,
+                //   ),
+                // ),
                 smallPaddingVert,
                 Text(
                   recipient.name,
-                  style: Theme.of(context).textTheme.bodyLarge,
+                  style: textStyleTextBold,
                 )
               ],
             ),
           ],
         ),
-        content: Column(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            CustomTextField(
-              hintText: "your Opener ..... be Creative.......",
-              obscureText: false,
-              controller: controller,
-              maxLines: 5,
-              style: textStyleTextBold.copyWith(
-                fontSize: 16,
-              ),
-            )
-          ],
+        content: CustomTextField(
+          hintText: "your Opener ..... be Creative.......",
+          obscureText: false,
+          controller: controller,
+          maxLines: 4,
+          style: textStyleTextBold.copyWith(
+            fontSize: 16,
+          ),
         ),
         actions: <Widget>[
           Padding(
             padding: const EdgeInsets.all(8.0),
             child: Consumer(builder: (context, ref, child) {
               return CustomButton(
-                colorText: purpleColor,
+                colorText: whiteColor,
                 textButton: "send",
                 onPressed: () async {
                   ref.watch(chatControllerProvider).sendRequest(
@@ -277,49 +275,49 @@ void popUpRepondRequestDialog(
       TextEditingController controller = TextEditingController();
       return AlertDialog(
         title: Row(
-          mainAxisAlignment: MainAxisAlignment.center,
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             Column(
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
-                ClipRRect(
-                  borderRadius: const BorderRadius.all(Radius.circular(12)),
-                  child: Image.network(
-                    requestModel.imageSender,
-                    height: 80,
-                    width: 80,
-                    fit: BoxFit.cover,
-                  ),
-                ),
+                Avaatar(urlPic: requestModel.imageSender),
+                // ClipRRect(
+                //   borderRadius: const BorderRadius.all(Radius.circular(12)),
+                //   child: Image.network(
+                //     requestModel.imageSender,
+                //     height: 80,
+                //     width: 80,
+                //     fit: BoxFit.cover,
+                //   ),
+                // ),
                 smallPaddingVert,
                 Text(
                   requestModel.nameSender,
-                  style: Theme.of(context).textTheme.bodyLarge,
+                  style: textStyleTextBold,
                 )
               ],
             ),
-            mediumPaddingHor,
             Image.asset(
-              'assets/images/logo_request.png',
+              'assets/images/logo.png',
               height: 40,
             ),
-            mediumPaddingHor,
             Column(
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
-                ClipRRect(
-                  borderRadius: const BorderRadius.all(Radius.circular(12)),
-                  child: Image.network(
-                    recipient.imageURLs![0],
-                    height: 80,
-                    width: 80,
-                    fit: BoxFit.cover,
-                  ),
-                ),
+                Avaatar(urlPic: recipient.imageURLs![0]),
+                // ClipRRect(
+                //   borderRadius: const BorderRadius.all(Radius.circular(12)),
+                //   child: Image.network(
+                //     recipient.imageURLs![0],
+                //     height: 80,
+                //     width: 80,
+                //     fit: BoxFit.cover,
+                //   ),
+                // ),
                 smallPaddingVert,
                 Text(
                   recipient.name,
-                  style: Theme.of(context).textTheme.bodyLarge,
+                  style: textStyleTextBold,
                 )
               ],
             ),
@@ -328,10 +326,31 @@ void popUpRepondRequestDialog(
         content: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
+            // smallPaddingVert,
+            // Align(
+            //   alignment: Alignment.topLeft,
+            //   child: Text(
+            //     "${requestModel.nameSender} :",
+            //     style: textStyleTextBold,
+            //   ),
+            // ),
             smallPaddingVert,
-            Text(
-              requestModel.opener,
-              style: textStyleTextBold,
+            SingleChildScrollView(
+              child: Container(
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(10),
+                  color: lightColor, // Adjust the color of the box as needed
+                ),
+                width: double.maxFinite,
+                height: 70,
+                child: Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Text(
+                    requestModel.opener,
+                    style: textStyleTextBold,
+                  ),
+                ),
+              ),
             ),
             smallPaddingVert,
             CustomTextField(
@@ -352,13 +371,13 @@ void popUpRepondRequestDialog(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
                   Container(
-                    width: 80.0,
-                    height: 80.0,
+                    width: 60.0,
+                    height: 60.0,
                     decoration: BoxDecoration(
                       shape: BoxShape.circle,
                       // You can set your desired color here
                       border: Border.all(
-                        color: Colors.red,
+                        color: primaryColor,
                         width: 2.0,
                       ),
                     ),
@@ -373,8 +392,8 @@ void popUpRepondRequestDialog(
                         },
                         icon: Icon(
                           Icons.close,
-                          size: 50,
-                          color: Colors.red,
+                          size: 30,
+                          color: primaryColor,
                         ),
                       ),
                     ),
@@ -398,20 +417,20 @@ void popUpRepondRequestDialog(
                       Navigator.pop(context);
                     },
                     child: Container(
-                      width: 80.0,
-                      height: 80.0,
+                      width: 60.0,
+                      height: 60.0,
                       decoration: BoxDecoration(
                         shape: BoxShape.circle,
                         // You can set your desired color here
                         border: Border.all(
-                          color: purpleColor,
+                          color: primaryColor,
                           width: 2.0,
                         ),
                       ),
                       child: Center(
                           child: Image.asset(
-                        "assets/images/logo_request_active.png",
-                        height: 40,
+                        "assets/images/logo.png",
+                        height: 30,
                       )),
                     ),
                   ),
@@ -536,24 +555,48 @@ class CustomTextField extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return TextField(
-      controller: controller,
-      onEditingComplete: () => onEditingComplete!(controller.value.text),
-      cursorColor: Colors.white,
-      maxLines: maxLines,
-      style: style ?? TextStyle(color: Colors.white),
-      obscureText: obscureText,
-      decoration: InputDecoration(
-        //fillColor: Color.fromRGBO(30, 29, 37, 1.0),
-        fillColor: purpleColor.withOpacity(0.6),
-        filled: true,
-        border: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(10.0),
-          borderSide: BorderSide.none,
+    return SingleChildScrollView(
+      child: Container(
+        //margin: EdgeInsets.all(10.0),
+        decoration: BoxDecoration(
+          boxShadow: [
+            BoxShadow(
+              color: blackColor.withOpacity(0.4),
+              //offset: Offset(0, 4),
+              blurRadius: 4,
+              spreadRadius: 1,
+            ),
+            BoxShadow(
+              color: lightColor.withOpacity(0.5),
+              // offset: Offset(0, -1),
+              blurRadius: 4,
+              spreadRadius: 1,
+            ),
+          ],
         ),
-        hintText: hintText,
-        hintStyle: TextStyle(color: Colors.white),
-        prefixIcon: Icon(icon, color: Colors.white54),
+
+        child: TextField(
+          controller: controller,
+          textAlign: TextAlign.center,
+          onEditingComplete: () => onEditingComplete!(controller.value.text),
+          maxLines: maxLines,
+          style: style ?? TextStyle(color: primaryColor),
+          obscureText: obscureText,
+          decoration: InputDecoration(
+            fillColor: whiteColor.withOpacity(0.8),
+            filled: true,
+            border: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(10.0),
+              borderSide: BorderSide.none,
+            ),
+            hintText: hintText,
+            hintStyle: TextStyle(
+              color: primaryColor,
+            ),
+
+            //prefixIcon: Icon(icon, color: Colors.white54),
+          ),
+        ),
       ),
     );
   }
@@ -570,4 +613,39 @@ void showSnackBar(BuildContext context, String text) {
     ),
   );
   ScaffoldMessenger.of(context).showSnackBar(snackBar);
+}
+
+// avatar
+class Avaatar extends StatelessWidget {
+  final String urlPic;
+  const Avaatar({super.key, required this.urlPic});
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(70),
+          boxShadow: [
+            BoxShadow(
+              color: Colors.black.withOpacity(0.3),
+              blurRadius: 5,
+              spreadRadius: 2,
+              offset: Offset(0, 2),
+            ),
+          ],
+          border: Border.all(
+            color: lightColor, // Border color
+            width: 2, // Border width
+          ),
+        ),
+        child: ClipRRect(
+          borderRadius: BorderRadius.circular(70),
+          child: Image.network(
+            urlPic,
+            height: 60,
+            width: 60,
+            fit: BoxFit.cover,
+          ),
+        ));
+  }
 }
