@@ -172,10 +172,12 @@ class UserProfile extends StatelessWidget {
 
                   bool isUserInCollection = snapshot.data!;
 
-                  return isUserInCollection
-                      ? const SizedBox()
-                      : GestureDetector(
-                          onTap: () {
+                  return  GestureDetector(
+                          onTap: isUserInCollection
+                      ? (){
+                        showSnackBar(context, "you send a pesst for this profile verif ur chatpage");
+                      }
+                      : () {
                             simplePisitDialog(
                                 context: context,
                                 sender: ownUserModel,
@@ -195,10 +197,19 @@ class UserProfile extends StatelessWidget {
                                 ),
                               ),
                               child: Center(
-                                  child: Image.asset(
+                                  child: 
+                                  isUserInCollection ?
+                                  Image.asset(
+                                "assets/images/logo_request.png",
+                                height: 40,
+                              ):
+                               Image.asset(
                                 "assets/images/logo.png",
                                 height: 40,
-                              )),
+                              ) 
+
+                              
+                              ) ,
                             ),
                           ),
                         );
