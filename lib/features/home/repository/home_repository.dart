@@ -1,9 +1,9 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:pisiit/models/request_model.dart';
 import 'package:pisiit/models/user_model.dart';
-import 'package:uuid/uuid.dart';
+import 'package:pisiit/utils/signin_showpopup.dart';
 
 final homeRepositoryProvider = Provider(
   (ref) => HomeRepository(
@@ -84,14 +84,14 @@ class HomeRepository {
   }
   ///! function for edit profile
   
-  Future<void> updateUser(String userid, String name) async {
+  Future<void> updateUser(String userid, String name, BuildContext context) async {
     
   try {
     final CollectionReference usersCollection =
         FirebaseFirestore.instance.collection('Users');
 
 
- await usersCollection.doc(userid).set(
+ await usersCollection.doc(userid).update(
       {
         'name': name,
       },
@@ -113,6 +113,10 @@ class HomeRepository {
 
     //}
    //);
+    
+    
+
+
   } catch (e) {
     // Handle the exception, e.g., log an error
     print('Error updating user: $e');

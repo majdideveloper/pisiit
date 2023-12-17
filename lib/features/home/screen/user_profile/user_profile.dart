@@ -56,6 +56,7 @@ class UserProfile extends StatelessWidget {
               ),
               smallPaddingVert,
               InfoUserWidget(
+                isProfile: false,
                 userid: userModel.uid,
                 name: userModel.name,
                 age: userModel.age,

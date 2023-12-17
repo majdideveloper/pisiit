@@ -1,11 +1,13 @@
 import "package:flutter/material.dart";
 import "package:flutter_riverpod/flutter_riverpod.dart";
 import "package:pisiit/features/home/controller/home_controller.dart";
-import "package:pisiit/models/user_model.dart";
+import 'package:pisiit/features/auth/widgets/customtext_field.dart';
 import "package:pisiit/utils/colors.dart";
 import "package:pisiit/utils/helper_textstyle.dart";
+
 import "package:pisiit/widgets/custom_button.dart";
-import 'package:pisiit/features/auth/widgets/customtext_field.dart';
+
+
 class EditProfile extends ConsumerStatefulWidget {
   static const routeName = '/edit-profile';
   final String userid;
@@ -25,9 +27,11 @@ class _EditProfileState extends ConsumerState<EditProfile> {
      String name = NicknameController.text.trim();
      ref.read(homeControllerProvider).updateUser(
       widget.userid,
-      name
+      name,
+      context
      );
      print("update username");
+     
 
 
   }
@@ -110,7 +114,14 @@ class _EditProfileState extends ConsumerState<EditProfile> {
                   Expanded(
                   child: CustomButton(
                   colorText: whiteColor, textButton: "save",
-                  onPressed: editInformationProfile,
+                  onPressed:()async {
+                    editInformationProfile;
+                    //showSignInPopup(context, "UPDATE", "UPDATE SUCCESS", Icons.person);
+                    //await Future.delayed(Duration(seconds: 10));
+                     CircularProgressIndicator();
+                     Navigator.pop(context);
+
+                  } ,
                   
                   )),
                 ],

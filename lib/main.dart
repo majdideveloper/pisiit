@@ -37,6 +37,8 @@ class MyApp extends ConsumerWidget {
       onGenerateRoute: (settings) => generateRoute(settings),
       home: //const HomeAuthScreen(),
           //! +++ we can use  Future BUilder and handle all case of State Connecction
+          
+         // ref.watch(userDataProvider).when(
           ref.watch(userDataAuthProvider).when(
                 data: (user) {
                   if (user == null) {

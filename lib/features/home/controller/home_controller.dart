@@ -1,3 +1,4 @@
+import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:pisiit/features/home/repository/home_repository.dart';
 import 'package:pisiit/models/request_model.dart';
@@ -23,8 +24,11 @@ class HomeController {
 
   Future<List<UserModel>?> fetchAllUser() async {
     List<UserModel>? listUser = await homeRepository.fetchAllUser();
+    
     return listUser;
   }
+
+
 
   Future<bool> canSendRequest(String userId) async {
     return await homeRepository.canSendRequest(userId);
@@ -53,7 +57,7 @@ class HomeController {
   // Stream<List<RequestModel>> getAllRequest() {
   //   return homeRepository.getAllRequest();
   // }
-  Future<void> updateUser(String userid ,String name) async {
-    homeRepository.updateUser(userid, name);
+  Future<void> updateUser(String userid ,String name, BuildContext context) async {
+    homeRepository.updateUser(userid, name, context);
   }
 }

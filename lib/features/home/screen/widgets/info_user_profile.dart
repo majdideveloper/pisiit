@@ -11,7 +11,9 @@ class InfoUserWidget extends ConsumerWidget {
   final String gender;
   final String jobTitle;
   final String country;
-  const InfoUserWidget({
+  bool isProfile;
+   InfoUserWidget({
+    this.isProfile =true,
     required this.name,
     required this.age,
     required this.gender,
@@ -44,12 +46,12 @@ class InfoUserWidget extends ConsumerWidget {
             'userid': userid
            });
           },
-          child: Text(
+          child: isProfile ? Text(
             "Edit Profile",
             style: textStyleTextBold
                 .copyWith(fontSize: 26)
                 .copyWith(decoration: TextDecoration.underline),
-          ),
+          ):SizedBox.shrink(),
         )),
         smallPaddingVert,
         gender == "Male"
