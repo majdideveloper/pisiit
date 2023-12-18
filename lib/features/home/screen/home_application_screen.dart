@@ -1,6 +1,7 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 import 'package:pisiit/features/auth/controller/auth_controller.dart';
 import 'package:badges/badges.dart' as badges;
@@ -72,15 +73,15 @@ class _HomeApplicationScreenState extends State<HomeApplicationScreen> {
                   elevation: 0,
                   items: const [
                     BottomNavigationBarItem(
-                      icon: Icon(Icons.home),
+                      icon: FaIcon(FontAwesomeIcons.house),
                       label: "Home",
                     ),
                     BottomNavigationBarItem(
-                      icon: Icon(Icons.message),
+                      icon: FaIcon(FontAwesomeIcons.comments),
                       label: "Chats",
                     ),
                     BottomNavigationBarItem(
-                      icon: Icon(Icons.person),
+                      icon: FaIcon(FontAwesomeIcons.user),
                       label: "Profile",
                     )
                   ],
@@ -95,12 +96,12 @@ class _HomeApplicationScreenState extends State<HomeApplicationScreen> {
                 elevation: 0,
                 items: [
                   const BottomNavigationBarItem(
-                    icon: Icon(Icons.home),
+                    icon: FaIcon(FontAwesomeIcons.house),
                     label: "Home",
                   ),
                   BottomNavigationBarItem(
                     icon: numberOfRequests == 0
-                        ? const Icon(Icons.message)
+                        ? const FaIcon(FontAwesomeIcons.comments)
                         : badges.Badge(
                             badgeContent: Text(numberOfRequests.toString()),
                             child: const Icon(Icons.message),
@@ -108,7 +109,7 @@ class _HomeApplicationScreenState extends State<HomeApplicationScreen> {
                     label: "Chats",
                   ),
                   const BottomNavigationBarItem(
-                    icon: Icon(Icons.person),
+                    icon: FaIcon(FontAwesomeIcons.user),
                     label: "Profile",
                   )
                 ],

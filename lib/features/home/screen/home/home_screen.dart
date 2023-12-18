@@ -3,6 +3,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 import 'package:pisiit/features/home/controller/home_controller.dart';
 import 'package:pisiit/features/home/screen/user_profile/user_profile.dart';
@@ -60,15 +61,14 @@ class _HomeScreenState extends State<HomeScreen> {
           //   ),
           // ),
           IconButton(
-            onPressed: () {
-              _showAgeRangePicker(context);
-            },
-            icon: const Icon(
-              Icons.add_road_sharp,
-              color: primaryColor,
-              size: 30,
-            ),
-          ),
+              onPressed: () {
+                _showAgeRangePicker(context);
+              },
+              icon: const FaIcon(
+                FontAwesomeIcons.sliders,
+                color: primaryColor,
+                size: 30,
+              )),
         ],
       ),
       body: BodyHomeScreen(
