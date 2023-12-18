@@ -72,7 +72,9 @@ case  EditProfile.routeName:
 final arguments = settings.arguments as Map<String, dynamic>;
 return MaterialPageRoute(
  builder: (context) => EditProfile(
+ 
  userid: arguments['userid'] as String,
+ user: arguments ['user'] as UserModel,
  )
  );
     default:

@@ -28,50 +28,65 @@ class _InterestWidgetState extends State<InterestWidget> {
               subTitle:
                   "Share your interests passions ans hobbies We'll connect you with people who share your enthusiasm"),
           mediumPaddingVert,
-          Wrap(
-            runAlignment: WrapAlignment.start,
-            crossAxisAlignment: WrapCrossAlignment.start,
-            runSpacing: 10,
-            spacing: 5,
-            children: [
-              CustomTextContainer(
-                  listInteresrt: widget.interests, text: "Travel 🛩️"),
-              CustomTextContainer(
-                  listInteresrt: widget.interests, text: "Cooking 🍳"),
-              CustomTextContainer(
-                  listInteresrt: widget.interests, text: "Photography 📸"),
-              CustomTextContainer(
-                  listInteresrt: widget.interests, text: "Hiking 🧗‍♀️"),
-              CustomTextContainer(
-                  listInteresrt: widget.interests, text: "Music 🎶"),
-              CustomTextContainer(
-                  listInteresrt: widget.interests, text: "Yoga 🧘‍♂️"),
-              CustomTextContainer(
-                  listInteresrt: widget.interests, text: "Pets 😺"),
-              CustomTextContainer(
-                  listInteresrt: widget.interests, text: "Gaming 🎮"),
-              CustomTextContainer(
-                  listInteresrt: widget.interests, text: "Painting 🖼️"),
-              CustomTextContainer(
-                  listInteresrt: widget.interests, text: "Movies 🎬"),
-              CustomTextContainer(
-                  listInteresrt: widget.interests, text: "Art 🎨"),
-              CustomTextContainer(
-                  listInteresrt: widget.interests, text: "Reading 📖"),
-              CustomTextContainer(
-                  listInteresrt: widget.interests, text: "Dancing 💃"),
-              CustomTextContainer(
-                  listInteresrt: widget.interests, text: "Sports ⚽"),
-              CustomTextContainer(
-                  listInteresrt: widget.interests, text: "Techhnology 📱"),
-              CustomTextContainer(
-                  listInteresrt: widget.interests, text: "Fashion 👗"),
-              CustomTextContainer(
-                  listInteresrt: widget.interests, text: "Motorcycling 🏍️"),
-            ],
-          ),
+          InterstList(interests: widget.interests),
         ],
       ),
+    );
+  }
+}
+
+class InterstList extends StatelessWidget {
+   final List<String> interests;
+   const InterstList({
+    super.key,
+    required this.interests,
+  });
+
+ 
+
+  @override
+  Widget build(BuildContext context) {
+    return Wrap(
+      runAlignment: WrapAlignment.start,
+      crossAxisAlignment: WrapCrossAlignment.start,
+      runSpacing: 10,
+      spacing: 5,
+      children: [
+        CustomTextContainer(
+            listInteresrt: interests, text: "Travel 🛩️"),
+        CustomTextContainer(
+            listInteresrt: interests, text: "Cooking 🍳"),
+        CustomTextContainer(
+            listInteresrt: interests, text: "Photography 📸"),
+        CustomTextContainer(
+            listInteresrt: interests, text: "Hiking 🧗‍♀️"),
+        CustomTextContainer(
+            listInteresrt: interests, text: "Music 🎶"),
+        CustomTextContainer(
+            listInteresrt: interests, text: "Yoga 🧘‍♂️"),
+        CustomTextContainer(
+            listInteresrt: interests, text: "Pets 😺"),
+        CustomTextContainer(
+            listInteresrt: interests, text: "Gaming 🎮"),
+        CustomTextContainer(
+            listInteresrt: interests, text: "Painting 🖼️"),
+        CustomTextContainer(
+            listInteresrt: interests, text: "Movies 🎬"),
+        CustomTextContainer(
+            listInteresrt: interests, text: "Art 🎨"),
+        CustomTextContainer(
+            listInteresrt: interests, text: "Reading 📖"),
+        CustomTextContainer(
+            listInteresrt: interests, text: "Dancing 💃"),
+        CustomTextContainer(
+            listInteresrt: interests, text: "Sports ⚽"),
+        CustomTextContainer(
+            listInteresrt: interests, text: "Techhnology 📱"),
+        CustomTextContainer(
+            listInteresrt: interests, text: "Fashion 👗"),
+        CustomTextContainer(
+            listInteresrt: interests, text: "Motorcycling 🏍️"),
+      ],
     );
   }
 }

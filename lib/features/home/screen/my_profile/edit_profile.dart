@@ -3,6 +3,10 @@ import "package:flutter_riverpod/flutter_riverpod.dart";
 import "package:pisiit/features/auth/screens/signup_widget/widget_gender.dart";
 import "package:pisiit/features/home/controller/home_controller.dart";
 import 'package:pisiit/features/auth/widgets/customtext_field.dart';
+import "package:pisiit/features/home/screen/my_profile/profile_screen.dart";
+import "package:pisiit/features/home/screen/my_profile/widgets/interst_widget.dart";
+import "package:pisiit/features/home/screen/my_profile/widgets/relation_widget.dart";
+import "package:pisiit/models/user_model.dart";
 import "package:pisiit/utils/colors.dart";
 import "package:pisiit/utils/helper_padding.dart";
 import "package:pisiit/utils/helper_textstyle.dart";
@@ -13,7 +17,11 @@ import "package:pisiit/widgets/custom_button.dart";
 class EditProfile extends ConsumerStatefulWidget {
   static const routeName = '/edit-profile';
   final String userid;
-  const EditProfile({super.key, required this.userid});
+  final UserModel user;
+  const EditProfile({
+    required this.userid, 
+    required this.user
+    });
 
 
   @override
@@ -62,9 +70,12 @@ class _EditProfileState extends ConsumerState<EditProfile> {
         body: SingleChildScrollView(
           child: Padding(
             padding: const EdgeInsets.all(15),
-            child: Column(children: [
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
               //!pic
               Text(widget.userid),
+              Text(widget.user.uid),
               //! nickname + birthday
               Row(
                 children: [
@@ -75,7 +86,7 @@ class _EditProfileState extends ConsumerState<EditProfile> {
                       SizedBox(
                         width: 150,
                         child: CustomTextField(
-                                hintText: 'Nickname',
+                                hintText: widget.user.name,
                                 controller: NicknameController,
                                 ),
                       ),
@@ -112,7 +123,7 @@ class _EditProfileState extends ConsumerState<EditProfile> {
                             smallPaddingVert,
 
               CustomTextField(
-                                hintText: 'job title',
+                                hintText: widget.user.jobTitle,
                                 controller: birthController,
                                 ),
               //! living in
@@ -136,11 +147,52 @@ class _EditProfileState extends ConsumerState<EditProfile> {
 
                                 ),
                                 mediumPaddingVert,
+
               //! interest
-              
+
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Text("Interset"),
+                  IconButton(
+                    onPressed: (){
+                      Navigator.push(
+                        context, 
+                       MaterialPageRoute(builder: (context) => InterstWidgetProfile()
+                      )
+                      );
+                    }, 
+                    icon:Icon(Icons.arrow_forward_ios) )
+                ],
+              ),
+              SectionWidget(
+                  nameSection: "",
+                  interests: widget.user.interests as List<String>,
+                ),
               //! relations goals
+              
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Text("relation GOALS"),
+                  IconButton(
+                    onPressed: (){
+
+                      
+                      Navigator.push(
+                        context, 
+                       MaterialPageRoute(builder: (context) => RelationWidgetProfile()
+                      )
+                      );
+                    }, 
+                    icon:Icon(Icons.arrow_forward_ios) )
+                ],
+              ),
+              RelationshipGoalWidget(
+                  relationGoals: widget.user.relationGoals,
+                ),
               //! save and cancel button
-            
+            mediumPaddingVert,
               (Row(
                 children: [
                   Expanded(

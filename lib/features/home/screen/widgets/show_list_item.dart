@@ -34,7 +34,7 @@ class ItemList extends StatelessWidget {
       decoration: BoxDecoration(
         color: whiteColor,
         border: Border.all(
-          color: purpleColor,
+          color: primaryColor,
           width: 2.0,
         ),
         borderRadius: BorderRadius.circular(20),

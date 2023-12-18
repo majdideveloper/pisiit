@@ -1,6 +1,8 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:pisiit/features/home/screen/my_profile/edit_profile.dart';
+import 'package:pisiit/models/user_model.dart';
 import 'package:pisiit/utils/helper_padding.dart';
 import 'package:pisiit/utils/helper_textstyle.dart';
 
@@ -12,7 +14,9 @@ class InfoUserWidget extends ConsumerWidget {
   final String jobTitle;
   final String country;
   bool isProfile;
+  UserModel user;
    InfoUserWidget({
+    required this.user,
     this.isProfile =true,
     required this.name,
     required this.age,
@@ -43,7 +47,8 @@ class InfoUserWidget extends ConsumerWidget {
             child: TextButton(
           onPressed: () {
            Navigator.pushNamed(context, EditProfile.routeName, arguments: {
-            'userid': userid
+            'userid': userid,
+            'user'  :user
            });
           },
           child: isProfile ? Text(
