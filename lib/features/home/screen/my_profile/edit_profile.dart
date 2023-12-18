@@ -1,8 +1,10 @@
 import "package:flutter/material.dart";
 import "package:flutter_riverpod/flutter_riverpod.dart";
+import "package:pisiit/features/auth/screens/signup_widget/widget_gender.dart";
 import "package:pisiit/features/home/controller/home_controller.dart";
 import 'package:pisiit/features/auth/widgets/customtext_field.dart';
 import "package:pisiit/utils/colors.dart";
+import "package:pisiit/utils/helper_padding.dart";
 import "package:pisiit/utils/helper_textstyle.dart";
 
 import "package:pisiit/widgets/custom_button.dart";
@@ -35,8 +37,11 @@ class _EditProfileState extends ConsumerState<EditProfile> {
 
 
   }
+   List<String> gender =[" "];
   @override
   Widget build(BuildContext context) {
+
+   
     return Scaffold(
         appBar: AppBar(
           leading: IconButton(
@@ -91,12 +96,48 @@ class _EditProfileState extends ConsumerState<EditProfile> {
                   ),
                 ],
               ),
-            
+            mediumPaddingVert,
+             
               //!gender
+              Text("Gender", style:textStyleTextBold,),
+              smallPaddingVert,
+             CustomShapes(
+              gender:gender,
+              withContainer: 70,
+              heightContainer: 80,
+              ),
+              mediumPaddingVert,
               //! job title
+              Text("Job title", style:textStyleTextBold,),
+                            smallPaddingVert,
+
+              CustomTextField(
+                                hintText: 'job title',
+                                controller: birthController,
+                                ),
               //! living in
+              mediumPaddingVert,
+              Text("Living", style:textStyleTextBold,),
+                            smallPaddingVert,
+
+              CustomTextField(
+                                hintText: 'country',
+                                controller: birthController,
+                                ),
+                                mediumPaddingVert,
               //! about me
+ mediumPaddingVert,
+              Text("about me", style:textStyleTextBold,),
+                            smallPaddingVert,
+
+              CustomTextField(
+                                hintText: 'about me',
+                                controller: birthController,
+
+                                ),
+                                mediumPaddingVert,
               //! interest
+              
               //! relations goals
               //! save and cancel button
             
@@ -125,7 +166,8 @@ class _EditProfileState extends ConsumerState<EditProfile> {
                   
                   )),
                 ],
-              ))
+              )
+              )
             ]),
           ),
         ));

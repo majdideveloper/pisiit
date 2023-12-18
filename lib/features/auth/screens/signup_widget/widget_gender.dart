@@ -25,6 +25,8 @@ class GenderWidget extends StatelessWidget {
                 "Choose the gender that best represents you Authenticity is key to meaningful connections."),
         mediumPaddingVert,
         CustomShapes(
+          withContainer: 100,
+          heightContainer: 150,
           gender: gender,
         ),
       ],
@@ -34,9 +36,13 @@ class GenderWidget extends StatelessWidget {
 
 class CustomShapes extends StatefulWidget {
   final List<String> gender;
-  const CustomShapes({
+   double withContainer;
+  double heightContainer;
+   CustomShapes({
     Key? key,
     required this.gender,
+    required this.withContainer,
+    required this.heightContainer,
   }) : super(key: key);
 
   @override
@@ -59,6 +65,8 @@ class _CustomShapesState extends State<CustomShapes> {
           .asMap()
           .entries
           .map((entry) => ShapeItem(
+                withContainer: widget.withContainer,
+                heightContainer: widget.heightContainer,
                 shapeData: entry.value,
                 color: selectedShapeIndex == entry.key ||
                         widget.gender[0] == shapes[entry.key].text
@@ -69,6 +77,7 @@ class _CustomShapesState extends State<CustomShapes> {
                     entry.key,
                   );
                 },
+
               ))
           .toList(),
     );
@@ -91,20 +100,28 @@ class ShapeItem extends StatelessWidget {
   final ShapeItemData shapeData;
   final Color color;
   final VoidCallback onShapeSelected;
+  double withContainer;
+  double heightContainer;
 
-  const ShapeItem({
+   ShapeItem(
+
+     {
+    Key? key,
+    required this.heightContainer,
+    required this.withContainer,
     required this.shapeData,
     required this.color,
     required this.onShapeSelected,
-  });
+    
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return InkWell(
       onTap: onShapeSelected,
       child: Container(
-        width: 100,
-        height: 150,
+        width: withContainer ?? 100,
+        height: heightContainer ?? 150,
         decoration: BoxDecoration(
           shape: BoxShape.rectangle,
           borderRadius: BorderRadius.circular(10),
@@ -115,8 +132,8 @@ class ShapeItem extends StatelessWidget {
           children: [
             Image.asset(
               shapeData.imagePath,
-              width: 70,
-              height: 70,
+              width: withContainer / 2,
+              height: withContainer / 2,
             ),
             smallPaddingVert,
             Text(
