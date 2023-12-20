@@ -44,6 +44,7 @@ class ChatsScreen extends StatelessWidget {
         actions: [],
       ),
       body: Center(
+        //! requests avatars 
         child: Consumer(
           builder: (context, ref, child) {
             return Padding(
@@ -70,15 +71,18 @@ class ChatsScreen extends StatelessWidget {
                                 itemBuilder: (context, index) {
                                   return Padding(
                                     padding: const EdgeInsets.all(10.0),
-                                    child: Container(
+                                    child:
+                                  
+                                    Container(
                                       decoration: BoxDecoration(
+                                         shape: BoxShape.circle,
                                         color: greyColor.shade300,
-                                        borderRadius: const BorderRadius.all(
-                                            Radius.circular(12)),
+                                        //borderRadius: const BorderRadius.all(
+                                         //   Radius.circular(50)),
                                       ),
                                       child: SizedBox(
-                                        height: 100,
-                                        width: 100,
+                                        height: 70,
+                                        width: 70,
                                       ),
                                     ),
                                   );
@@ -98,7 +102,7 @@ class ChatsScreen extends StatelessWidget {
                         // list or single element
                         var request = snapshot.data!;
                         return SizedBox(
-                          height: 150,
+                          height: 120,
                           child: ListView.builder(
                               scrollDirection: Axis.horizontal,
                               itemCount: request.length,
@@ -116,17 +120,19 @@ class ChatsScreen extends StatelessWidget {
                                     padding: const EdgeInsets.all(10.0),
                                     child: Column(
                                       children: [
-                                        ClipRRect(
-                                          borderRadius: const BorderRadius.all(
-                                              Radius.circular(12)),
-                                          child: CachedNetworkImage(
-                                            imageUrl:
-                                                request[index].imageSender,
-                                            fit: BoxFit.cover,
-                                            height: 100,
-                                            width: 100,
-                                          ),
-                                        ),
+                                        
+                                        Avaatar(urlPic: request[index].imageSender),
+                                        // ClipRRect(
+                                        //   borderRadius: const BorderRadius.all(
+                                        //       Radius.circular(12)),
+                                        //   child: CachedNetworkImage(
+                                        //     imageUrl:
+                                        //         request[index].imageSender,
+                                        //     fit: BoxFit.cover,
+                                        //     height: 100,
+                                        //     width: 100,
+                                        //   ),
+                                        //),
                                         smallPaddingVert,
                                         Text(
                                           request[index].nameSender,
@@ -141,6 +147,8 @@ class ChatsScreen extends StatelessWidget {
                         );
                       }),
                   divider,
+                  ///! message part 
+                  ///
                   Expanded(
                       child: StreamBuilder(
                     stream:
@@ -157,11 +165,11 @@ class ChatsScreen extends StatelessWidget {
                                   decoration: BoxDecoration(
                                     color: greyColor.shade300,
                                     borderRadius: const BorderRadius.all(
-                                        Radius.circular(12)),
+                                        Radius.circular(20)),
                                   ),
                                   child: SizedBox(
-                                    height: 100,
-                                    width: 100,
+                                    height: 70,
+                                    width: 70,
                                   ),
                                 ),
                               );
@@ -184,6 +192,7 @@ class ChatsScreen extends StatelessWidget {
                             scrollDirection: Axis.vertical,
                             itemCount: contacts.length,
                             itemBuilder: (context, index) {
+                              int l = contacts[index].lastMessage.length;
                               return GestureDetector(
                                 onTap: () {
                                   Navigator.pushNamed(
@@ -209,18 +218,19 @@ class ChatsScreen extends StatelessWidget {
                                       children: [
                                         Row(
                                           children: [
-                                            ClipRRect(
-                                              borderRadius:
-                                                  const BorderRadius.all(
-                                                      Radius.circular(50)),
-                                              child: CachedNetworkImage(
-                                                imageUrl:
-                                                    contacts[index].profilePic,
-                                                fit: BoxFit.cover,
-                                                height: 60,
-                                                width: 60,
-                                              ),
-                                            ),
+                                            Avaatar(urlPic: contacts[index].profilePic),
+                                            // ClipRRect(
+                                            //   borderRadius:
+                                            //       const BorderRadius.all(
+                                            //           Radius.circular(50)),
+                                            //   child: CachedNetworkImage(
+                                            //     imageUrl:
+                                            //         contacts[index].profilePic,
+                                            //     fit: BoxFit.cover,
+                                            //     height: 60,
+                                            //     width: 60,
+                                            //   ),
+                                            // ),
                                             mediumPaddingHor,
                                             Column(
                                               crossAxisAlignment:
@@ -230,8 +240,13 @@ class ChatsScreen extends StatelessWidget {
                                                   contacts[index].name,
                                                   style: textStyleTextBold,
                                                 ),
-                                                Text(contacts[index]
-                                                    .lastMessage),
+                                                l > 25 ? 
+                                                Text(
+                                                  contacts[index]
+                                                    .lastMessage.substring(0, 25)+"......")
+                                                    :  Text(
+                                                  contacts[index]
+                                                    .lastMessage)
                                               ],
                                             ),
                                           ],
@@ -266,12 +281,7 @@ class ChatsScreen extends StatelessWidget {
                       );
                     },
                   )),
-                  ElevatedButton(
-                    onPressed: () {
-                      ref.read(authControllerProvider).signOut(context);
-                    },
-                    child: Text("out"),
-                  ),
+                 
                 ],
               ),
             );

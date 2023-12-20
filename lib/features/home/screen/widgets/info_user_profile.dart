@@ -43,21 +43,7 @@ class InfoUserWidget extends ConsumerWidget {
             style: textStyleTextBold.copyWith(fontSize: 26),
           ),
         ),
-        Center(
-            child: TextButton(
-          onPressed: () {
-           Navigator.pushNamed(context, EditProfile.routeName, arguments: {
-            'userid': userid,
-            'user'  :user
-           });
-          },
-          child: isProfile ? Text(
-            "Edit Profile",
-            style: textStyleTextBold
-                .copyWith(fontSize: 26)
-                .copyWith(decoration: TextDecoration.underline),
-          ):SizedBox.shrink(),
-        )),
+        
         smallPaddingVert,
         gender == "Male"
             ? const ItemInfoUser(icon: Icons.male, textDescription: "Man")

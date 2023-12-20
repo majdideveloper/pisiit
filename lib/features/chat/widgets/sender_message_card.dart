@@ -39,7 +39,8 @@ class SenderMessageCard extends StatelessWidget {
             elevation: 1,
             shape:
                 RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
-            color: purpleColor,
+            color:greyColor.shade200,
+            //lightColor,
             margin: const EdgeInsets.symmetric(horizontal: 15, vertical: 5),
             child: Stack(
               children: [
@@ -70,7 +71,7 @@ class SenderMessageCard extends StatelessWidget {
                         Container(
                           padding: const EdgeInsets.all(10),
                           decoration: BoxDecoration(
-                            color: purpleColor.withOpacity(0.5),
+                            color: greyColor.withOpacity(0.5),
                             borderRadius: const BorderRadius.all(
                               Radius.circular(
                                 5,
@@ -84,10 +85,10 @@ class SenderMessageCard extends StatelessWidget {
                         ),
                         const SizedBox(height: 8),
                       ],
-                      DisplayTextImageGIF(
-                        message: message,
-                        type: type,
-                      ),
+                       DisplayTextImageGIF(
+                         message: message,
+                         type: type,
+                       ),
                     ],
                   ),
                 ),
@@ -98,7 +99,7 @@ class SenderMessageCard extends StatelessWidget {
                     date,
                     style: TextStyle(
                       fontSize: 13,
-                      color: Colors.grey[600],
+                      color: blackColor,
                     ),
                   ),
                 ),

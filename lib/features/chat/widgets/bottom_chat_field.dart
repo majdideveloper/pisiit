@@ -2,6 +2,7 @@ import 'dart:io';
 // import 'package:emoji_picker_flutter/emoji_picker_flutter.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 // import 'package:flutter_sound/public/flutter_sound_recorder.dart';
 import 'package:path_provider/path_provider.dart';
 // import 'package:permission_handler/permission_handler.dart';
@@ -165,100 +166,76 @@ class _BottomChatFieldState extends ConsumerState<BottomChatField> {
         //   isShowMessageReply ? const MessageReplyPreview() : const SizedBox(),
         Row(
           children: [
+          
             Expanded(
-              child: TextFormField(
-                focusNode: focusNode,
-                controller: _messageController,
-                onChanged: (val) {
-                  if (val.isNotEmpty) {
-                    setState(() {
-                      isShowSendButton = true;
-                    });
-                  } else {
-                    setState(() {
-                      isShowSendButton = false;
-                    });
-                  }
-                },
-                decoration: InputDecoration(
-                  filled: true,
-                  fillColor: purpleColor,
-                  prefixIcon: Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 20.0),
-                    child: SizedBox(
-                      width: 100,
-                      child: Row(
-                        children: [
-                          // IconButton(
-                          //   onPressed: toggleEmojiKeyboardContainer,
-                          //   icon: const Icon(
-                          //     Icons.emoji_emotions,
-                          //     color: Colors.grey,
-                          //   ),
-                          // ),
-                          // IconButton(
-                          //   onPressed: selectGIF,
-                          //   icon: const Icon(
-                          //     Icons.gif,
-                          //     color: Colors.grey,
-                          //   ),
-                          // ),
-                        ],
+              child: Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: TextFormField(
+                  
+                  focusNode: focusNode,
+                  controller: _messageController,
+                  onChanged: (val) {
+                    if (val.isNotEmpty) {
+                      setState(() {
+                        isShowSendButton = true;
+                      });
+                    } else {
+                      setState(() {
+                        isShowSendButton = false;
+                      });
+                    }
+                  },
+                  decoration: InputDecoration(
+                    filled: true,
+                    fillColor: greyColor.shade200,
+                    suffixIcon: IconButton(
+                   
+                   onPressed: (){},//selectGIF,
+                     icon: const 
+
+                      Icon(
+                       Icons.gif_box_outlined,
+                        color: primaryColor,
+                      ),
+                  ) ,
+                    prefixIcon:  IconButton(
+                   
+                   onPressed: (){},//selectGIF,
+                     icon: const 
+
+                      Icon(
+                       Icons. emoji_emotions_outlined,
+                        color: primaryColor,
+                      ),
+                  ),
+                    hintText: 'Type a message!',
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(12.0),
+                      borderSide: const BorderSide(
+                        width: 0,
+                        style: BorderStyle.none,
                       ),
                     ),
+                    contentPadding: const EdgeInsets.all(10),
                   ),
-                  suffixIcon: SizedBox(
-                    width: 100,
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.end,
-                      children: [
-                        // IconButton(
-                        //   onPressed: selectImage,
-                        //   icon: const Icon(
-                        //     Icons.camera_alt,
-                        //     color: Colors.grey,
-                        //   ),
-                        // ),
-                        // IconButton(
-                        //   onPressed: selectVideo,
-                        //   icon: const Icon(
-                        //     Icons.attach_file,
-                        //     color: Colors.grey,
-                        //   ),
-                        // ),
-                      ],
-                    ),
-                  ),
-                  hintText: 'Type a message!',
-                  border: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(20.0),
-                    borderSide: const BorderSide(
-                      width: 0,
-                      style: BorderStyle.none,
-                    ),
-                  ),
-                  contentPadding: const EdgeInsets.all(10),
+                  //maxLines: 2,
                 ),
               ),
             ),
             Padding(
               padding: const EdgeInsets.only(
-                bottom: 8,
-                right: 2,
-                left: 2,
+                right: 8
               ),
               child: CircleAvatar(
-                backgroundColor: const Color(0xFF128C7E),
+                backgroundColor: primaryColor,
                 radius: 25,
                 child: GestureDetector(
-                  child: Icon(
-                    isShowSendButton
-                        ? Icons.send
-                        : isRecording
-                            ? Icons.close
-                            : Icons.mic,
-                    color: Colors.white,
-                  ),
+                  child: 
+                  FaIcon(FontAwesomeIcons.solidPaperPlane, color: whiteColor, size: 20,),
+                  // Icon(
+                  //       Icons.send,
+                  //   color: Colors.white,
+                  // ),
                   onTap: sendTextMessage,
                 ),
               ),
@@ -284,7 +261,7 @@ class _BottomChatFieldState extends ConsumerState<BottomChatField> {
                 //   }),
                 // ),
               )
-            : const SizedBox(),
+            : const SizedBox.shrink(),
       ],
     );
   }

@@ -1,14 +1,15 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-
-import 'package:pisiit/features/auth/controller/auth_controller.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:pisiit/features/home/screen/my_profile/edit_profile.dart';
 import 'package:pisiit/features/home/screen/widgets/appbar_profile.dart';
 import 'package:pisiit/features/home/screen/widgets/complete_profile_widget.dart';
 import 'package:pisiit/features/home/screen/widgets/image_widget.dart';
 import 'package:pisiit/features/home/screen/widgets/info_user_profile.dart';
 import 'package:pisiit/features/home/screen/widgets/show_list_item.dart';
 import 'package:pisiit/models/user_model.dart';
+import 'package:pisiit/utils/colors.dart';
 import 'package:pisiit/utils/helper_padding.dart';
 import 'package:pisiit/utils/helper_textstyle.dart';
 
@@ -133,6 +134,19 @@ class ProfileScreen extends StatelessWidget {
           ),
         );
       }),
+      floatingActionButton:  FloatingActionButton(
+        backgroundColor: greyColor.shade200,
+        //lightColor,
+          onPressed: () {
+             Navigator.pushNamed(context, EditProfile.routeName, arguments: {
+            'userid': userModel.uid,
+            'user'  :userModel
+           });
+          },
+          child:
+          FaIcon(FontAwesomeIcons.pencil, color: primaryColor),
+           //Icon(Icons.edit , color: primaryColor,),
+        ),
     );
   }
 }

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:pisiit/features/chat/widgets/display_text_image_gif.dart';
 import 'package:pisiit/utils/colors.dart';
+import 'package:pisiit/utils/helper_textstyle.dart';
 import 'package:pisiit/utils/message_enum.dart';
 import 'package:swipe_to/swipe_to.dart';
 
@@ -42,7 +43,7 @@ class MyMessageCard extends StatelessWidget {
             elevation: 1,
             shape:
                 RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
-            color: blueColor,
+            color: primaryColor,
             margin: const EdgeInsets.symmetric(horizontal: 15, vertical: 5),
             child: Stack(
               children: [
@@ -73,7 +74,7 @@ class MyMessageCard extends StatelessWidget {
                         Container(
                           padding: const EdgeInsets.all(10),
                           decoration: BoxDecoration(
-                            color: purpleColor.withOpacity(0.5),
+                            color: primaryColor.withOpacity(0.5),
                             borderRadius: const BorderRadius.all(
                               Radius.circular(
                                 5,
@@ -81,6 +82,7 @@ class MyMessageCard extends StatelessWidget {
                             ),
                           ),
                           child: DisplayTextImageGIF(
+                            style: textStyleTextMeduimBold.copyWith(color: whiteColor),
                             message: repliedText,
                             type: repliedMessageType,
                           ),
@@ -88,6 +90,7 @@ class MyMessageCard extends StatelessWidget {
                         const SizedBox(height: 8),
                       ],
                       DisplayTextImageGIF(
+                        style: textStyleTextMeduimBold.copyWith(color: whiteColor),
                         message: message,
                         type: type,
                       ),
@@ -103,17 +106,17 @@ class MyMessageCard extends StatelessWidget {
                         date,
                         style: const TextStyle(
                           fontSize: 13,
-                          color: Colors.white60,
+                          color: whiteColor,
                         ),
                       ),
                       const SizedBox(
                         width: 5,
                       ),
-                      Icon(
-                        isSeen ? Icons.done_all : Icons.done,
-                        size: 20,
-                        color: isSeen ? Colors.blue : Colors.white60,
-                      ),
+                      // Icon(
+                      //   isSeen ? Icons.done_all : Icons.done,
+                      //   size: 20,
+                      //   color: isSeen ? Colors.blue : Colors.white60,
+                      // ),
                     ],
                   ),
                 ),

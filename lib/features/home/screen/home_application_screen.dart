@@ -1,4 +1,5 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
+import 'package:badges/badges.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -103,8 +104,13 @@ class _HomeApplicationScreenState extends State<HomeApplicationScreen> {
                     icon: numberOfRequests == 0
                         ? const FaIcon(FontAwesomeIcons.comments)
                         : badges.Badge(
-                            badgeContent: Text(numberOfRequests.toString()),
-                            child: const Icon(Icons.message),
+                          badgeStyle: BadgeStyle(
+                            badgeColor: primaryColor,
+                            padding:  EdgeInsets.all(5),
+                          ),
+                            badgeContent: Text(numberOfRequests.toString(),style: TextStyle(color: whiteColor),),
+                  
+                            child: const FaIcon(FontAwesomeIcons.comments),
                           ),
                     label: "Chats",
                   ),

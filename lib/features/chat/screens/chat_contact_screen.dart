@@ -3,6 +3,7 @@
 import 'package:flutter/material.dart';
 import 'package:pisiit/features/chat/widgets/bottom_chat_field.dart';
 import 'package:pisiit/features/chat/widgets/chat_list.dart';
+import 'package:pisiit/utils/helper_textstyle.dart';
 
 class ChatContactScreen extends StatelessWidget {
   static const routeName = '/chat-contact-screen';
@@ -18,7 +19,11 @@ class ChatContactScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("$nameContact $idContact"),
+        title: Text(
+          "$nameContact",
+          style: textStyleSubtitle,
+        ),
+        centerTitle: true,
       ),
       body: Column(
         children: [

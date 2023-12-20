@@ -1,6 +1,8 @@
+// ignore_for_file: public_member_api_docs, sort_constructors_first
 // import 'package:audioplayers/audioplayers.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+
 import 'package:pisiit/utils/colors.dart';
 import 'package:pisiit/utils/helper_textstyle.dart';
 import 'package:pisiit/utils/message_enum.dart';
@@ -8,10 +10,13 @@ import 'package:pisiit/utils/message_enum.dart';
 class DisplayTextImageGIF extends StatelessWidget {
   final String message;
   final MessageEnum type;
-  const DisplayTextImageGIF({
+  final TextStyle? style;
+
+  DisplayTextImageGIF({
     Key? key,
     required this.message,
-    required this.type,
+    required this.type, this.style,
+   
   }) : super(key: key);
 
   @override
@@ -20,7 +25,7 @@ class DisplayTextImageGIF extends StatelessWidget {
     // final AudioPlayer audioPlayer = AudioPlayer();
 
     return Text(message,
-        style: textStyleTextMeduimBold.copyWith(color: whiteColor));
+        style: style ?? textStyleTextMeduimBold ,);
     //type == MessageEnum.text
     // ? Text(
     //     message,

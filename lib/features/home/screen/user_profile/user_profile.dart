@@ -127,98 +127,143 @@ class UserProfile extends StatelessWidget {
           ),
         ),
       ),
-      bottomNavigationBar: Row(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
+      //request part 
+
+
+      bottomNavigationBar:
+      
+       Container(
+       
+         color: Colors.transparent,
+         child: Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+           
+            mediumPaddingHor,
+            Consumer(builder: (context, ref, child) {
+              return FutureBuilder<bool>(
+                  future: ref
+                      .watch(homeControllerProvider)
+                      .canSendRequest(userModel.uid),
+                  builder: (context, snapshot) {
+                    if (snapshot.connectionState == ConnectionState.waiting) {
+                      return  Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Padding(
+                            padding: const EdgeInsets.all(16),
+                            child: Container(
+                              width: 60,
+                              height: 60,
+                            decoration: BoxDecoration(
+                              color: greyColor.shade300,
+                              shape: BoxShape.circle
+                            ),
+                            ),
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.all(16),
+                            child: Container(
+                              width: 60,
+                              height: 60,
+                            decoration: BoxDecoration(
+                              color: greyColor.shade300,
+                              shape: BoxShape.circle
+                            ),
+                            ),
+                          ),
+                        ],
+                      ); //CircularProgressIndicator();
+                    }
+         
+                    if (snapshot.hasError) {
+                      return Text('Error: ${snapshot.error}');
+                    }
+         
+                    bool isUserInCollection = snapshot.data!;
+         
+                    return  
+                    
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+         //! close circle
           Padding(
-            padding: const EdgeInsets.all(16.0),
-            child: Container(
-              width: 80.0,
-              height: 80.0,
-              decoration: BoxDecoration(
-                shape: BoxShape.circle,
-                // You can set your desired color here
-                border: Border.all(
-                  color: primaryColor,
-                  width: 2.0,
-                ),
-              ),
-              child: Center(
-                child: IconButton(
-                  onPressed: () {
-                    Navigator.pop(context);
-                  },
-                  icon: Icon(
-                    Icons.close,
-                    size: 50,
+              padding: const EdgeInsets.all(16.0),
+              child: Container(
+                width: 60,
+                height: 60,
+                decoration: BoxDecoration(
+                  shape: BoxShape.circle,
+                  // You can set your desired color here
+                  border: Border.all(
                     color: primaryColor,
+                    width: 2.0,
+                  ),
+                ),
+                child: Center(
+                  child: IconButton(
+                    onPressed: () {
+                      Navigator.pop(context);
+                    },
+                    icon: Icon(
+                      Icons.close,
+                      size: 30,
+                      color: primaryColor,
+                    ),
                   ),
                 ),
               ),
             ),
-          ),
-          mediumPaddingHor,
-          Consumer(builder: (context, ref, child) {
-            return FutureBuilder<bool>(
-                future: ref
-                    .watch(homeControllerProvider)
-                    .canSendRequest(userModel.uid),
-                builder: (context, snapshot) {
-                  if (snapshot.connectionState == ConnectionState.waiting) {
-                    return const SizedBox(); //CircularProgressIndicator();
-                  }
-
-                  if (snapshot.hasError) {
-                    return Text('Error: ${snapshot.error}');
-                  }
-
-                  bool isUserInCollection = snapshot.data!;
-
-                  return  GestureDetector(
-                          onTap: isUserInCollection
-                      ? (){
-                        showSnackBar(context, "you send a pesst for this profile verif ur chatpage");
-                      }
-                      : () {
-                            simplePisitDialog(
-                                context: context,
-                                sender: ownUserModel,
-                                recipient: userModel);
-                          },
-                          child: Padding(
-                            padding: const EdgeInsets.all(16.0),
-                            child: Container(
-                              width: 80.0,
-                              height: 80.0,
-                              decoration: BoxDecoration(
-                                shape: BoxShape.circle,
-                                // You can set your desired color here
-                                border: Border.all(
-                                  color: primaryColor,
-                                  width: 2.0,
+                        //? request logo
+                        GestureDetector(
+                                onTap: isUserInCollection
+                            ? (){
+                              showSnackBar(context, "you send a pesst for this profile verif ur chatpage");
+                            }
+                            : () {
+                                  simplePisitDialog(
+                                      context: context,
+                                      sender: ownUserModel,
+                                      recipient: userModel);
+                                },
+                                child: Padding(
+                                  padding: const EdgeInsets.all(16.0),
+                                  child: Container(
+                                    width: 60.0,
+                                    height: 60.0,
+                                    decoration: BoxDecoration(
+                                      shape: BoxShape.circle,
+                                      // You can set your desired color here
+                                      border: Border.all(
+                                        color: primaryColor,
+                                        width: 2.0,
+                                      ),
+                                    ),
+                                    child: Center(
+                                        child: 
+                                        isUserInCollection ?
+                                        Image.asset(
+                                      "assets/images/logo_request.png",
+                                      height: 30,
+                                    ):
+                                     Image.asset(
+                                      "assets/images/logo.png",
+                                      height: 30,
+                                    ) 
+                        
+                                    
+                                    ) ,
+                                  ),
                                 ),
                               ),
-                              child: Center(
-                                  child: 
-                                  isUserInCollection ?
-                                  Image.asset(
-                                "assets/images/logo_request.png",
-                                height: 40,
-                              ):
-                               Image.asset(
-                                "assets/images/logo.png",
-                                height: 40,
-                              ) 
-
-                              
-                              ) ,
-                            ),
-                          ),
-                        );
-                });
-          })
-        ],
-      ),
+                      ],
+                    );
+                  });
+            })
+          ],
+               ),
+       ),
     );
   }
 }
