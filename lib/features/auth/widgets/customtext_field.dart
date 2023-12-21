@@ -8,6 +8,8 @@ class CustomTextField extends StatelessWidget {
   final String hintText;
   final TextEditingController controller;
   int? maxLength;
+  int? maxline;
+  double? fSize;
   TextInputType? keyboardType;
   FocusNode? focusNode;
 
@@ -18,6 +20,8 @@ class CustomTextField extends StatelessWidget {
     this.maxLength,
     this.keyboardType,
     this.focusNode,
+    this.fSize,
+    this.maxline
   }) : super(key: key);
 
   @override
@@ -29,18 +33,19 @@ class CustomTextField extends StatelessWidget {
       ),
       child: TextField(
         controller: controller,
+        maxLines: maxline ?? 1,
         maxLength: maxLength,
         keyboardType: keyboardType,
         focusNode: focusNode,
         textAlign: TextAlign.center,
-        style: const TextStyle(
-            fontSize: 26, color: blackColor, fontWeight: FontWeight.w700),
+        style:  TextStyle(
+            fontSize: fSize ?? 26, color: blackColor, fontWeight: FontWeight.w700),
         decoration: InputDecoration(
           contentPadding: EdgeInsets.all(16.0),
           labelStyle: textStyleText, // Adjust content padding as needed
           hintText: hintText,
           hintStyle: TextStyle(
-              fontSize: 26,
+              fontSize:fSize ?? 26,
               color: Colors.grey[500],
               fontWeight: FontWeight.w700),
           border: InputBorder.none, // Remove the default border

@@ -4,6 +4,7 @@ import 'package:lottie/lottie.dart';
 import 'package:pisiit/features/auth/widgets/widget_title.dart';
 import 'package:pisiit/features/chat/controller/chat_controller.dart';
 import 'package:pisiit/features/home/controller/home_controller.dart';
+import 'package:pisiit/features/home/screen/user_profile/user_profile.dart';
 import 'package:pisiit/features/home/screen/widgets/image_widget.dart';
 import 'package:pisiit/models/request_model.dart';
 import 'package:pisiit/models/user_model.dart';
@@ -162,6 +163,7 @@ void simplePisitDialog(
       TextEditingController controller = TextEditingController();
 
       return AlertDialog(
+        backgroundColor: greyColor.shade200,
         title: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
@@ -274,13 +276,25 @@ void popUpRepondRequestDialog(
     builder: (BuildContext context) {
       TextEditingController controller = TextEditingController();
       return AlertDialog(
+        backgroundColor: greyColor.shade200,
         title: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             Column(
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
-                Avaatar(urlPic: requestModel.imageSender),
+                GestureDetector(
+                    onTap: () {
+                      Navigator.pushNamed(
+                        context,
+                        UserProfile.routeName,
+                        arguments: {
+                          "userModel": sender,
+                          "ownUserModel": recipient
+                        },
+                      );
+                    },
+                    child: Avaatar(urlPic: requestModel.imageSender)),
                 // ClipRRect(
                 //   borderRadius: const BorderRadius.all(Radius.circular(12)),
                 //   child: Image.network(

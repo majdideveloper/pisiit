@@ -40,8 +40,10 @@ class CustomBottomSheet extends ConsumerWidget {
                   ref.read(authControllerProvider).signOut(context);
                 },
               )),
+             
             ],
-          ))
+          )),
+           mediumPaddingVert,
         ],
       ),
     );

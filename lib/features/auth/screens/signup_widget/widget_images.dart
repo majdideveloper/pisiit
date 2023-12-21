@@ -31,27 +31,41 @@ class WidgetImages extends StatelessWidget {
               subTitle:
                   "Upload up to six of your best photos to make a fantastic first impression. Let your personality shine"),
           mediumPaddingVert,
-          SizedBox(
-            height: MediaQuery.of(context).size.height / 0.4,
-            child: GridView.builder(
-              gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                crossAxisCount: 3,
-                childAspectRatio: 0.66,
-              ),
-              itemCount: 6,
-              itemBuilder: (BuildContext context, int index) {
-                return (listImages.length > index)
-                    ? CustomImageContainer(
-                        listImages: listImages,
-                        imageUrl: listImages[index],
-                      )
-                    : CustomImageContainer(
-                        listImages: listImages,
-                      );
-              },
-            ),
-          ),
+          ImagesContainer(listImages: listImages),
         ],
+      ),
+    );
+  }
+}
+
+class ImagesContainer extends StatelessWidget {
+  const ImagesContainer({
+    super.key,
+    required this.listImages,
+  });
+
+  final List<File?> listImages;
+
+  @override
+  Widget build(BuildContext context) {
+    return SizedBox(
+      height: MediaQuery.of(context).size.height / 0.4,
+      child: GridView.builder(
+        gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+          crossAxisCount: 3,
+          childAspectRatio: 0.66,
+        ),
+        itemCount: 6,
+        itemBuilder: (BuildContext context, int index) {
+          return (listImages.length > index)
+              ? CustomImageContainer(
+                  listImages: listImages,
+                  imageUrl: listImages[index],
+                )
+              : CustomImageContainer(
+                  listImages: listImages,
+                );
+        },
       ),
     );
   }

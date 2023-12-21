@@ -6,9 +6,11 @@ import 'package:pisiit/utils/colors.dart';
 class CustomImageContainer extends StatefulWidget {
   File? imageUrl;
   List<File?> listImages;
+  List<dynamic>? listUrlsImages;
   CustomImageContainer({
     Key? key,
     this.imageUrl,
+    this.listUrlsImages,
     required this.listImages,
   }) : super(key: key);
 
@@ -67,7 +69,8 @@ class _CustomImageContainerState extends State<CustomImageContainer> {
                   children: [
                     ClipRRect(
                       borderRadius: BorderRadius.circular(12),
-                      child: Image.file(
+                      child:
+                       Image.file(
                         widget.imageUrl!,
                         fit: BoxFit.cover,
                         height: double.infinity,

@@ -55,7 +55,7 @@ class _CustomShapesState extends State<CustomShapes> {
   List<ShapeItemData> shapes = [
     ShapeItemData(0, 'Male', 'assets/images/male_gender.png'),
     ShapeItemData(1, 'Female', 'assets/images/femal_gender.png'),
-    ShapeItemData(2, 'Non Binary', 'assets/images/bi_gender.png'),
+    ShapeItemData(2, 'Other', 'assets/images/bi_gender.png'),
   ];
   @override
   Widget build(BuildContext context) {
