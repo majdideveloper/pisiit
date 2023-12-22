@@ -130,16 +130,145 @@ class UserProfile extends StatelessWidget {
       //request part 
 
 
-      bottomNavigationBar:
+      // bottomNavigationBar:
       
-       Container(
+      //  Container(
        
-         color: Colors.transparent,
+      //    color: Colors.transparent,
+      //    child: Row(
+      //     mainAxisAlignment: MainAxisAlignment.center,
+      //     children: [
+           
+      //       mediumPaddingHor,
+      //       Consumer(builder: (context, ref, child) {
+      //         return FutureBuilder<bool>(
+      //             future: ref
+      //                 .watch(homeControllerProvider)
+      //                 .canSendRequest(userModel.uid),
+      //             builder: (context, snapshot) {
+      //               if (snapshot.connectionState == ConnectionState.waiting) {
+      //                 return  Row(
+      //                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      //                   children: [
+      //                     Padding(
+      //                       padding: const EdgeInsets.all(16),
+      //                       child: Container(
+      //                         width: 60,
+      //                         height: 60,
+      //                       decoration: BoxDecoration(
+      //                         color: greyColor.shade300,
+      //                         shape: BoxShape.circle
+      //                       ),
+      //                       ),
+      //                     ),
+      //                     Padding(
+      //                       padding: const EdgeInsets.all(16),
+      //                       child: Container(
+      //                         width: 60,
+      //                         height: 60,
+      //                       decoration: BoxDecoration(
+      //                         color: greyColor.shade300,
+      //                         shape: BoxShape.circle
+      //                       ),
+      //                       ),
+      //                     ),
+      //                   ],
+      //                 ); //CircularProgressIndicator();
+      //               }
+         
+      //               if (snapshot.hasError) {
+      //                 return Text('Error: ${snapshot.error}');
+      //               }
+         
+      //               bool isUserInCollection = snapshot.data!;
+         
+      //               return  
+                    
+      //               Row(
+      //                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      //                 children: [
+      //    //! close circle
+      //     Padding(
+      //         padding: const EdgeInsets.all(16.0),
+      //         child: Container(
+      //           width: 60,
+      //           height: 60,
+      //           decoration: BoxDecoration(
+      //             shape: BoxShape.circle,
+      //             // You can set your desired color here
+      //             border: Border.all(
+      //               color: primaryColor,
+      //               width: 2.0,
+      //             ),
+      //           ),
+      //           child: Center(
+      //             child: IconButton(
+      //               onPressed: () {
+      //                 Navigator.pop(context);
+      //               },
+      //               icon: Icon(
+      //                 Icons.close,
+      //                 size: 30,
+      //                 color: primaryColor,
+      //               ),
+      //             ),
+      //           ),
+      //         ),
+      //       ),
+      //                   //? request logo
+      //                   GestureDetector(
+      //                           onTap: isUserInCollection
+      //                       ? (){
+      //                         showSnackBar(context, "you send a pesst for this profile verif ur chatpage");
+      //                       }
+      //                       : () {
+      //                             simplePisitDialog(
+      //                                 context: context,
+      //                                 sender: ownUserModel,
+      //                                 recipient: userModel);
+      //                           },
+      //                           child: Padding(
+      //                             padding: const EdgeInsets.all(16.0),
+      //                             child: Container(
+      //                               width: 60.0,
+      //                               height: 60.0,
+      //                               decoration: BoxDecoration(
+      //                                 shape: BoxShape.circle,
+      //                                 // You can set your desired color here
+      //                                 border: Border.all(
+      //                                   color: primaryColor,
+      //                                   width: 2.0,
+      //                                 ),
+      //                               ),
+      //                               child: Center(
+      //                                   child: 
+      //                                   isUserInCollection ?
+      //                                   Image.asset(
+      //                                 "assets/images/logo_request.png",
+      //                                 height: 30,
+      //                               ):
+      //                                Image.asset(
+      //                                 "assets/images/logo.png",
+      //                                 height: 30,
+      //                               ) 
+                        
+                                    
+      //                               ) ,
+      //                             ),
+      //                           ),
+      //                         ),
+      //                 ],
+      //               );
+      //             });
+      //       })
+      //     ],
+      //          ),
+      //  ),
+       floatingActionButton: Padding(
+         padding: const EdgeInsets.only(left: 20, right: 20),
          child: Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-           
-            mediumPaddingHor,
             Consumer(builder: (context, ref, child) {
               return FutureBuilder<bool>(
                   future: ref
@@ -148,7 +277,7 @@ class UserProfile extends StatelessWidget {
                   builder: (context, snapshot) {
                     if (snapshot.connectionState == ConnectionState.waiting) {
                       return  Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        mainAxisAlignment: MainAxisAlignment.center,
                         children: [
                           Padding(
                             padding: const EdgeInsets.all(16),
@@ -157,18 +286,36 @@ class UserProfile extends StatelessWidget {
                               height: 60,
                             decoration: BoxDecoration(
                               color: greyColor.shade300,
-                              shape: BoxShape.circle
+                              shape: BoxShape.circle,
+                              boxShadow: [
+              BoxShadow(
+                color: Colors.grey.withOpacity(0.5),
+                spreadRadius: 5,
+                blurRadius: 7,
+                offset: Offset(0, 3), // changes the position of the shadow
+              ),
+            ],
                             ),
                             ),
                           ),
+                          largePaddingHor,
                           Padding(
                             padding: const EdgeInsets.all(16),
                             child: Container(
                               width: 60,
                               height: 60,
                             decoration: BoxDecoration(
+                              boxShadow: [
+              BoxShadow(
+                color: Colors.grey.withOpacity(0.5),
+                spreadRadius: 5,
+                blurRadius: 7,
+                offset: Offset(0, 3), // changes the position of the shadow
+              ),
+            ],
                               color: greyColor.shade300,
-                              shape: BoxShape.circle
+                              shape: BoxShape.circle,
+                              
                             ),
                             ),
                           ),
@@ -194,6 +341,15 @@ class UserProfile extends StatelessWidget {
                 width: 60,
                 height: 60,
                 decoration: BoxDecoration(
+                  boxShadow: [
+              BoxShadow(
+                color: Colors.grey.withOpacity(0.5),
+                spreadRadius: 5,
+                blurRadius: 7,
+                offset: Offset(0, 3), // changes the position of the shadow
+              ),
+            ],
+                  color: whiteColor,
                   shape: BoxShape.circle,
                   // You can set your desired color here
                   border: Border.all(
@@ -215,6 +371,7 @@ class UserProfile extends StatelessWidget {
                 ),
               ),
             ),
+            largePaddingHor,
                         //? request logo
                         GestureDetector(
                                 onTap: isUserInCollection
@@ -233,6 +390,15 @@ class UserProfile extends StatelessWidget {
                                     width: 60.0,
                                     height: 60.0,
                                     decoration: BoxDecoration(
+                                      boxShadow: [
+              BoxShadow(
+                color: Colors.grey.withOpacity(0.5),
+                spreadRadius: 5,
+                blurRadius: 7,
+                offset: Offset(0, 3), // changes the position of the shadow
+              ),
+            ],
+                                      color: whiteColor,
                                       shape: BoxShape.circle,
                                       // You can set your desired color here
                                       border: Border.all(
@@ -262,7 +428,7 @@ class UserProfile extends StatelessWidget {
                   });
             })
           ],
-               ),
+         ),
        ),
     );
   }
