@@ -1,5 +1,5 @@
 import 'dart:io';
-// import 'package:emoji_picker_flutter/emoji_picker_flutter.dart';
+ import 'package:emoji_picker_flutter/emoji_picker_flutter.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -124,30 +124,30 @@ class _BottomChatFieldState extends ConsumerState<BottomChatField> {
   //   }
   // }
 
-  // void hideEmojiContainer() {
-  //   setState(() {
-  //     isShowEmojiContainer = false;
-  //   });
-  // }
+  void hideEmojiContainer() {
+    setState(() {
+      isShowEmojiContainer = false;
+    });
+  }
 
-  // void showEmojiContainer() {
-  //   setState(() {
-  //     isShowEmojiContainer = true;
-  //   });
-  // }
+  void showEmojiContainer() {
+    setState(() {
+      isShowEmojiContainer = true;
+    });
+  }
 
-  // void showKeyboard() => focusNode.requestFocus();
-  // void hideKeyboard() => focusNode.unfocus();
+  void showKeyboard() => focusNode.requestFocus();
+  void hideKeyboard() => focusNode.unfocus();
 
-  // void toggleEmojiKeyboardContainer() {
-  //   if (isShowEmojiContainer) {
-  //     showKeyboard();
-  //     hideEmojiContainer();
-  //   } else {
-  //     hideKeyboard();
-  //     showEmojiContainer();
-  //   }
-  // }
+  void toggleEmojiKeyboardContainer() {
+    if (isShowEmojiContainer) {
+      showKeyboard();
+      hideEmojiContainer();
+    } else {
+      hideKeyboard();
+      showEmojiContainer();
+    }
+  }
 
   @override
   void dispose() {
@@ -200,7 +200,7 @@ class _BottomChatFieldState extends ConsumerState<BottomChatField> {
                   ) ,
                     prefixIcon:  IconButton(
                    
-                   onPressed: (){},//selectGIF,
+                   onPressed: toggleEmojiKeyboardContainer,//select emoji,
                      icon: const 
 
                       Icon(
@@ -245,21 +245,25 @@ class _BottomChatFieldState extends ConsumerState<BottomChatField> {
         isShowEmojiContainer
             ? SizedBox(
                 height: 310,
-                child: SizedBox(),
-                // EmojiPicker(
-                //   onEmojiSelected: ((category, emoji) {
-                //     setState(() {
-                //       _messageController.text =
-                //           _messageController.text + emoji.emoji;
-                //     });
+                child: 
+                 EmojiPicker(
+                  config: Config(
+                    indicatorColor: primaryColor,
+                    iconColorSelected: primaryColor,
+                  ),
+                   onEmojiSelected: ((category, emoji) {
+                     setState(() {
+                       _messageController.text =
+                           _messageController.text + emoji.emoji;
+                     });
 
-                //     if (!isShowSendButton) {
-                //       setState(() {
-                //         isShowSendButton = true;
-                //       });
-                //     }
-                //   }),
-                // ),
+                     if (!isShowSendButton) {
+                       setState(() {
+                         isShowSendButton = true;
+                       });
+                     }
+                   }),
+                 ),
               )
             : const SizedBox.shrink(),
       ],

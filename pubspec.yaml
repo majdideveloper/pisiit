@@ -54,6 +54,7 @@ dependencies:
   swipe_to: ^1.0.4
   email_validator: ^2.1.17
   font_awesome_flutter: ^10.6.0
+  emoji_picker_flutter: ^1.6.3
 
 dev_dependencies:
   flutter_test:

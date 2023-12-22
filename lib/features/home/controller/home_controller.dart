@@ -24,11 +24,9 @@ class HomeController {
 
   Future<List<UserModel>?> fetchAllUser() async {
     List<UserModel>? listUser = await homeRepository.fetchAllUser();
-    
+
     return listUser;
   }
-
-
 
   Future<bool> canSendRequest(String userId) async {
     return await homeRepository.canSendRequest(userId);
@@ -53,11 +51,21 @@ class HomeController {
     return homeRepository.numberRequest();
   }
 
-
   // Stream<List<RequestModel>> getAllRequest() {
   //   return homeRepository.getAllRequest();
   // }
-  Future<void> updateUser(String userid ,String name, BuildContext context) async {
-    homeRepository.updateUser(userid, name, context);
+  Future<void> updateUser(
+      String userid,
+      String name,
+      String birthday,
+      String jobTitle,
+      String country,
+      String bio,
+      List<dynamic> interests,
+      String gender,
+      String relationGoals,
+      BuildContext context) async {
+    homeRepository.updateUser(userid, name, birthday, jobTitle, country, bio,
+        interests, gender, relationGoals, context);
   }
 }

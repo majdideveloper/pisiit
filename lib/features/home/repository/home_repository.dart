@@ -82,44 +82,43 @@ class HomeRepository {
 
     return snapshot1.exists || snapshot2.exists || snapshot3.exists;
   }
+
   ///! function for edit profile
-  
-  Future<void> updateUser(String userid, String name, BuildContext context) async {
+
+  Future<void> updateUser(
+      String userid,
+      String name,
+      String birthday,
+      String jobTitle,
+      String country,
+      String bio,
+      List<dynamic> interests,
+      String gender,
+      String relationGoals,
+      BuildContext context) async {
+    try {
+      final CollectionReference usersCollection =
+          FirebaseFirestore.instance.collection('Users');
+
+      await usersCollection.doc(userid).update(
+        {
+          'name': name,
+          'birthday': birthday,
+          'gender': gender,
+          'relationGoals': relationGoals,
+          'interests': interests,
+          'bio': bio,
+          'jobTitle': jobTitle,
+          'country': country,
+        },
+      );
+
+      print('User information updated successfully');
     
-  try {
-    final CollectionReference usersCollection =
-        FirebaseFirestore.instance.collection('Users');
-
-
- await usersCollection.doc(userid).update(
-      {
-        'name': name,
-      },
-     
-    );
-
-    print('User information updated successfully');
-    //await usersCollection.doc(userid).update({
-     // 'name': name,
-      // 'age': user.age,
-      // 'birthday': user.birthday,
-      // 'gender': user.gender,
-      // 'relationGoals': user.relationGoals,
-      // 'imageURLs': user.imageURLs,
-      // 'interests': user.interests,
-      // 'bio': user.bio,
-      // 'jobTitle': user.jobTitle,
-      // 'country': user.country,
-
-    //}
-   //);
     
-    
-
-
-  } catch (e) {
-    // Handle the exception, e.g., log an error
-    print('Error updating user: $e');
+    } catch (e) {
+      // Handle the exception, e.g., log an error
+      print('Error updating user: $e');
+    }
   }
-}
 }

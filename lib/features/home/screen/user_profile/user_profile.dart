@@ -349,7 +349,7 @@ class UserProfile extends StatelessWidget {
                 offset: Offset(0, 3), // changes the position of the shadow
               ),
             ],
-                  color: whiteColor,
+                  color: whiteColor.withOpacity(0.8),
                   shape: BoxShape.circle,
                   // You can set your desired color here
                   border: Border.all(
@@ -398,7 +398,7 @@ class UserProfile extends StatelessWidget {
                 offset: Offset(0, 3), // changes the position of the shadow
               ),
             ],
-                                      color: whiteColor,
+                                      color:   isUserInCollection ? whiteColor.withOpacity(0.5) :  whiteColor.withOpacity(0.8),
                                       shape: BoxShape.circle,
                                       // You can set your desired color here
                                       border: Border.all(

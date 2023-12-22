@@ -33,14 +33,48 @@ class _EditProfileState extends ConsumerState<EditProfile> {
   final CountryController = TextEditingController();
   final aboutController = TextEditingController();
 
-  void editInformationProfile() {
-    String name = NicknameController.text.trim();
-    ref.read(homeControllerProvider).updateUser(widget.userid, name, context);
-    print("update username");
-  }
-
   List<String> gender = [" "];
   List<File?> listImages = [];
+  List<String> Newinterests = [];
+  List<String> newRelationGoals = [" "];
+
+  void editInformationProfile() {
+    String name = NicknameController.text.trim().isEmpty ?NicknameController.text.trim(): widget.user.name ;
+    String birth = birthController.text.trim().isEmpty
+        ? widget.user.birthday
+        : birthController.text.trim();
+    String job = JobController.text.trim().isEmpty
+        ? widget.user.jobTitle
+        : JobController.text.trim();
+    String country = CountryController.text.trim().isEmpty
+        ? widget.user.country
+        : CountryController.text.trim();
+    String about = aboutController.text.trim().isEmpty
+        ? widget.user.bio
+        : aboutController.text.trim();
+    List<dynamic> interst =
+        Newinterests.isEmpty ? widget.user.interests : Newinterests;
+    String gend = gender.isEmpty ? widget.user.gender : gender[0];
+    String relation = newRelationGoals.isEmpty
+        ? widget.user.relationGoals
+        : newRelationGoals[0];
+
+    ref.read(homeControllerProvider).updateUser(
+      widget.user.uid, 
+      name, 
+      birth,
+      job, 
+      country, 
+      about, 
+      interst, 
+      gend, 
+      relation, 
+      context);
+
+    print("update sucess");
+
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -91,6 +125,7 @@ class _EditProfileState extends ConsumerState<EditProfile> {
                           controller: NicknameController,
                         ),
                       ),
+                      Text(NicknameController.text),
                     ],
                   ),
                   Column(
@@ -124,6 +159,7 @@ class _EditProfileState extends ConsumerState<EditProfile> {
                 withContainer: 70,
                 heightContainer: 80,
               ),
+              Text(gender.toString()),
               mediumPaddingVert,
               //! job title
               Text(
@@ -172,37 +208,51 @@ class _EditProfileState extends ConsumerState<EditProfile> {
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  Text("Interset", style: textStyleTextBold,),
+                  Text(
+                    "Interset",
+                    style: textStyleTextBold,
+                  ),
                   IconButton(
                       onPressed: () {
                         Navigator.push(
                             context,
                             MaterialPageRoute(
-                                builder: (context) => InterstWidgetProfile()));
+                                builder: (context) => InterstWidgetProfile(
+                                      interests: Newinterests,
+                                    )));
                       },
                       icon: Icon(Icons.arrow_forward_ios))
                 ],
               ),
+              Text(Newinterests.toString()),
               SectionWidget(
                 nameSection: "",
-                interests: widget.user.interests as List<String>,
+                interests: Newinterests.length > 4
+                    ? Newinterests
+                    : widget.user.interests as List<String>,
               ),
               //! relations goals
-      smallPaddingVert,
+              smallPaddingVert,
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  Text("Relation GOALS", style: textStyleTextBold,),
+                  Text(
+                    "Relation GOALS",
+                    style: textStyleTextBold,
+                  ),
                   IconButton(
                       onPressed: () {
                         Navigator.push(
                             context,
                             MaterialPageRoute(
-                                builder: (context) => RelationWidgetProfile()));
+                                builder: (context) => RelationWidgetProfile(
+                                      relationGoals: newRelationGoals,
+                                    )));
                       },
                       icon: Icon(Icons.arrow_forward_ios))
                 ],
               ),
+              Text(newRelationGoals.toString()),
               RelationshipGoalWidget(
                 relationGoals: widget.user.relationGoals,
               ),
@@ -224,10 +274,11 @@ class _EditProfileState extends ConsumerState<EditProfile> {
                     colorText: whiteColor,
                     textButton: "save",
                     onPressed: () async {
+                     
                       editInformationProfile;
                       //showSignInPopup(context, "UPDATE", "UPDATE SUCCESS", Icons.person);
                       //await Future.delayed(Duration(seconds: 10));
-                      CircularProgressIndicator();
+                       CircularProgressIndicator();
                       Navigator.pop(context);
                     },
                   )),
