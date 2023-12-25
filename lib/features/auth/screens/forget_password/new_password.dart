@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:pisiit/features/auth/controller/auth_controller.dart';
+import 'package:pisiit/features/auth/screens/forget_password/function_reset.dart';
 import 'package:pisiit/features/auth/screens/home_auth_screen.dart';
 import 'package:pisiit/features/auth/screens/login_screen.dart';
 import 'package:pisiit/features/auth/widgets/textfield_auth.dart';
@@ -34,6 +35,8 @@ class _NewPasswordSceenState extends ConsumerState<NewPasswordSceen> {
       newPassword: password.trim());
       
   }
+
+
 
 final passwordController = TextEditingController();
  bool showPassword = true;

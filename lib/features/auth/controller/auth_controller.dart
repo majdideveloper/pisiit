@@ -47,6 +47,9 @@ class AuthController {
     await authRepository.resetPasswordWithOTP(
         email: email, newPassword: newPassword);
   }
+  Future<void> resetPassword(BuildContext context, String email) async {
+    await authRepository.resetPassword(context, email);
+  }
 
   ///! reset
   Future<void> updatePassword(String userEmail, String newPassword) async {

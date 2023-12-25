@@ -36,6 +36,19 @@ class AuthRepository {
     }
     return user;
   }
+
+  //!reset with sending mail
+  Future<void> resetPassword(BuildContext context, String email) async {
+  try {
+    await FirebaseAuth.instance.sendPasswordResetEmail(email: email);
+    print("Password reset email sent successfully");
+
+  } catch (e) {
+    print("Error sending password reset email: $e");
+    showSnackBar(context, "Error sending password reset email: $e");
+
+  }
+}
 //!reset password
 
   Future<void> resetPasswordWithOTP(

@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:pisiit/features/auth/controller/auth_controller.dart';
+import 'package:pisiit/features/auth/screens/forget_password/function_reset.dart';
 import 'package:pisiit/features/auth/screens/home_auth_screen.dart';
 import 'package:pisiit/features/home/screen/home_application_screen.dart';
 import 'package:pisiit/firebase_options.dart';
@@ -11,6 +12,7 @@ import 'package:pisiit/router.dart';
 import 'package:pisiit/utils/colors.dart';
 
 void main() async {
+
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
