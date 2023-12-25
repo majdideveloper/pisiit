@@ -91,4 +91,30 @@ class ChatController {
     print(text);
     ref.read(messageReplyProvider.state).update((state) => null);
   }
+
+
+void sendGIFMessage(
+  BuildContext context,
+  String gifUrl,
+  String recieverUserId,
+  ) async {
+    final messageReply = ref.read(messageReplyProvider);
+    int gifUrlPartIndex = gifUrl.lastIndexOf('-') + 1;
+    String gifUrlPart = gifUrl.substring(gifUrlPartIndex);
+    String newgifUrl = 'https://i.giphy.com/media/$gifUrlPart/200.gif';
+   
+    final senderMessage = await ref
+        .watch(authControllerProvider)
+        .getCurrentUserInfo(); //.whenComplete(() => null);
+    ref.read(userDataAuthProvider).whenData((value) {
+      print("${value!.uid}+++++++++++++++++++++++++++++++++++++++++++++++++++");
+      chatRepository.sendGIFMessage(
+        context: context, 
+        gifUrl: newgifUrl, 
+        recieverUserId: recieverUserId, 
+        senderUserData: senderMessage!, 
+        messageReply: messageReply);
+    });
+     ref.read(messageReplyProvider.state).update((state) => null);
+  }
 }

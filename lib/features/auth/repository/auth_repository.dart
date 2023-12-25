@@ -143,6 +143,13 @@ class AuthRepository {
       await auth
           .createUserWithEmailAndPassword(email: email, password: password)
           .then((user) async {
+             showPopUp(
+     context,
+     "Register Successful!",
+     "You will be directed to HomePage",
+     Icons.lock_clock_outlined,
+     Duration(seconds: 20)
+   );
         List<String>? urlImage = await ref
             .read(commonFirebaseStorageRepositoryProvider)
             .saveUserImageToStorage(uid: user.user!.uid, files: imageURLs);
@@ -164,13 +171,7 @@ class AuthRepository {
           noteAccount: 0,
           numberPisit: 10,
         );
- showPopUp(
-     context,
-     "Register Successful!",
-     "You will be directed to HomePage",
-     Icons.lock_clock_outlined,
-     Duration(seconds: 20)
-   );
+
         await firestore
             .collection('Users')
             .doc(user.user!.uid)

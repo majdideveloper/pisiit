@@ -1,10 +1,12 @@
 import 'dart:io';
  import 'package:emoji_picker_flutter/emoji_picker_flutter.dart';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 // import 'package:flutter_sound/public/flutter_sound_recorder.dart';
 import 'package:path_provider/path_provider.dart';
+import 'package:pisiit/commun/utils/utils.dart';
 // import 'package:permission_handler/permission_handler.dart';
 import 'package:pisiit/features/chat/controller/chat_controller.dart';
 import 'package:pisiit/utils/colors.dart';
@@ -14,6 +16,8 @@ import 'package:pisiit/utils/colors.dart';
 // import 'package:whatsapp_ui/common/utils/utils.dart';
 // import 'package:whatsapp_ui/features/chat/controller/chat_controller.dart';
 // import 'package:whatsapp_ui/features/chat/widgets/message_reply_preview.dart';
+
+
 
 class BottomChatField extends ConsumerStatefulWidget {
   final String recieverUserId;
@@ -112,17 +116,31 @@ class _BottomChatFieldState extends ConsumerState<BottomChatField> {
   //   }
   // }
 
-  // void selectGIF() async {
-  //   final gif = await pickGIF(context);
-  //   if (gif != null) {
-  //     ref.read(chatControllerProvider).sendGIFMessage(
-  //           context,
-  //           gif.url,
-  //           widget.recieverUserId,
-  //           widget.isGroupChat,
-  //         );
-  //   }
-  // }
+   void selectGIF() async {
+    
+            // final gif = await Giphy.getGif(context: context, apiKey: '3eIFTBFqPL2wccMx26W7lo8ddtYxN4Y7');
+            // if (gif != null) {
+            //     // the user has selected a GIF, now handle it in your own way.
+            //     // Example: display gif using the GiphyImageView:
+            //     showDialog(
+            //         context: context,
+            //         builder: (context) => AlertDialog(
+            //             title: Text(gif.title),
+            //             content: GiphyImageView(
+            //                 gif: gif,
+            //             ),
+            //         ),
+            //     );
+            // }
+        
+    //    ref.read(chatControllerProvider).sendGIFMessage(
+    //          context,
+    //          gif.url,
+    //          widget.recieverUserId,
+      
+    //        );
+    // }
+   }
 
   void hideEmojiContainer() {
     setState(() {
@@ -190,7 +208,7 @@ class _BottomChatFieldState extends ConsumerState<BottomChatField> {
                     fillColor: greyColor.shade200,
                     suffixIcon: IconButton(
                    
-                   onPressed: (){},//selectGIF,
+                   onPressed: selectGIF,
                      icon: const 
 
                       Icon(

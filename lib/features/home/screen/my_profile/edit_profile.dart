@@ -39,7 +39,7 @@ class _EditProfileState extends ConsumerState<EditProfile> {
   List<String> newRelationGoals = [" "];
 
   void editInformationProfile() {
-    String name = NicknameController.text.trim().isEmpty ?NicknameController.text.trim(): widget.user.name ;
+    String name = NicknameController.text.trim().isEmpty ? widget.user.name : NicknameController.text.trim() ;
     String birth = birthController.text.trim().isEmpty
         ? widget.user.birthday
         : birthController.text.trim();
@@ -72,7 +72,8 @@ class _EditProfileState extends ConsumerState<EditProfile> {
       context);
 
     print("update sucess");
-
+    CircularProgressIndicator();
+    Navigator.pop(context);
   }
 
   @override
@@ -273,14 +274,9 @@ class _EditProfileState extends ConsumerState<EditProfile> {
                       child: CustomButton(
                     colorText: whiteColor,
                     textButton: "save",
-                    onPressed: () async {
-                     
-                      editInformationProfile;
-                      //showSignInPopup(context, "UPDATE", "UPDATE SUCCESS", Icons.person);
-                      //await Future.delayed(Duration(seconds: 10));
-                       CircularProgressIndicator();
-                      Navigator.pop(context);
-                    },
+                    onPressed:
+                     editInformationProfile
+                   
                   )),
                 ],
               ))
