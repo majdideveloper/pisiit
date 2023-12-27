@@ -9,14 +9,20 @@ final authControllerProvider = Provider((ref) {
   return AuthController(authRepository: authRepository, ref: ref);
 });
 
-final userDataAuthProvider = FutureProvider.autoDispose((ref) {
-  final authController = ref.watch(authRepositoryProvider);
-  return authController.getCurrentUserData();
-});
+// final userDataAuthProvider = FutureProvider.autoDispose((ref) {
+//   final authController = ref.watch(authRepositoryProvider);
+//   return authController.getCurrentUserData();
+// });
 
-final userDataProvider = FutureProvider.autoDispose((ref) {
+final userDataProvider = StreamProvider<UserModel?>((ref) {
   final authController = ref.watch(authRepositoryProvider);
   return authController.fetchUserData();
+});
+
+final userDataStreamProvider = StreamProvider<UserModel?>((ref) {
+  final authController = ref.watch(authRepositoryProvider);
+ 
+  return authController.getCurrentUserDataAsStream();
 });
 
 class AuthController {
@@ -100,7 +106,7 @@ class AuthController {
     return authRepository.userData(userId);
   }
 
-  Future<UserModel?> fetchUserData() {
+  Stream<UserModel?> fetchUserData() {
     return authRepository.fetchUserData();
   }
 }

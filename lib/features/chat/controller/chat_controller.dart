@@ -78,7 +78,7 @@ class ChatController {
     final senderMessage = await ref
         .watch(authControllerProvider)
         .getCurrentUserInfo(); //.whenComplete(() => null);
-    ref.read(userDataAuthProvider).whenData((value) {
+    ref.read(userDataStreamProvider).whenData((value) {
       print("${value!.uid}+++++++++++++++++++++++++++++++++++++++++++++++++++");
       chatRepository.sendTextMessage(
         context: context,
@@ -106,7 +106,7 @@ void sendGIFMessage(
     final senderMessage = await ref
         .watch(authControllerProvider)
         .getCurrentUserInfo(); //.whenComplete(() => null);
-    ref.read(userDataAuthProvider).whenData((value) {
+    ref.read(userDataStreamProvider).whenData((value) {
       print("${value!.uid}+++++++++++++++++++++++++++++++++++++++++++++++++++");
       chatRepository.sendGIFMessage(
         context: context, 

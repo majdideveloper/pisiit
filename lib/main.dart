@@ -41,7 +41,7 @@ class MyApp extends ConsumerWidget {
           //! +++ we can use  Future BUilder and handle all case of State Connecction
           
          // ref.watch(userDataProvider).when(
-          ref.watch(userDataAuthProvider).when(
+          ref.watch(userDataStreamProvider).when(
                 data: (user) {
                   if (user == null) {
                     return const HomeAuthScreen();

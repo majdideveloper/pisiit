@@ -72,8 +72,7 @@ class _EditProfileState extends ConsumerState<EditProfile> {
       context);
 
     print("update sucess");
-    CircularProgressIndicator();
-    Navigator.pop(context);
+
   }
 
   @override

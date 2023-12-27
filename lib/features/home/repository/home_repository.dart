@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -19,6 +21,7 @@ class HomeRepository {
     required this.auth,
     required this.firestore,
   });
+
 
   Stream<List<UserModel>> getAllUsers() {
     return firestore.collection("Users").snapshots().asyncMap((event) async {
@@ -84,7 +87,18 @@ class HomeRepository {
   }
 
   ///! function for edit profile
+  StreamController<UserModel?> _userDataController = StreamController<UserModel?>.broadcast();
 
+void _fetchUserData() async {
+  var userData = await firestore.collection('Users').doc(auth.currentUser?.uid).get();
+
+  UserModel? user;
+  if (userData.data() != null) {
+    user = UserModel.fromMap(userData.data()!);
+  }
+
+  _userDataController.add(user);
+}
   Future<void> updateUser(
       String userid,
       String name,
@@ -112,9 +126,10 @@ class HomeRepository {
           'country': country,
         },
       );
-
+      _fetchUserData(); 
       print('User information updated successfully');
-    
+      CircularProgressIndicator();
+      Navigator.pop(context);
     
     } catch (e) {
       // Handle the exception, e.g., log an error

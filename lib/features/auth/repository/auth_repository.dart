@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:io';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -25,6 +26,27 @@ class AuthRepository {
     required this.auth,
     required this.firestore,
   });
+ Stream<UserModel?> getCurrentUserDataAsStream() {
+    final streamcurrentUser = auth.currentUser;
+    if (streamcurrentUser != null) {
+      return firestore
+          .collection('Users')
+          .doc(streamcurrentUser.uid)
+          .snapshots()
+          .map((snapshot) {
+        if (snapshot.exists) {
+          return UserModel.fromMap(snapshot.data()!);
+        } else {
+          return null;
+        }
+      });
+    } else {
+      return const Stream.empty();
+    }
+  }
+
+
+
 
   Future<UserModel?> getCurrentUserData() async {
     var userData =
@@ -247,44 +269,55 @@ class AuthRepository {
   //}
 
   // Function to fetch user data from Firebase
-  Future<UserModel?> fetchUserData() async {
-    try {
-      // Check if a user is signed in
-      final User? firebaseUser = auth.currentUser;
-      if (firebaseUser == null) {
-        return null;
-      }
+StreamController<UserModel> _userDataStreamController = StreamController<UserModel>.broadcast();
 
-      // Fetch additional user data from Firestore
-      final DocumentSnapshot userSnapshot =
-          await firestore.collection('Users').doc(firebaseUser.uid).get();
+Stream<UserModel> get userDataStream => _userDataStreamController.stream;
 
-      if (userSnapshot.exists) {
-        final Map<String, dynamic> userData =
-            userSnapshot.data() as Map<String, dynamic>;
-        return UserModel(
-          uid: firebaseUser.uid,
-          name: userData['name'] ?? '',
-          age: userData['age'] ?? '',
-          birthday: userData['birthday'] ?? '',
-          gender: userData['gender'] ?? '',
-          relationGoals: userData['relationGoals'] ?? '',
-          imageURLs: List<String>.from(userData['imageURLs']),
-          interests: List<String>.from(userData['interests']),
-          bio: userData['bio'] ?? '',
-          jobTitle: userData['jobTitle'] ?? '',
-          country: userData['country'] ?? '',
-          lastActive: userData['last_active'] ?? DateTime.now(), //.toDate(),
-          noteAccount: userData['noteAccount'] ?? 0,
-          scoreAccount: userData['scoreAccount'] ?? 0,
-          numberPisit: userData['numberPisit'] ?? 0,
-        );
-      } else {
-        return null;
-      }
-    } catch (e) {
-      print('Error fetching user data: $e');
-      return null;
+Stream<UserModel> fetchUserData() async* {
+  try {
+    // Check if a user is signed in
+    final User? firebaseUser = auth.currentUser;
+    if (firebaseUser == null) {
+      _userDataStreamController.addError('User not signed in');
+      return;
     }
+
+    // Fetch additional user data from Firestore
+    final DocumentSnapshot userSnapshot =
+        await firestore.collection('Users').doc(firebaseUser.uid).get();
+
+    if (userSnapshot.exists) {
+      final Map<String, dynamic> userData =
+          userSnapshot.data() as Map<String, dynamic>;
+      final userModel = UserModel(
+        uid: firebaseUser.uid,
+        name: userData['name'] ?? '',
+        age: userData['age'] ?? '',
+        birthday: userData['birthday'] ?? '',
+        gender: userData['gender'] ?? '',
+        relationGoals: userData['relationGoals'] ?? '',
+        imageURLs: List<String>.from(userData['imageURLs']),
+        interests: List<String>.from(userData['interests']),
+        bio: userData['bio'] ?? '',
+        jobTitle: userData['jobTitle'] ?? '',
+        country: userData['country'] ?? '',
+        lastActive: userData['last_active'] ?? DateTime.now(),
+        noteAccount: userData['noteAccount'] ?? 0,
+        scoreAccount: userData['scoreAccount'] ?? 0,
+        numberPisit: userData['numberPisit'] ?? 0,
+      );
+      _userDataStreamController.add(userModel);
+      yield userModel; // Yield the user model to the stream
+    } else {
+      _userDataStreamController.addError('User data not found');
+    }
+  } catch (e) {
+    print('Error fetching user data: $e');
+    _userDataStreamController.addError('Error fetching user data: $e');
   }
+}
+
+void dispose() {
+  _userDataStreamController.close();
+}
 }
