@@ -22,7 +22,6 @@ class HomeRepository {
     required this.firestore,
   });
 
-
   Stream<List<UserModel>> getAllUsers() {
     return firestore.collection("Users").snapshots().asyncMap((event) async {
       List<UserModel> users = [];
@@ -87,18 +86,21 @@ class HomeRepository {
   }
 
   ///! function for edit profile
-  StreamController<UserModel?> _userDataController = StreamController<UserModel?>.broadcast();
+  StreamController<UserModel?> _userDataController =
+      StreamController<UserModel?>.broadcast();
 
-void _fetchUserData() async {
-  var userData = await firestore.collection('Users').doc(auth.currentUser?.uid).get();
+  void _fetchUserData() async {
+    var userData =
+        await firestore.collection('Users').doc(auth.currentUser?.uid).get();
 
-  UserModel? user;
-  if (userData.data() != null) {
-    user = UserModel.fromMap(userData.data()!);
+    UserModel? user;
+    if (userData.data() != null) {
+      user = UserModel.fromMap(userData.data()!);
+    }
+
+    _userDataController.add(user);
   }
 
-  _userDataController.add(user);
-}
   Future<void> updateUser(
       String userid,
       String name,
@@ -126,11 +128,8 @@ void _fetchUserData() async {
           'country': country,
         },
       );
-      _fetchUserData(); 
+      _fetchUserData();
       print('User information updated successfully');
-      CircularProgressIndicator();
-      Navigator.pop(context);
-    
     } catch (e) {
       // Handle the exception, e.g., log an error
       print('Error updating user: $e');

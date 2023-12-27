@@ -13,16 +13,16 @@ class CustomTextField extends StatelessWidget {
   TextInputType? keyboardType;
   FocusNode? focusNode;
 
-  CustomTextField({
-    Key? key,
-    required this.hintText,
-    required this.controller,
-    this.maxLength,
-    this.keyboardType,
-    this.focusNode,
-    this.fSize,
-    this.maxline
-  }) : super(key: key);
+  CustomTextField(
+      {Key? key,
+      required this.hintText,
+      required this.controller,
+      this.maxLength,
+      this.keyboardType,
+      this.focusNode,
+      this.fSize,
+      this.maxline})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -38,14 +38,16 @@ class CustomTextField extends StatelessWidget {
         keyboardType: keyboardType,
         focusNode: focusNode,
         textAlign: TextAlign.center,
-        style:  TextStyle(
-            fontSize: fSize ?? 26, color: blackColor, fontWeight: FontWeight.w700),
+        style: TextStyle(
+            fontSize: fSize ?? 26,
+            color: blackColor,
+            fontWeight: FontWeight.w700),
         decoration: InputDecoration(
           contentPadding: EdgeInsets.all(16.0),
           labelStyle: textStyleText, // Adjust content padding as needed
           hintText: hintText,
           hintStyle: TextStyle(
-              fontSize:fSize ?? 26,
+              fontSize: fSize ?? 26,
               color: Colors.grey[500],
               fontWeight: FontWeight.w700),
           border: InputBorder.none, // Remove the default border

@@ -3,8 +3,11 @@ import 'package:pisiit/features/auth/screens/signup_widget/widget_interest.dart'
 import 'package:pisiit/utils/colors.dart';
 import 'package:pisiit/utils/signin_showpopup.dart';
 import 'package:pisiit/widgets/custom_button.dart';
+
 class InterstWidgetProfile extends StatefulWidget {
-  final  List<String> interests;
+  final List<String> interests;
+  // final Function(List<String>) updateList;
+
   const InterstWidgetProfile({super.key, required this.interests});
 
   @override
@@ -12,9 +15,7 @@ class InterstWidgetProfile extends StatefulWidget {
 }
 
 class _InterstWidgetProfileState extends State<InterstWidgetProfile> {
-
-
-   List<String> currentInterests = [];
+  List<String> currentInterests = [];
 
   @override
   void initState() {
@@ -22,53 +23,39 @@ class _InterstWidgetProfileState extends State<InterstWidgetProfile> {
     // Initialize the current interests with the initial interests.
     currentInterests = List.from(widget.interests);
   }
+
   @override
   Widget build(BuildContext context) {
-   
     return Scaffold(
       appBar: AppBar(
-        title:  Text("Intersets"),
+        title: Text("Intersets"),
         centerTitle: true,
       ),
       body: SingleChildScrollView(
-        child:
-        Column(
-          children: [
-            Padding(
-              padding: const EdgeInsets.all(20),
-              child: InterstList(interests: widget.interests,),
+          child: Column(
+        children: [
+          Padding(
+            padding: const EdgeInsets.all(20),
+            child: InterstList(
+              interests: widget.interests,
             ),
-            
-            Text(widget.interests.length.toString()),
-          ],
-        )
-      ),
+          ),
+          Text(widget.interests.length.toString()),
+        ],
+      )),
       floatingActionButton: CustomButton(
-        colorText: whiteColor, 
+        colorText: whiteColor,
         textButton: "ok(${widget.interests.length} / 5 )",
         onPressed: () {
-          
-          
-          if( widget.interests.length != 5)
-          {
+          if (widget.interests.length != 5) {
             showSnackBar(context, "select 5 intersts");
-
-          }
-          else {
-
+          } else {
             Future.delayed(Duration(milliseconds: 500), () {
-            Navigator.pop(context);
-          });
-            }
-          
-          
-            
-          
-          
-          
-          },
-        ),
-        
+              Navigator.pop(context);
+            });
+          }
+        },
+      ),
     );
   }
 }

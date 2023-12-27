@@ -36,10 +36,13 @@ class _EditProfileState extends ConsumerState<EditProfile> {
   List<String> gender = [" "];
   List<File?> listImages = [];
   List<String> Newinterests = [];
+  List<String> NewInterests2 = [];
   List<String> newRelationGoals = [" "];
 
-  void editInformationProfile() {
-    String name = NicknameController.text.trim().isEmpty ? widget.user.name : NicknameController.text.trim() ;
+  void editInformationProfile(BuildContext context) async {
+    String name = NicknameController.text.trim().isEmpty
+        ? widget.user.name
+        : NicknameController.text.trim();
     String birth = birthController.text.trim().isEmpty
         ? widget.user.birthday
         : birthController.text.trim();
@@ -59,20 +62,21 @@ class _EditProfileState extends ConsumerState<EditProfile> {
         ? widget.user.relationGoals
         : newRelationGoals[0];
 
-    ref.read(homeControllerProvider).updateUser(
-      widget.user.uid, 
-      name, 
-      birth,
-      job, 
-      country, 
-      about, 
-      interst, 
-      gend, 
-      relation, 
-      context);
+    await ref.read(homeControllerProvider).updateUser(widget.user.uid, name,
+        birth, job, country, about, interst, gend, relation, context);
+
+    Navigator.pop(context);
 
     print("update sucess");
+  }
 
+  @override
+  void initState() {
+    gender[0] = widget.user.gender;
+    newRelationGoals[0] = widget.user.relationGoals;
+    Newinterests = widget.user.interests as List<String>;
+
+    super.initState();
   }
 
   @override
@@ -219,7 +223,9 @@ class _EditProfileState extends ConsumerState<EditProfile> {
                             MaterialPageRoute(
                                 builder: (context) => InterstWidgetProfile(
                                       interests: Newinterests,
-                                    )));
+                                    ))).then((value) {
+                          setState(() {});
+                        });
                       },
                       icon: Icon(Icons.arrow_forward_ios))
                 ],
@@ -247,14 +253,17 @@ class _EditProfileState extends ConsumerState<EditProfile> {
                             MaterialPageRoute(
                                 builder: (context) => RelationWidgetProfile(
                                       relationGoals: newRelationGoals,
-                                    )));
+                                    ))).then((value) {
+                          setState(() {});
+                        });
+                        ;
                       },
                       icon: Icon(Icons.arrow_forward_ios))
                 ],
               ),
               Text(newRelationGoals.toString()),
               RelationshipGoalWidget(
-                relationGoals: widget.user.relationGoals,
+                relationGoals: newRelationGoals[0],
               ),
               //! save and cancel button
               mediumPaddingVert,
@@ -271,12 +280,11 @@ class _EditProfileState extends ConsumerState<EditProfile> {
                   )),
                   Expanded(
                       child: CustomButton(
-                    colorText: whiteColor,
-                    textButton: "save",
-                    onPressed:
-                     editInformationProfile
-                   
-                  )),
+                          colorText: whiteColor,
+                          textButton: "save",
+                          onPressed: () {
+                            editInformationProfile(context);
+                          })),
                 ],
               ))
             ]),
