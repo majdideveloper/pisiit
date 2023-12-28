@@ -106,6 +106,7 @@ class UserProfile extends StatelessWidget {
               divider,
               smallPaddingVert,
               RelationshipGoalWidget(
+                title: "Relation Goals",
                 relationGoals: userModel.relationGoals,
               ),
               listBoolPictures[4] ? mediumPaddingVert : const SizedBox(),

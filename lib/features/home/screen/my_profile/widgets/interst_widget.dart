@@ -17,12 +17,12 @@ class InterstWidgetProfile extends StatefulWidget {
 class _InterstWidgetProfileState extends State<InterstWidgetProfile> {
   List<String> currentInterests = [];
 
-  @override
-  void initState() {
-    super.initState();
-    // Initialize the current interests with the initial interests.
-    currentInterests = List.from(widget.interests);
-  }
+  // @override
+  // void initState() {
+  //   super.initState();
+  //   // Initialize the current interests with the initial interests.
+  //   currentInterests = List.from(widget.interests);
+  // }
 
   @override
   Widget build(BuildContext context) {
@@ -36,25 +36,32 @@ class _InterstWidgetProfileState extends State<InterstWidgetProfile> {
         children: [
           Padding(
             padding: const EdgeInsets.all(20),
-            child: InterstList(
-              interests: widget.interests,
-            ),
+            child: 
+            
+            InterstList(
+              interests: widget.interests
+            )
+           
           ),
+          
           Text(widget.interests.length.toString()),
         ],
       )),
-      floatingActionButton: CustomButton(
-        colorText: whiteColor,
-        textButton: "ok(${widget.interests.length} / 5 )",
-        onPressed: () {
-          if (widget.interests.length != 5) {
-            showSnackBar(context, "select 5 intersts");
-          } else {
-            Future.delayed(Duration(milliseconds: 500), () {
-              Navigator.pop(context);
-            });
-          }
-        },
+      floatingActionButton: Padding(
+        padding: const EdgeInsets.all(15),
+        child: CustomButton(
+          colorText: whiteColor,
+          textButton: "ok(${widget.interests.length} / 5 )",
+          onPressed: () {
+            if (widget.interests.length != 5) {
+              showSnackBar(context, "select 5 intersts");
+            } else {
+             
+                Navigator.pop(context);
+              
+            }
+          },
+        ),
       ),
     );
   }

@@ -29,11 +29,13 @@ class MyApp extends ConsumerWidget {
       title: 'Flutter Demo',
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
+        
         scaffoldBackgroundColor: whiteColor,
         appBarTheme: AppBarTheme(
           backgroundColor: whiteColor,
         ),
-        colorScheme: ColorScheme.fromSeed(seedColor: primaryColor),
+        
+        colorScheme: ColorScheme.fromSeed(seedColor: lightColor),
         useMaterial3: true,
       ),
       onGenerateRoute: (settings) => generateRoute(settings),

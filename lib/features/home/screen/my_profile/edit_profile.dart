@@ -1,12 +1,17 @@
+import "dart:core";
 import "dart:io";
 
+import "package:country_picker/country_picker.dart";
 import "package:flutter/material.dart";
 import "package:flutter_riverpod/flutter_riverpod.dart";
+import "package:intl/intl.dart";
 import "package:pisiit/features/auth/screens/signup_widget/widget_gender.dart";
 import "package:pisiit/features/auth/widgets/custom_image_container.dart";
 import "package:pisiit/features/home/controller/home_controller.dart";
 import 'package:pisiit/features/auth/widgets/customtext_field.dart';
 import "package:pisiit/features/home/screen/my_profile/profile_screen.dart";
+import "package:pisiit/features/home/screen/my_profile/widgets/custom_multi_choice.dart";
+import "package:pisiit/features/home/screen/my_profile/widgets/custom_text_profile.dart";
 import "package:pisiit/features/home/screen/my_profile/widgets/interst_widget.dart";
 import "package:pisiit/features/home/screen/my_profile/widgets/relation_widget.dart";
 import "package:pisiit/models/user_model.dart";
@@ -38,6 +43,34 @@ class _EditProfileState extends ConsumerState<EditProfile> {
   List<String> Newinterests = [];
   List<String> NewInterests2 = [];
   List<String> newRelationGoals = [" "];
+  Country? country;
+
+void pickCountry() {
+    showCountryPicker(
+        context: context,
+       countryListTheme:const CountryListThemeData(
+        bottomSheetHeight: 500,
+        inputDecoration: InputDecoration(
+           labelText: 'Search',
+      hintText: 'Start typing to search',
+      prefixIcon:  Icon(Icons.search),
+          border: OutlineInputBorder(
+        borderSide: BorderSide(
+          color: lightColor,
+        ),
+        borderRadius: BorderRadius.all(Radius.circular(20))
+      ),
+        ),
+        backgroundColor: whiteColor
+       ),
+        onSelect: (Country _country) {
+          setState(() {
+            country = _country; 
+            CountryController.text =  _country.name;
+          });
+          print(country);
+        });
+  }
 
   void editInformationProfile(BuildContext context) async {
     String name = NicknameController.text.trim().isEmpty
@@ -61,13 +94,23 @@ class _EditProfileState extends ConsumerState<EditProfile> {
     String relation = newRelationGoals.isEmpty
         ? widget.user.relationGoals
         : newRelationGoals[0];
+    String age = birthController.text.trim().isEmpty
+        ? widget.user.age
+        : calculateage(birthController.text).toString();
 
     await ref.read(homeControllerProvider).updateUser(widget.user.uid, name,
-        birth, job, country, about, interst, gend, relation, context);
+        birth, job, country, about, interst, gend, relation, age, context);
 
     Navigator.pop(context);
 
     print("update sucess");
+  }
+
+  int calculateage(String birthday) {
+    DateTime dob = DateFormat('dd/MM/yyyy').parse(birthday);
+    DateTime now = DateTime.now();
+    int age = now.year - dob.year;
+    return age;
   }
 
   @override
@@ -105,66 +148,97 @@ class _EditProfileState extends ConsumerState<EditProfile> {
                 Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
               //!pic
               Container(
-                height: 300,
+                height: 360,
                 child: ImagesEditContainer(
                   listImages: listImages,
                   listUrlsImages: widget.user.imageURLs,
                 ),
               ),
+              mediumPaddingVert,
+              
               //! nickname + birthday
               Row(
+                mainAxisAlignment: MainAxisAlignment.spaceAround,
                 children: [
                   Column(
+                    mainAxisAlignment: MainAxisAlignment.start,
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
                         "NickName",
                         style: textStyleTextBold,
                       ),
-                      SizedBox(
-                        width: 150,
-                        child: CustomTextField(
-                          fSize: 18,
-                          hintText: widget.user.name,
-                          controller: NicknameController,
-                        ),
+                      CustomProfileTextField(
+                        nameTextField: widget.user.name,
+                        controller: NicknameController,
                       ),
-                      Text(NicknameController.text),
                     ],
                   ),
                   Column(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
                         "Birthday",
                         style: textStyleTextBold,
                       ),
-                      SizedBox(
-                        width: 150,
-                        child: CustomTextField(
-                          fSize: 18,
-                          hintText: widget.user.birthday,
-                          controller: birthController,
+                      CustomProfileTextField(
+                        nameTextField: widget.user.birthday,
+                        controller: birthController,
+                        prefixIcon: IconButton(
+                          icon: Icon(Icons.calendar_today),
+                          onPressed: () async {
+                            DateTime? pickedDate = await showDatePicker(
+                              context: context,
+                              initialDate: DateFormat("dd/MM/yyyy").parse(widget
+                                  .user
+                                  .birthday), //?? DateTime.now().subtract(Duration(days: 365*18)), //get today's date
+                              firstDate: DateTime.now().subtract(Duration(
+                                  days: 365 *
+                                      60)), // - not to allow to choose before today.
+                              lastDate: DateTime.now()
+                                  .subtract(Duration(days: 365 * 18)),
+                            );
+                            if (pickedDate != null) {
+                              String formattedDate = DateFormat('dd/MM/yyyy')
+                                  .format(
+                                      pickedDate); // format date in required form here we use yyyy-MM-dd that means time is removed
+                              print(formattedDate);
+
+                              setState(() {
+                                birthController.text =
+                                    formattedDate; //set foratted date to TextField value.
+                              });
+                            } else {
+                              print("Date is not selected");
+                            }
+                          },
                         ),
                       ),
                     ],
                   ),
                 ],
               ),
+
               mediumPaddingVert,
 
               //!gender
+
               Text(
                 "Gender",
                 style: textStyleTextBold,
               ),
               smallPaddingVert,
-              CustomShapes(
+              CustomMultiChoiceTextField(
                 gender: gender,
-                withContainer: 70,
-                heightContainer: 80,
               ),
-              Text(gender.toString()),
+              // CustomShapes(
+              //   gender: gender,
+              //   withContainer: 70,
+              //   heightContainer: 80,
+              // ),
               mediumPaddingVert,
+             
               //! job title
               Text(
                 "Job title",
@@ -172,10 +246,11 @@ class _EditProfileState extends ConsumerState<EditProfile> {
               ),
               smallPaddingVert,
 
-              CustomTextField(
-                fSize: 18,
-                hintText: widget.user.jobTitle,
+              CustomProfileTextField(
+                width: double.maxFinite,
+                nameTextField: widget.user.jobTitle,
                 controller: JobController,
+               
               ),
               //! living in
               mediumPaddingVert,
@@ -185,86 +260,76 @@ class _EditProfileState extends ConsumerState<EditProfile> {
               ),
               smallPaddingVert,
 
-              CustomTextField(
-                fSize: 18,
-                hintText: widget.user.country,
+              CustomProfileTextField(
+                width: double.maxFinite,
+                nameTextField: widget.user.country,
                 controller: CountryController,
+                prefixIcon: IconButton(
+                  onPressed:
+                   (){pickCountry();}, 
+                  icon: Icon(Icons.language_rounded)
+                ),
               ),
               mediumPaddingVert,
               //! about me
               mediumPaddingVert,
               Text(
-                "about me",
+                "About me",
                 style: textStyleTextBold,
               ),
               smallPaddingVert,
-              CustomTextField(
-                fSize: 18,
-                hintText: widget.user.bio.isEmpty
+              CustomProfileTextField(
+                width: double.maxFinite,
+                nameTextField: widget.user.bio.isEmpty
                     ? 'Describe yourself in two sentences to make your profile stand out. What are your key qualities or interests that you want someone to know?'
                     : widget.user.bio,
                 controller: aboutController,
                 maxLength: 200,
-                maxline: 3,
+                maxLines: 4,
               ),
               mediumPaddingVert,
               //! interest
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Text(
-                    "Interset",
-                    style: textStyleTextBold,
-                  ),
-                  IconButton(
-                      onPressed: () {
-                        Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) => InterstWidgetProfile(
-                                      interests: Newinterests,
-                                    ))).then((value) {
-                          setState(() {});
-                        });
-                      },
-                      icon: Icon(Icons.arrow_forward_ios))
-                ],
+              CartInfoEditProfile(
+                titleHeader: "Interest",
+                onPressed: () {
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => InterstWidgetProfile(
+                                interests: Newinterests,
+                              ))).then((value) {
+                    setState(() {});
+                  });
+                },
+                widgetInfo: SectionWidget(
+                  nameSection: "",
+                  interests: Newinterests.length > 4
+                      ? Newinterests
+                      : widget.user.interests as List<String>,
+                ),
               ),
-              Text(Newinterests.toString()),
-              SectionWidget(
-                nameSection: "",
-                interests: Newinterests.length > 4
-                    ? Newinterests
-                    : widget.user.interests as List<String>,
-              ),
+              smallPaddingVert,
+
               //! relations goals
               smallPaddingVert,
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Text(
-                    "Relation GOALS",
-                    style: textStyleTextBold,
-                  ),
-                  IconButton(
-                      onPressed: () {
-                        Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) => RelationWidgetProfile(
-                                      relationGoals: newRelationGoals,
-                                    ))).then((value) {
-                          setState(() {});
-                        });
-                        ;
-                      },
-                      icon: Icon(Icons.arrow_forward_ios))
-                ],
+              CartInfoEditProfile(
+                titleHeader: "Relation Goals",
+                onPressed: () {
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => RelationWidgetProfile(
+                                relationGoals: newRelationGoals,
+                              ))).then((value) {
+                    setState(() {});
+                  });
+                },
+                widgetInfo: RelationshipGoalWidget(
+                  title: "",
+                  relationGoals: newRelationGoals[0],
+                ),
               ),
-              Text(newRelationGoals.toString()),
-              RelationshipGoalWidget(
-                relationGoals: newRelationGoals[0],
-              ),
+
               //! save and cancel button
               mediumPaddingVert,
               (Row(

@@ -111,6 +111,7 @@ class HomeRepository {
       List<dynamic> interests,
       String gender,
       String relationGoals,
+      String age,
       BuildContext context) async {
     try {
       final CollectionReference usersCollection =
@@ -126,6 +127,7 @@ class HomeRepository {
           'bio': bio,
           'jobTitle': jobTitle,
           'country': country,
+          'age':age
         },
       );
       _fetchUserData();

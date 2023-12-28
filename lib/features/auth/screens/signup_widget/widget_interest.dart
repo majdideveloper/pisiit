@@ -35,15 +35,18 @@ class _InterestWidgetState extends State<InterestWidget> {
   }
 }
 
-class InterstList extends StatelessWidget {
+class InterstList extends StatefulWidget {
    final List<String> interests;
    const InterstList({
     super.key,
     required this.interests,
   });
 
- 
+  @override
+  State<InterstList> createState() => _InterstListState();
+}
 
+class _InterstListState extends State<InterstList> {
   @override
   Widget build(BuildContext context) {
     return Wrap(
@@ -53,39 +56,39 @@ class InterstList extends StatelessWidget {
       spacing: 5,
       children: [
         CustomTextContainer(
-            listInteresrt: interests, text: "Travel 🛩️"),
+            listInteresrt: widget.interests, text: "Travel 🛩️"),
         CustomTextContainer(
-            listInteresrt: interests, text: "Cooking 🍳"),
+            listInteresrt: widget.interests, text: "Cooking 🍳"),
         CustomTextContainer(
-            listInteresrt: interests, text: "Photography 📸"),
+            listInteresrt: widget.interests, text: "Photography 📸"),
         CustomTextContainer(
-            listInteresrt: interests, text: "Hiking 🧗‍♀️"),
+            listInteresrt: widget.interests, text: "Hiking 🧗‍♀️"),
         CustomTextContainer(
-            listInteresrt: interests, text: "Music 🎶"),
+            listInteresrt: widget.interests, text: "Music 🎶"),
         CustomTextContainer(
-            listInteresrt: interests, text: "Yoga 🧘‍♂️"),
+            listInteresrt: widget.interests, text: "Yoga 🧘‍♂️"),
         CustomTextContainer(
-            listInteresrt: interests, text: "Pets 😺"),
+            listInteresrt: widget.interests, text: "Pets 😺"),
         CustomTextContainer(
-            listInteresrt: interests, text: "Gaming 🎮"),
+            listInteresrt: widget.interests, text: "Gaming 🎮"),
         CustomTextContainer(
-            listInteresrt: interests, text: "Painting 🖼️"),
+            listInteresrt: widget.interests, text: "Painting 🖼️"),
         CustomTextContainer(
-            listInteresrt: interests, text: "Movies 🎬"),
+            listInteresrt: widget.interests, text: "Movies 🎬"),
         CustomTextContainer(
-            listInteresrt: interests, text: "Art 🎨"),
+            listInteresrt: widget.interests, text: "Art 🎨"),
         CustomTextContainer(
-            listInteresrt: interests, text: "Reading 📖"),
+            listInteresrt: widget.interests, text: "Reading 📖"),
         CustomTextContainer(
-            listInteresrt: interests, text: "Dancing 💃"),
+            listInteresrt: widget.interests, text: "Dancing 💃"),
         CustomTextContainer(
-            listInteresrt: interests, text: "Sports ⚽"),
+            listInteresrt: widget.interests, text: "Sports ⚽"),
         CustomTextContainer(
-            listInteresrt: interests, text: "Techhnology 📱"),
+            listInteresrt: widget.interests, text: "Techhnology 📱"),
         CustomTextContainer(
-            listInteresrt: interests, text: "Fashion 👗"),
+            listInteresrt: widget.interests, text: "Fashion 👗"),
         CustomTextContainer(
-            listInteresrt: interests, text: "Motorcycling 🏍️"),
+            listInteresrt: widget.interests, text: "Motorcycling 🏍️"),
       ],
     );
   }
@@ -114,10 +117,12 @@ class _CustomTextContainerState extends State<CustomTextContainer> {
         setState(() {
           if (widget.listInteresrt.contains(widget.text)) {
             widget.listInteresrt.remove(widget.text);
+            
             print(widget.listInteresrt);
           } else {
             if (!widget.listInteresrt.contains(widget.text)) {
               widget.listInteresrt.add(widget.text);
+               widget.listInteresrt;
               print(widget.listInteresrt);
             }
           }

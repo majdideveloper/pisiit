@@ -113,6 +113,7 @@ class ProfileScreen extends StatelessWidget {
                 smallPaddingVert,
                 //! section Relationship goals
                 RelationshipGoalWidget(
+                  title: "Relation Goals",
                   relationGoals: userModel.relationGoals,
                 ),
                 mediumPaddingVert,
@@ -204,9 +205,11 @@ class SectionWidget extends StatelessWidget {
 
 class RelationshipGoalWidget extends StatelessWidget {
   final String relationGoals;
+  final String title;
+ 
   const RelationshipGoalWidget({
     Key? key,
-    required this.relationGoals,
+    required this.relationGoals, required this.title,
   }) : super(key: key);
 
   @override
@@ -215,7 +218,7 @@ class RelationshipGoalWidget extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text(
-          "Relationship Goals",
+         title,
           style: textStyleTextBold,
         ),
         smallPaddingVert,

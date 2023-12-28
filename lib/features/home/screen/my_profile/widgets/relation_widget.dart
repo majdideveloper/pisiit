@@ -27,15 +27,17 @@ class RelationWidgetProfile extends StatelessWidget {
           ),
         )
       ),
-      floatingActionButton: CustomButton(
-        colorText: whiteColor, textButton: "ok",
-        onPressed: (){
-            Future.delayed(Duration(milliseconds: 500), () {
-              CircularProgressIndicator();
-                          Navigator.pop(context);
-           });        
-        },
-        ),
+      floatingActionButton: Padding(
+        padding: const EdgeInsets.all(15),
+        child: CustomButton(
+          colorText: whiteColor, textButton: "ok",
+          onPressed: (){
+             
+                            Navigator.pop(context);
+                   
+          },
+          ),
+      ),
     );
   }
 }
