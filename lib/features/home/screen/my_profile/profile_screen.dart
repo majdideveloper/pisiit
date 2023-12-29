@@ -1,6 +1,7 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:pisiit/features/home/screen/my_profile/edit_profile.dart';
 import 'package:pisiit/features/home/screen/widgets/appbar_profile.dart';
@@ -145,7 +146,12 @@ class ProfileScreen extends StatelessWidget {
            });
           },
           child:
-          FaIcon(FontAwesomeIcons.pencil, color: primaryColor),
+          SvgPicture.asset(
+            "assets/svg/edit.svg", 
+            height: 24,width: 24,
+            color: primaryColor,
+            ),
+          //FaIcon(FontAwesomeIcons.pencil, color: primaryColor),
            //Icon(Icons.edit , color: primaryColor,),
         ),
     );
@@ -180,20 +186,22 @@ class AboutMeWidget extends StatelessWidget {
 class SectionWidget extends StatelessWidget {
   final String nameSection;
   final List<String> interests;
+  final bool? hadtitle;
   const SectionWidget({
     Key? key,
     required this.nameSection,
-    required this.interests,
+    required this.interests, this.hadtitle = true,
   }) : super(key: key);
   @override
   Widget build(BuildContext context) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
+        hadtitle! ? 
         Text(
           nameSection,
           style: textStyleTextBold,
-        ),
+        ) : SizedBox.shrink(),
         smallPaddingVert,
         ShowListItem(
           list: interests,
@@ -205,11 +213,12 @@ class SectionWidget extends StatelessWidget {
 
 class RelationshipGoalWidget extends StatelessWidget {
   final String relationGoals;
-  final String title;
+  final String? title;
+  final bool? hadtile; 
  
   const RelationshipGoalWidget({
     Key? key,
-    required this.relationGoals, required this.title,
+    required this.relationGoals, required this.title, this.hadtile =false,
   }) : super(key: key);
 
   @override
@@ -217,10 +226,11 @@ class RelationshipGoalWidget extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
+        hadtile == false ? 
         Text(
-         title,
+         title!,
           style: textStyleTextBold,
-        ),
+        ): SizedBox.shrink(),
         smallPaddingVert,
         ItemList(
           text: relationGoals,

@@ -13,6 +13,7 @@ class CustomProfileTextField extends StatefulWidget {
   final DateTime? date;
   final double? width;
   final int? maxLines;
+  bool? readonly;
   Widget? suffixIcon;
   Widget? prefixIcon;
 
@@ -27,6 +28,7 @@ class CustomProfileTextField extends StatefulWidget {
     this.date,
     this.width,
     this.maxLines,
+    this.readonly,
   }) : super(key: key);
 
   @override
@@ -39,10 +41,12 @@ class _CustomProfileTextFieldState extends State<CustomProfileTextField> {
     return Container(
       width: widget.width ?? 155,
       child: TextFormField(
+        autofocus: true,
+        readOnly: widget.readonly ?? false,
         controller: widget.controller,
         maxLength: widget.maxLength,
         keyboardType: widget.keyboardType,
-        maxLines: widget.maxLines,
+        maxLines: widget.maxLines ?? 1,
         decoration: InputDecoration(
           suffixIcon: widget.prefixIcon,
           prefixIcon: widget.suffixIcon,
@@ -81,24 +85,24 @@ class CartInfoEditProfile extends StatelessWidget {
         padding: const EdgeInsets.all(8.0),
         //!headerPart
         child: Column(
-          mainAxisAlignment: MainAxisAlignment.start,
-          crossAxisAlignment: CrossAxisAlignment.start, 
-        children: [
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            mainAxisAlignment: MainAxisAlignment.start,
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text(
-                titleHeader,
-                style: textStyleTextBold,
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Text(
+                    titleHeader,
+                    style: textStyleTextBold,
+                  ),
+                  IconButton(
+                      onPressed: onPressed, icon: Icon(Icons.arrow_forward_ios))
+                ],
               ),
-              IconButton(
-                  onPressed: onPressed, icon: Icon(Icons.arrow_forward_ios))
-            ],
-          ),
-          divider,
-          widgetInfo,
-          smallPaddingVert
-        ]),
+              divider,
+              widgetInfo,
+              smallPaddingVert
+            ]),
       ),
     );
   }

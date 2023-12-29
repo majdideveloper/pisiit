@@ -2,6 +2,7 @@
 import 'package:badges/badges.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 import 'package:pisiit/features/auth/controller/auth_controller.dart';
@@ -72,9 +73,10 @@ class _HomeApplicationScreenState extends State<HomeApplicationScreen> {
                   onTap: _onItemTapped,
                   backgroundColor: whiteColor,
                   elevation: 0,
-                  items: const [
+                  items:  [
                     BottomNavigationBarItem(
-                      icon: FaIcon(FontAwesomeIcons.house),
+                      icon: SvgPicture.asset("assets/svg/home but light.svg"),
+                      // FaIcon(FontAwesomeIcons.house),
                       label: "Home",
                     ),
                     BottomNavigationBarItem(
@@ -96,8 +98,9 @@ class _HomeApplicationScreenState extends State<HomeApplicationScreen> {
                 backgroundColor: whiteColor,
                 elevation: 0,
                 items: [
-                  const BottomNavigationBarItem(
-                    icon: FaIcon(FontAwesomeIcons.house),
+                   BottomNavigationBarItem(
+                    icon: SvgPicture.asset("assets/svg/home but light.svg" , height: 24, width: 24, color: primaryColor,),
+                    //FaIcon(FontAwesomeIcons.house),
                     label: "Home",
                   ),
                   BottomNavigationBarItem(

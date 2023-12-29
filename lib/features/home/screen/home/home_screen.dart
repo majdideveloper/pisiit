@@ -207,12 +207,18 @@ class ItemListUsers extends StatelessWidget {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
-                          "${userModel.name} (${userModel.age})",
+                          userModel.name.length > 8
+                              ? userModel.name.substring(0, 7) +
+                                  "..." +
+                                  " ( ${userModel.age})"
+                              : userModel.name + " ( ${userModel.age})",
                           style: textStyleTextBold.copyWith(color: whiteColor),
                         ),
                         microPaddingVert,
                         Text(
-                          userModel.jobTitle,
+                          userModel.jobTitle.length > 10
+                              ? userModel.jobTitle.substring(0, 9) + "..."
+                              : userModel.jobTitle,
                           style: textStyleTextMeduimBold.copyWith(
                               color: whiteColor),
                         ),

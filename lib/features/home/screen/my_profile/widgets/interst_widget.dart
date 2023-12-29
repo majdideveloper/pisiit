@@ -47,7 +47,7 @@ class _InterstWidgetProfileState extends State<InterstWidgetProfile> {
           Text(widget.interests.length.toString()),
         ],
       )),
-      floatingActionButton: Padding(
+      bottomNavigationBar: Padding(
         padding: const EdgeInsets.all(15),
         child: CustomButton(
           colorText: whiteColor,

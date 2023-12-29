@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:lottie/lottie.dart';
@@ -654,8 +655,8 @@ class Avaatar extends StatelessWidget {
         ),
         child: ClipRRect(
           borderRadius: BorderRadius.circular(70),
-          child: Image.network(
-            urlPic,
+          child: CachedNetworkImage(
+            imageUrl: urlPic,
             height: 60,
             width: 60,
             fit: BoxFit.cover,

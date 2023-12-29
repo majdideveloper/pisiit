@@ -45,28 +45,26 @@ class _EditProfileState extends ConsumerState<EditProfile> {
   List<String> newRelationGoals = [" "];
   Country? country;
 
-void pickCountry() {
+  void pickCountry() {
     showCountryPicker(
         context: context,
-       countryListTheme:const CountryListThemeData(
-        bottomSheetHeight: 500,
-        inputDecoration: InputDecoration(
-           labelText: 'Search',
-      hintText: 'Start typing to search',
-      prefixIcon:  Icon(Icons.search),
-          border: OutlineInputBorder(
-        borderSide: BorderSide(
-          color: lightColor,
-        ),
-        borderRadius: BorderRadius.all(Radius.circular(20))
-      ),
-        ),
-        backgroundColor: whiteColor
-       ),
+        countryListTheme: const CountryListThemeData(
+            bottomSheetHeight: 500,
+            inputDecoration: InputDecoration(
+              labelText: 'Search',
+              hintText: 'Start typing to search',
+              prefixIcon: Icon(Icons.search),
+              border: OutlineInputBorder(
+                  borderSide: BorderSide(
+                    color: lightColor,
+                  ),
+                  borderRadius: BorderRadius.all(Radius.circular(20))),
+            ),
+            backgroundColor: whiteColor),
         onSelect: (Country _country) {
           setState(() {
-            country = _country; 
-            CountryController.text =  _country.name;
+            country = _country;
+            CountryController.text = _country.name;
           });
           print(country);
         });
@@ -107,9 +105,9 @@ void pickCountry() {
   }
 
   int calculateage(String birthday) {
-    DateTime dob = DateFormat('dd/MM/yyyy').parse(birthday);
+    DateTime userBirth = DateFormat('dd/MM/yyyy').parse(birthday);
     DateTime now = DateTime.now();
-    int age = now.year - dob.year;
+    int age = now.year - userBirth.year;
     return age;
   }
 
@@ -155,7 +153,7 @@ void pickCountry() {
                 ),
               ),
               mediumPaddingVert,
-              
+
               //! nickname + birthday
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceAround,
@@ -183,10 +181,14 @@ void pickCountry() {
                         style: textStyleTextBold,
                       ),
                       CustomProfileTextField(
+                        readonly: true,
                         nameTextField: widget.user.birthday,
                         controller: birthController,
                         prefixIcon: IconButton(
-                          icon: Icon(Icons.calendar_today),
+                          icon: Icon(
+                            Icons.calendar_today,
+                            color: primaryColor,
+                          ),
                           onPressed: () async {
                             DateTime? pickedDate = await showDatePicker(
                               context: context,
@@ -219,9 +221,7 @@ void pickCountry() {
                   ),
                 ],
               ),
-
               mediumPaddingVert,
-
               //!gender
 
               Text(
@@ -238,7 +238,6 @@ void pickCountry() {
               //   heightContainer: 80,
               // ),
               mediumPaddingVert,
-             
               //! job title
               Text(
                 "Job title",
@@ -250,7 +249,6 @@ void pickCountry() {
                 width: double.maxFinite,
                 nameTextField: widget.user.jobTitle,
                 controller: JobController,
-               
               ),
               //! living in
               mediumPaddingVert,
@@ -261,14 +259,18 @@ void pickCountry() {
               smallPaddingVert,
 
               CustomProfileTextField(
+                readonly: true,
                 width: double.maxFinite,
                 nameTextField: widget.user.country,
                 controller: CountryController,
                 prefixIcon: IconButton(
-                  onPressed:
-                   (){pickCountry();}, 
-                  icon: Icon(Icons.language_rounded)
-                ),
+                    onPressed: () {
+                      pickCountry();
+                    },
+                    icon: Icon(
+                      Icons.language_rounded,
+                      color: primaryColor,
+                    )),
               ),
               mediumPaddingVert,
               //! about me
@@ -303,6 +305,7 @@ void pickCountry() {
                 },
                 widgetInfo: SectionWidget(
                   nameSection: "",
+                  hadtitle: false,
                   interests: Newinterests.length > 4
                       ? Newinterests
                       : widget.user.interests as List<String>,
@@ -326,6 +329,7 @@ void pickCountry() {
                 },
                 widgetInfo: RelationshipGoalWidget(
                   title: "",
+                  hadtile: true,
                   relationGoals: newRelationGoals[0],
                 ),
               ),

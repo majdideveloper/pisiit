@@ -14,7 +14,7 @@ class RelationWidgetProfile extends StatelessWidget {
    
     return Scaffold(
       appBar: AppBar(
-        title:  Text("Intersets"),
+        title:  Text("Relation Goals"),
         centerTitle: true,
       ),
       body: SingleChildScrollView(
@@ -27,7 +27,7 @@ class RelationWidgetProfile extends StatelessWidget {
           ),
         )
       ),
-      floatingActionButton: Padding(
+      bottomNavigationBar: Padding(
         padding: const EdgeInsets.all(15),
         child: CustomButton(
           colorText: whiteColor, textButton: "ok",
