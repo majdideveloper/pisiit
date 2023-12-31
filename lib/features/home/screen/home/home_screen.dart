@@ -15,10 +15,13 @@ import 'package:pisiit/utils/modalBottomSheet.dart';
 
 class HomeScreen extends StatefulWidget {
   final UserModel userModel;
-  const HomeScreen({
+
+  HomeScreen({
     Key? key,
     required this.userModel,
   }) : super(key: key);
+  List<String> goalRelation;
+  List<String> gender;
 
   @override
   State<HomeScreen> createState() => _HomeScreenState();

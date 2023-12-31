@@ -1,4 +1,6 @@
+// ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:flutter/material.dart';
+
 import 'package:pisiit/features/auth/screens/signup_widget/widget_interest.dart';
 import 'package:pisiit/utils/colors.dart';
 import 'package:pisiit/utils/helper_padding.dart';
@@ -7,7 +9,12 @@ import 'package:pisiit/widgets/custom_button.dart';
 
 class ModalBottomSheet extends StatefulWidget {
   List<String> goalRelation = [];
-  ModalBottomSheet({super.key});
+  List<String> gender = [];
+  ModalBottomSheet({
+    Key? key,
+    required this.goalRelation,
+    required this.gender,
+  }) : super(key: key);
 
   @override
   State<ModalBottomSheet> createState() => _ModalBottomSheetState();
