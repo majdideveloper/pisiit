@@ -43,8 +43,16 @@ class HomeController {
   //       currentUserId: currentUserId);
   // }
 
-  Stream<List<UserModel>> getAllUsers() {
-    return homeRepository.getAllUsers();
+  Stream<List<UserModel>> getAllUsers({
+    List<int>? minAndMaxAge,
+    String? gender,
+    List<String>? listOfGoalsRelationShip,
+  }) {
+    return homeRepository.getAllUsers(
+      minAndMaxAge: minAndMaxAge,
+      gender: gender,
+      listOfGoalsRelationShip: listOfGoalsRelationShip,
+    );
   }
 
   Stream<int> numberRequest() {

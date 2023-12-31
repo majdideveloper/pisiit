@@ -16,26 +16,51 @@ import 'package:pisiit/utils/modalBottomSheet.dart';
 class HomeScreen extends StatefulWidget {
   final UserModel userModel;
 
-  HomeScreen({
+  const HomeScreen({
     Key? key,
     required this.userModel,
   }) : super(key: key);
-  List<String> goalRelation;
-  List<String> gender;
 
   @override
   State<HomeScreen> createState() => _HomeScreenState();
 }
 
 class _HomeScreenState extends State<HomeScreen> {
+  List<String> goalRelation = [];
+  List<String> gender = [""];
+  List<int> minAndMaxAge = [0, 100];
   void _showAgeRangePicker(BuildContext context) {
     showModalBottomSheet(
       context: context,
       isScrollControlled: true,
       builder: (BuildContext context) {
-        return ModalBottomSheet();
+        return ModalBottomSheet(
+          minAndMaxAge: minAndMaxAge,
+          goalRelation: goalRelation,
+          gender: gender,
+        );
       },
-    );
+    ).then((value) => {
+          setState(() {
+            print(gender[0]);
+            print(minAndMaxAge[0]);
+            print(minAndMaxAge[1]);
+          }),
+        });
+  }
+
+  @override
+  void initState() {
+    goalRelation = [''];
+    gender[0] = widget.userModel.gender == "Female"
+        ? 'Male'
+        : widget.userModel.gender == 'Male'
+            ? "Female"
+            : "Other";
+    print(goalRelation);
+    print(gender);
+
+    super.initState();
   }
 
   @override
@@ -66,6 +91,7 @@ class _HomeScreenState extends State<HomeScreen> {
           IconButton(
               onPressed: () {
                 _showAgeRangePicker(context);
+                setState(() {});
               },
               icon: const FaIcon(
                 FontAwesomeIcons.sliders,
@@ -75,7 +101,10 @@ class _HomeScreenState extends State<HomeScreen> {
         ],
       ),
       body: BodyHomeScreen(
+        gender: gender[0], //!= '' ? gender[0] : "",
         ownUserModel: widget.userModel,
+        // listOfGoalsRelationShip: goalRelation[0] != '' ? goalRelation : [''],
+        // minAndMaxAge: minAndMaxAge,
       ),
     );
   }
@@ -83,14 +112,27 @@ class _HomeScreenState extends State<HomeScreen> {
 
 class BodyHomeScreen extends ConsumerWidget {
   final UserModel ownUserModel;
+  final List<int>? minAndMaxAge;
+  final String? gender;
+  final List<String>? listOfGoalsRelationShip;
   const BodyHomeScreen({
     required this.ownUserModel,
+    this.minAndMaxAge,
+    this.gender,
+    this.listOfGoalsRelationShip,
   });
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     return StreamBuilder(
-        stream: ref.watch(homeControllerProvider).getAllUsers(),
+        stream: ref.watch(homeControllerProvider).getAllUsers(
+              minAndMaxAge: minAndMaxAge,
+              gender: gender,
+              listOfGoalsRelationShip: listOfGoalsRelationShip,
+            ),
+        // gender != null
+        //     ?
+        //     : ref.watch(homeControllerProvider).getAllUsers(),
         builder: (context, snapshot) {
           if (snapshot.connectionState == ConnectionState.waiting) {
             //! widget in waiting Users similar to real screen

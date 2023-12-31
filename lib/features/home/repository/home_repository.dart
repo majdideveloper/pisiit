@@ -22,17 +22,45 @@ class HomeRepository {
     required this.firestore,
   });
 
-  Stream<List<UserModel>> getAllUsers() {
-    return firestore.collection("Users").snapshots().asyncMap((event) async {
-      List<UserModel> users = [];
-      for (var document in event.docs) {
-        var userModel = UserModel.fromMap(document.data());
-        if (auth.currentUser!.uid != userModel.uid) {
-          users.add(userModel);
+  Stream<List<UserModel>> getAllUsers({
+    List<int>? minAndMaxAge,
+    String? gender,
+    List<String>? listOfGoalsRelationShip,
+  }) {
+    if (gender == null) {
+      print(gender);
+      return firestore.collection("Users").snapshots().asyncMap((event) async {
+        List<UserModel> users = [];
+        for (var document in event.docs) {
+          var userModel = UserModel.fromMap(document.data());
+          if (auth.currentUser!.uid != userModel.uid) {
+            users.add(userModel);
+          }
         }
-      }
-      return users;
-    });
+        return users;
+      });
+    } else {
+      return firestore
+          .collection("Users")
+          // .where(
+          //   "age",
+          //   isGreaterThan: minAndMaxAge[0],
+          //   isLessThan: minAndMaxAge[1],
+          // )
+          .where("gender", isEqualTo: gender)
+          // .where("relationGoals", arrayContainsAny: listOfGoalsRelationShip)
+          .snapshots()
+          .asyncMap((event) async {
+        List<UserModel> users = [];
+        for (var document in event.docs) {
+          var userModel = UserModel.fromMap(document.data());
+          if (auth.currentUser!.uid != userModel.uid) {
+            users.add(userModel);
+          }
+        }
+        return users;
+      });
+    }
   }
 
   Future<List<UserModel>?> fetchAllUser() async {
@@ -127,7 +155,7 @@ class HomeRepository {
           'bio': bio,
           'jobTitle': jobTitle,
           'country': country,
-          'age':age
+          'age': age
         },
       );
       _fetchUserData();
