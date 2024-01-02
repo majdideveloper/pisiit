@@ -60,7 +60,7 @@ class UserProfile extends StatelessWidget {
                 isProfile: false,
                 userid: userModel.uid,
                 name: userModel.name,
-                age: userModel.age,
+                age: userModel.age.toString(),
                 gender: userModel.gender,
                 jobTitle: userModel.jobTitle,
                 country: userModel.country
@@ -128,18 +128,17 @@ class UserProfile extends StatelessWidget {
           ),
         ),
       ),
-      //request part 
-
+      //request part
 
       // bottomNavigationBar:
-      
+
       //  Container(
-       
+
       //    color: Colors.transparent,
       //    child: Row(
       //     mainAxisAlignment: MainAxisAlignment.center,
       //     children: [
-           
+
       //       mediumPaddingHor,
       //       Consumer(builder: (context, ref, child) {
       //         return FutureBuilder<bool>(
@@ -176,15 +175,15 @@ class UserProfile extends StatelessWidget {
       //                   ],
       //                 ); //CircularProgressIndicator();
       //               }
-         
+
       //               if (snapshot.hasError) {
       //                 return Text('Error: ${snapshot.error}');
       //               }
-         
+
       //               bool isUserInCollection = snapshot.data!;
-         
-      //               return  
-                    
+
+      //               return
+
       //               Row(
       //                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
       //                 children: [
@@ -242,7 +241,7 @@ class UserProfile extends StatelessWidget {
       //                                 ),
       //                               ),
       //                               child: Center(
-      //                                   child: 
+      //                                   child:
       //                                   isUserInCollection ?
       //                                   Image.asset(
       //                                 "assets/images/logo_request.png",
@@ -251,9 +250,8 @@ class UserProfile extends StatelessWidget {
       //                                Image.asset(
       //                                 "assets/images/logo.png",
       //                                 height: 30,
-      //                               ) 
-                        
-                                    
+      //                               )
+
       //                               ) ,
       //                             ),
       //                           ),
@@ -265,9 +263,9 @@ class UserProfile extends StatelessWidget {
       //     ],
       //          ),
       //  ),
-       floatingActionButton: Padding(
-         padding: const EdgeInsets.only(left: 20, right: 20),
-         child: Row(
+      floatingActionButton: Padding(
+        padding: const EdgeInsets.only(left: 20, right: 20),
+        child: Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Consumer(builder: (context, ref, child) {
@@ -277,7 +275,7 @@ class UserProfile extends StatelessWidget {
                       .canSendRequest(userModel.uid),
                   builder: (context, snapshot) {
                     if (snapshot.connectionState == ConnectionState.waiting) {
-                      return  Row(
+                      return Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
                           Padding(
@@ -285,18 +283,19 @@ class UserProfile extends StatelessWidget {
                             child: Container(
                               width: 60,
                               height: 60,
-                            decoration: BoxDecoration(
-                              color: greyColor.shade300,
-                              shape: BoxShape.circle,
-                              boxShadow: [
-              BoxShadow(
-                color: Colors.grey.withOpacity(0.5),
-                spreadRadius: 5,
-                blurRadius: 7,
-                offset: Offset(0, 3), // changes the position of the shadow
-              ),
-            ],
-                            ),
+                              decoration: BoxDecoration(
+                                color: greyColor.shade300,
+                                shape: BoxShape.circle,
+                                boxShadow: [
+                                  BoxShadow(
+                                    color: Colors.grey.withOpacity(0.5),
+                                    spreadRadius: 5,
+                                    blurRadius: 7,
+                                    offset: Offset(0,
+                                        3), // changes the position of the shadow
+                                  ),
+                                ],
+                              ),
                             ),
                           ),
                           largePaddingHor,
@@ -305,132 +304,131 @@ class UserProfile extends StatelessWidget {
                             child: Container(
                               width: 60,
                               height: 60,
-                            decoration: BoxDecoration(
-                              boxShadow: [
-              BoxShadow(
-                color: Colors.grey.withOpacity(0.5),
-                spreadRadius: 5,
-                blurRadius: 7,
-                offset: Offset(0, 3), // changes the position of the shadow
-              ),
-            ],
-                              color: greyColor.shade300,
-                              shape: BoxShape.circle,
-                              
-                            ),
+                              decoration: BoxDecoration(
+                                boxShadow: [
+                                  BoxShadow(
+                                    color: Colors.grey.withOpacity(0.5),
+                                    spreadRadius: 5,
+                                    blurRadius: 7,
+                                    offset: Offset(0,
+                                        3), // changes the position of the shadow
+                                  ),
+                                ],
+                                color: greyColor.shade300,
+                                shape: BoxShape.circle,
+                              ),
                             ),
                           ),
                         ],
                       ); //CircularProgressIndicator();
                     }
-         
+
                     if (snapshot.hasError) {
                       return Text('Error: ${snapshot.error}');
                     }
-         
+
                     bool isUserInCollection = snapshot.data!;
-         
-                    return  
-                    
-                    Row(
+
+                    return Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-         //! close circle
-          Padding(
-              padding: const EdgeInsets.all(16.0),
-              child: Container(
-                width: 60,
-                height: 60,
-                decoration: BoxDecoration(
-                  boxShadow: [
-              BoxShadow(
-                color: Colors.grey.withOpacity(0.5),
-                spreadRadius: 5,
-                blurRadius: 7,
-                offset: Offset(0, 3), // changes the position of the shadow
-              ),
-            ],
-                  color: whiteColor.withOpacity(0.8),
-                  shape: BoxShape.circle,
-                  // You can set your desired color here
-                  border: Border.all(
-                    color: primaryColor,
-                    width: 2.0,
-                  ),
-                ),
-                child: Center(
-                  child: IconButton(
-                    onPressed: () {
-                      Navigator.pop(context);
-                    },
-                    icon: Icon(
-                      Icons.close,
-                      size: 30,
-                      color: primaryColor,
-                    ),
-                  ),
-                ),
-              ),
-            ),
-            largePaddingHor,
+                        //! close circle
+                        Padding(
+                          padding: const EdgeInsets.all(16.0),
+                          child: Container(
+                            width: 60,
+                            height: 60,
+                            decoration: BoxDecoration(
+                              boxShadow: [
+                                BoxShadow(
+                                  color: Colors.grey.withOpacity(0.5),
+                                  spreadRadius: 5,
+                                  blurRadius: 7,
+                                  offset: Offset(0,
+                                      3), // changes the position of the shadow
+                                ),
+                              ],
+                              color: whiteColor.withOpacity(0.8),
+                              shape: BoxShape.circle,
+                              // You can set your desired color here
+                              border: Border.all(
+                                color: primaryColor,
+                                width: 2.0,
+                              ),
+                            ),
+                            child: Center(
+                              child: IconButton(
+                                onPressed: () {
+                                  Navigator.pop(context);
+                                },
+                                icon: Icon(
+                                  Icons.close,
+                                  size: 30,
+                                  color: primaryColor,
+                                ),
+                              ),
+                            ),
+                          ),
+                        ),
+                        largePaddingHor,
                         //? request logo
                         GestureDetector(
-                                onTap: isUserInCollection
-                            ? (){
-                              showSnackBar(context, "you send a pesst for this profile verif ur chatpage");
-                            }
-                            : () {
+                          onTap: isUserInCollection
+                              ? () {
+                                  showSnackBar(context,
+                                      "you send a pesst for this profile verif ur chatpage");
+                                }
+                              : () {
                                   simplePisitDialog(
                                       context: context,
                                       sender: ownUserModel,
                                       recipient: userModel);
                                 },
-                                child: Padding(
-                                  padding: const EdgeInsets.all(16.0),
-                                  child: Container(
-                                    width: 60.0,
-                                    height: 60.0,
-                                    decoration: BoxDecoration(
-                                      boxShadow: [
-              BoxShadow(
-                color: Colors.grey.withOpacity(0.5),
-                spreadRadius: 5,
-                blurRadius: 7,
-                offset: Offset(0, 3), // changes the position of the shadow
-              ),
-            ],
-                                      color:   isUserInCollection ? whiteColor.withOpacity(0.5) :  whiteColor.withOpacity(0.8),
-                                      shape: BoxShape.circle,
-                                      // You can set your desired color here
-                                      border: Border.all(
-                                        color: primaryColor,
-                                        width: 2.0,
-                                      ),
-                                    ),
-                                    child: Center(
-                                        child: 
-                                        isUserInCollection ?
-                                        Image.asset(
-                                      "assets/images/logo_request.png",
-                                      height: 30,
-                                    ):
-                                     Image.asset(
-                                      "assets/images/logo.png",
-                                      height: 30,
-                                    ) 
-                        
-                                    
-                                    ) ,
+                          child: Padding(
+                            padding: const EdgeInsets.all(16.0),
+                            child: Container(
+                              width: 60.0,
+                              height: 60.0,
+                              decoration: BoxDecoration(
+                                boxShadow: [
+                                  BoxShadow(
+                                    color: Colors.grey.withOpacity(0.5),
+                                    spreadRadius: 5,
+                                    blurRadius: 7,
+                                    offset: Offset(0,
+                                        3), // changes the position of the shadow
                                   ),
+                                ],
+                                color: isUserInCollection
+                                    ? whiteColor.withOpacity(0.5)
+                                    : whiteColor.withOpacity(0.8),
+                                shape: BoxShape.circle,
+                                // You can set your desired color here
+                                border: Border.all(
+                                  color: primaryColor,
+                                  width: 2.0,
                                 ),
                               ),
+                              child: Center(
+                                  child: isUserInCollection
+                                      ? Image.asset(
+                                          "assets/images/logo_request.png",
+                                          height: 30,
+                                        )
+                                      : Image.asset(
+                                          "assets/images/logo.png",
+                                          height: 30,
+                                        )),
+                            ),
+                          ),
+                        ),
                       ],
                     );
                   });
             })
           ],
-         ),
-       ),
+        ),
+      ),
     );
   }
 }

@@ -36,7 +36,7 @@ class ProfileScreen extends StatelessWidget {
       body: Consumer(builder: (context, ref, child) {
         for (int index = 2; index <= 5; index++) {
           if (userModel.imageURLs!.length > index) {
-           print(userModel.imageURLs!.length);
+            print(userModel.imageURLs!.length);
 
             listBoolPictures[index] = true;
           } else {
@@ -54,14 +54,13 @@ class ProfileScreen extends StatelessWidget {
                 mediumPaddingVert,
                 ImageWidget(
                   imageUrl: userModel.imageURLs![0],
-                
                 ),
                 smallPaddingVert,
                 InfoUserWidget(
-                  user:userModel ,
+                  user: userModel,
                   userid: userModel.uid,
                   name: userModel.name,
-                  age: userModel.age,
+                  age: userModel.age.toString(),
                   gender: userModel.gender,
                   jobTitle: userModel.jobTitle,
                   country: userModel.country
@@ -136,24 +135,22 @@ class ProfileScreen extends StatelessWidget {
           ),
         );
       }),
-      floatingActionButton:  FloatingActionButton(
+      floatingActionButton: FloatingActionButton(
         backgroundColor: greyColor.shade200,
         //lightColor,
-          onPressed: () {
-             Navigator.pushNamed(context, EditProfile.routeName, arguments: {
-            'userid': userModel.uid,
-            'user'  :userModel
-           });
-          },
-          child:
-          SvgPicture.asset(
-            "assets/svg/edit.svg", 
-            height: 24,width: 24,
-            color: primaryColor,
-            ),
-          //FaIcon(FontAwesomeIcons.pencil, color: primaryColor),
-           //Icon(Icons.edit , color: primaryColor,),
+        onPressed: () {
+          Navigator.pushNamed(context, EditProfile.routeName,
+              arguments: {'userid': userModel.uid, 'user': userModel});
+        },
+        child: SvgPicture.asset(
+          "assets/svg/edit.svg",
+          height: 24,
+          width: 24,
+          color: primaryColor,
         ),
+        //FaIcon(FontAwesomeIcons.pencil, color: primaryColor),
+        //Icon(Icons.edit , color: primaryColor,),
+      ),
     );
   }
 }
@@ -190,18 +187,20 @@ class SectionWidget extends StatelessWidget {
   const SectionWidget({
     Key? key,
     required this.nameSection,
-    required this.interests, this.hadtitle = true,
+    required this.interests,
+    this.hadtitle = true,
   }) : super(key: key);
   @override
   Widget build(BuildContext context) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        hadtitle! ? 
-        Text(
-          nameSection,
-          style: textStyleTextBold,
-        ) : SizedBox.shrink(),
+        hadtitle!
+            ? Text(
+                nameSection,
+                style: textStyleTextBold,
+              )
+            : SizedBox.shrink(),
         smallPaddingVert,
         ShowListItem(
           list: interests,
@@ -214,11 +213,13 @@ class SectionWidget extends StatelessWidget {
 class RelationshipGoalWidget extends StatelessWidget {
   final String relationGoals;
   final String? title;
-  final bool? hadtile; 
- 
+  final bool? hadtile;
+
   const RelationshipGoalWidget({
     Key? key,
-    required this.relationGoals, required this.title, this.hadtile =false,
+    required this.relationGoals,
+    required this.title,
+    this.hadtile = false,
   }) : super(key: key);
 
   @override
@@ -226,11 +227,12 @@ class RelationshipGoalWidget extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        hadtile == false ? 
-        Text(
-         title!,
-          style: textStyleTextBold,
-        ): SizedBox.shrink(),
+        hadtile == false
+            ? Text(
+                title!,
+                style: textStyleTextBold,
+              )
+            : SizedBox.shrink(),
         smallPaddingVert,
         ItemList(
           text: relationGoals,

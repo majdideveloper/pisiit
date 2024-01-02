@@ -21,7 +21,7 @@ final userDataProvider = StreamProvider<UserModel?>((ref) {
 
 final userDataStreamProvider = StreamProvider<UserModel?>((ref) {
   final authController = ref.watch(authRepositoryProvider);
- 
+
   return authController.getCurrentUserDataAsStream();
 });
 
@@ -53,6 +53,7 @@ class AuthController {
     await authRepository.resetPasswordWithOTP(
         email: email, newPassword: newPassword);
   }
+
   Future<void> resetPassword(BuildContext context, String email) async {
     await authRepository.resetPassword(context, email);
   }
@@ -71,7 +72,7 @@ class AuthController {
     required String name,
     required String gender,
     required String relationGoals,
-    required String age,
+    required int age,
     required String birthday,
     required List<dynamic> interests,
     required String country,

@@ -42,9 +42,6 @@ class _SignUpScreenState extends ConsumerState<SignUpScreen> {
   FocusNode monthfocusNode = FocusNode();
   FocusNode yearfocusNode = FocusNode();
 
-
-
-
   List<String> gender = [""];
   List<String> relationGoals = [" "];
   List<File> listImages = [];
@@ -53,8 +50,6 @@ class _SignUpScreenState extends ConsumerState<SignUpScreen> {
   bool isChecked = false;
 
   bool isLoading = false;
-
-
 
   @override
   void initState() {
@@ -89,7 +84,7 @@ class _SignUpScreenState extends ConsumerState<SignUpScreen> {
       TabController tabController, PageController pageController) {
     String email = emailController.text.trim();
     String password = passwordController.text.trim();
- 
+
     print(password);
 
     if (email.isNotEmpty && password.isNotEmpty) {
@@ -102,8 +97,7 @@ class _SignUpScreenState extends ConsumerState<SignUpScreen> {
           gender: gender[0],
           relationGoals: relationGoals[0],
           age: calculateAge(
-                  "${dayController.text}/${monthController.text}/${yearController.text}")
-              .toString(),
+              "${dayController.text}/${monthController.text}/${yearController.text}"),
           birthday:
               "${dayController.text}/${monthController.text}/${yearController.text}",
           interests: interests,
@@ -120,7 +114,6 @@ class _SignUpScreenState extends ConsumerState<SignUpScreen> {
       // showSnackBar(context: context, content: 'Fill out all the fields');
     }
   }
-
 
   @override
   Widget build(BuildContext context) {
@@ -166,14 +159,13 @@ class _SignUpScreenState extends ConsumerState<SignUpScreen> {
                     emailController: emailController,
                     passwordController: passwordController,
                     isChecked: isChecked,
-                    onChanged:(value) {
-                        setState(() {
-                          isChecked = value!;
-                          print(isChecked);
-                        });
-                      },
+                    onChanged: (value) {
+                      setState(() {
+                        isChecked = value!;
+                        print(isChecked);
+                      });
+                    },
                   ),
-                  
                   WidgetNickName(
                       tabController: tabController,
                       nameController: _nameController),
@@ -199,7 +191,7 @@ class _SignUpScreenState extends ConsumerState<SignUpScreen> {
                     interests: interests,
                   ),
                   InfoWidget(
-                   // country: country,
+                    // country: country,
                     tabController: tabController,
                     jobController: _jobController,
                   ),
@@ -283,5 +275,5 @@ class _SignUpScreenState extends ConsumerState<SignUpScreen> {
         },
       ),
     );
-  } 
+  }
 }

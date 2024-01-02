@@ -42,12 +42,13 @@ class HomeRepository {
     } else {
       return firestore
           .collection("Users")
-          // .where(
-          //   "age",
-          //   isGreaterThan: minAndMaxAge[0],
-          //   isLessThan: minAndMaxAge[1],
-          // )
+          .where(
+            "age",
+            isGreaterThan: minAndMaxAge![0],
+            isLessThan: minAndMaxAge[1],
+          )
           .where("gender", isEqualTo: gender)
+
           // .where("relationGoals", arrayContainsAny: listOfGoalsRelationShip)
           .snapshots()
           .asyncMap((event) async {
@@ -139,7 +140,7 @@ class HomeRepository {
       List<dynamic> interests,
       String gender,
       String relationGoals,
-      String age,
+      int age,
       BuildContext context) async {
     try {
       final CollectionReference usersCollection =

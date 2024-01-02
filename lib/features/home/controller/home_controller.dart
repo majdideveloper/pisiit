@@ -72,7 +72,7 @@ class HomeController {
       List<dynamic> interests,
       String gender,
       String relationGoals,
-      String age,
+      int age,
       BuildContext context) async {
     homeRepository.updateUser(userid, name, birthday, jobTitle, country, bio,
         interests, gender, relationGoals, age, context);

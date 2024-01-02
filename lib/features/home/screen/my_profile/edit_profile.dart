@@ -92,9 +92,9 @@ class _EditProfileState extends ConsumerState<EditProfile> {
     String relation = newRelationGoals.isEmpty
         ? widget.user.relationGoals
         : newRelationGoals[0];
-    String age = birthController.text.trim().isEmpty
+    int age = birthController.text.trim().isEmpty
         ? widget.user.age
-        : calculateage(birthController.text).toString();
+        : calculateage(birthController.text);
 
     await ref.read(homeControllerProvider).updateUser(widget.user.uid, name,
         birth, job, country, about, interst, gend, relation, age, context);

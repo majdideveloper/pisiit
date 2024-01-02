@@ -104,7 +104,7 @@ class _HomeScreenState extends State<HomeScreen> {
         gender: gender[0], //!= '' ? gender[0] : "",
         ownUserModel: widget.userModel,
         // listOfGoalsRelationShip: goalRelation[0] != '' ? goalRelation : [''],
-        // minAndMaxAge: minAndMaxAge,
+        minAndMaxAge: minAndMaxAge,
       ),
     );
   }

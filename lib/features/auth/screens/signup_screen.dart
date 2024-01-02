@@ -116,8 +116,7 @@ class _SignUpScreenState extends ConsumerState<SignUpScreen> {
           gender: gender[0],
           relationGoals: relationGoals[0],
           age: calculateAge(
-                  "${dayController.text}/${monthController.text}/${yearController.text}")
-              .toString(),
+              "${dayController.text}/${monthController.text}/${yearController.text}"),
           birthday:
               "${dayController.text}/${monthController.text}/${yearController.text}",
           interests: interests,
@@ -175,8 +174,7 @@ class _SignUpScreenState extends ConsumerState<SignUpScreen> {
           showSnackBar(context, 'otp non valid verif code');
           return;
         }
-      break;
-
+        break;
 
       case 2:
         isFormValid = _formKeyname.currentState?.validate() ?? false;
@@ -214,13 +212,13 @@ class _SignUpScreenState extends ConsumerState<SignUpScreen> {
         }
         break;
       case 7:
-        if (country[0].isEmpty){
+        if (country[0].isEmpty) {
           showSnackBar(context, "select country");
           return;
         }
         break;
       case 8:
-       if (_jobController.text.isEmpty || _jobController.text.length < 4 ){
+        if (_jobController.text.isEmpty || _jobController.text.length < 4) {
           showSnackBar(context, "write job");
           return;
         }
@@ -339,10 +337,8 @@ class _SignUpScreenState extends ConsumerState<SignUpScreen> {
                   WidgetCountry(
                     country: country,
                     tabController: tabController,
-                    
                   ),
                   InfoWidget(
-                 
                     tabController: tabController,
                     jobController: _jobController,
                   ),
@@ -381,7 +377,7 @@ class _SignUpScreenState extends ConsumerState<SignUpScreen> {
                 children: [
                   // prev button
                   Expanded(
-                    child: tabController.index != 0  
+                    child: tabController.index != 0
                         ? CustomButton(
                             colorText: whiteColor,
                             textButton: "Prev",
@@ -397,11 +393,11 @@ class _SignUpScreenState extends ConsumerState<SignUpScreen> {
                               });
                             },
                           )
-                        :SizedBox(
+                        : SizedBox(
                             width: 10,
                           ),
                   ),
-                  
+
                   Expanded(
                     child: CustomButton(
                         colorText: whiteColor,

@@ -25,11 +25,24 @@ class ModalBottomSheet extends StatefulWidget {
 enum Gender { Male, Female, Other }
 
 class _ModalBottomSheetState extends State<ModalBottomSheet> {
-  double _startValue = 18;
-  double _endValue = 50;
+  double? _startValue;
+  double? _endValue;
   Gender? _selectedGender;
 
   RangeValues values = RangeValues(18, 60);
+
+  @override
+  void initState() {
+    _selectedGender = widget.gender[0] == "Female"
+        ? Gender.Female
+        : widget.gender[0] == "Male"
+            ? Gender.Male
+            : Gender.Other;
+
+    _startValue = widget.minAndMaxAge[0].toDouble();
+    _endValue = widget.minAndMaxAge[1].toDouble();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -61,14 +74,14 @@ class _ModalBottomSheetState extends State<ModalBottomSheet> {
                 style: textStyleTextBold,
               ),
               Text(
-                "${_startValue.truncate()} - ${_endValue.truncate()}",
+                "${_startValue!.truncate()} - ${_endValue!.truncate()}",
                 style: textStyleTextMeduimBold,
               )
             ],
           ),
           mediumPaddingVert,
           RangeSlider(
-            values: RangeValues(_startValue, _endValue),
+            values: RangeValues(_startValue!, _endValue!),
             min: 0,
             max: 100,
             onChanged: (RangeValues values) {
@@ -188,8 +201,8 @@ class _ModalBottomSheetState extends State<ModalBottomSheet> {
                 textButton: "Apply",
                 onPressed: () {
                   setState(() {
-                    widget.minAndMaxAge[0] = _startValue.toInt();
-                    widget.minAndMaxAge[1] = _endValue.toInt();
+                    widget.minAndMaxAge[0] = _startValue!.toInt();
+                    widget.minAndMaxAge[1] = _endValue!.toInt();
 
                     widget.gender[0] = _selectedGender.toString().substring(7);
                     print(widget.gender[0]);

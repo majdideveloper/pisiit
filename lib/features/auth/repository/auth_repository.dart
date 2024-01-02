@@ -26,7 +26,7 @@ class AuthRepository {
     required this.auth,
     required this.firestore,
   });
- Stream<UserModel?> getCurrentUserDataAsStream() {
+  Stream<UserModel?> getCurrentUserDataAsStream() {
     final streamcurrentUser = auth.currentUser;
     if (streamcurrentUser != null) {
       return firestore
@@ -45,9 +45,6 @@ class AuthRepository {
     }
   }
 
-
-
-
   Future<UserModel?> getCurrentUserData() async {
     var userData =
         await firestore.collection('Users').doc(auth.currentUser?.uid).get();
@@ -61,16 +58,14 @@ class AuthRepository {
 
   //!reset with sending mail
   Future<void> resetPassword(BuildContext context, String email) async {
-  try {
-    await FirebaseAuth.instance.sendPasswordResetEmail(email: email);
-    print("Password reset email sent successfully");
-
-  } catch (e) {
-    print("Error sending password reset email: $e");
-    showSnackBar(context, "Error sending password reset email: $e");
-
+    try {
+      await FirebaseAuth.instance.sendPasswordResetEmail(email: email);
+      print("Password reset email sent successfully");
+    } catch (e) {
+      print("Error sending password reset email: $e");
+      showSnackBar(context, "Error sending password reset email: $e");
+    }
   }
-}
 //!reset password
 
   Future<void> resetPasswordWithOTP(
@@ -127,31 +122,30 @@ class AuthRepository {
 
 // ! this function LogIn
   void signInWithEmailAndPassword(
-      BuildContext context, String email, String password)  async{
+      BuildContext context, String email, String password) async {
     try {
       await auth.signInWithEmailAndPassword(
         email: email,
         password: password,
       );
-      
- showPopUp(
-     context,
-     "Login Successful!",
-     "You will be directed to HomePage",
-     Icons.lock_clock_outlined,
-     Duration(seconds: 20)
-   );
-  UserModel? userModel = await getCurrentUserData();
-   
+
+      showPopUp(
+          context,
+          "Login Successful!",
+          "You will be directed to HomePage",
+          Icons.lock_clock_outlined,
+          Duration(seconds: 20));
+      UserModel? userModel = await getCurrentUserData();
+
       await Navigator.pushAndRemoveUntil(
-         context,
-         MaterialPageRoute(
-           builder: (context) => HomeApplicationScreen(
-             userModel: userModel,
-           ),
-         ),
-         (route) => false,
-       );
+        context,
+        MaterialPageRoute(
+          builder: (context) => HomeApplicationScreen(
+            userModel: userModel,
+          ),
+        ),
+        (route) => false,
+      );
     } catch (error) {
       showSnackBar(context, "email or password inccorect $error");
       print("Error signing in: $error");
@@ -168,7 +162,7 @@ class AuthRepository {
     required String name,
     required String gender,
     required String relationGoals,
-    required String age,
+    required int age,
     required String birthday,
     required List<dynamic> interests,
     required String country,
@@ -178,13 +172,12 @@ class AuthRepository {
       await auth
           .createUserWithEmailAndPassword(email: email, password: password)
           .then((user) async {
-             showPopUp(
-     context,
-     "Register Successful!",
-     "You will be directed to HomePage",
-     Icons.lock_clock_outlined,
-     Duration(seconds: 20)
-   );
+        showPopUp(
+            context,
+            "Register Successful!",
+            "You will be directed to HomePage",
+            Icons.lock_clock_outlined,
+            Duration(seconds: 20));
         List<String>? urlImage = await ref
             .read(commonFirebaseStorageRepositoryProvider)
             .saveUserImageToStorage(uid: user.user!.uid, files: imageURLs);
@@ -269,55 +262,56 @@ class AuthRepository {
   //}
 
   // Function to fetch user data from Firebase
-StreamController<UserModel> _userDataStreamController = StreamController<UserModel>.broadcast();
+  StreamController<UserModel> _userDataStreamController =
+      StreamController<UserModel>.broadcast();
 
-Stream<UserModel> get userDataStream => _userDataStreamController.stream;
+  Stream<UserModel> get userDataStream => _userDataStreamController.stream;
 
-Stream<UserModel> fetchUserData() async* {
-  try {
-    // Check if a user is signed in
-    final User? firebaseUser = auth.currentUser;
-    if (firebaseUser == null) {
-      _userDataStreamController.addError('User not signed in');
-      return;
+  Stream<UserModel> fetchUserData() async* {
+    try {
+      // Check if a user is signed in
+      final User? firebaseUser = auth.currentUser;
+      if (firebaseUser == null) {
+        _userDataStreamController.addError('User not signed in');
+        return;
+      }
+
+      // Fetch additional user data from Firestore
+      final DocumentSnapshot userSnapshot =
+          await firestore.collection('Users').doc(firebaseUser.uid).get();
+
+      if (userSnapshot.exists) {
+        final Map<String, dynamic> userData =
+            userSnapshot.data() as Map<String, dynamic>;
+        final userModel = UserModel(
+          uid: firebaseUser.uid,
+          name: userData['name'] ?? '',
+          age: userData['age'] ?? '',
+          birthday: userData['birthday'] ?? '',
+          gender: userData['gender'] ?? '',
+          relationGoals: userData['relationGoals'] ?? '',
+          imageURLs: List<String>.from(userData['imageURLs']),
+          interests: List<String>.from(userData['interests']),
+          bio: userData['bio'] ?? '',
+          jobTitle: userData['jobTitle'] ?? '',
+          country: userData['country'] ?? '',
+          lastActive: userData['last_active'] ?? DateTime.now(),
+          noteAccount: userData['noteAccount'] ?? 0,
+          scoreAccount: userData['scoreAccount'] ?? 0,
+          numberPisit: userData['numberPisit'] ?? 0,
+        );
+        _userDataStreamController.add(userModel);
+        yield userModel; // Yield the user model to the stream
+      } else {
+        _userDataStreamController.addError('User data not found');
+      }
+    } catch (e) {
+      print('Error fetching user data: $e');
+      _userDataStreamController.addError('Error fetching user data: $e');
     }
-
-    // Fetch additional user data from Firestore
-    final DocumentSnapshot userSnapshot =
-        await firestore.collection('Users').doc(firebaseUser.uid).get();
-
-    if (userSnapshot.exists) {
-      final Map<String, dynamic> userData =
-          userSnapshot.data() as Map<String, dynamic>;
-      final userModel = UserModel(
-        uid: firebaseUser.uid,
-        name: userData['name'] ?? '',
-        age: userData['age'] ?? '',
-        birthday: userData['birthday'] ?? '',
-        gender: userData['gender'] ?? '',
-        relationGoals: userData['relationGoals'] ?? '',
-        imageURLs: List<String>.from(userData['imageURLs']),
-        interests: List<String>.from(userData['interests']),
-        bio: userData['bio'] ?? '',
-        jobTitle: userData['jobTitle'] ?? '',
-        country: userData['country'] ?? '',
-        lastActive: userData['last_active'] ?? DateTime.now(),
-        noteAccount: userData['noteAccount'] ?? 0,
-        scoreAccount: userData['scoreAccount'] ?? 0,
-        numberPisit: userData['numberPisit'] ?? 0,
-      );
-      _userDataStreamController.add(userModel);
-      yield userModel; // Yield the user model to the stream
-    } else {
-      _userDataStreamController.addError('User data not found');
-    }
-  } catch (e) {
-    print('Error fetching user data: $e');
-    _userDataStreamController.addError('Error fetching user data: $e');
   }
-}
 
-void dispose() {
-  _userDataStreamController.close();
-}
+  void dispose() {
+    _userDataStreamController.close();
+  }
 }

@@ -27,7 +27,7 @@ class HomeApplicationScreen extends StatefulWidget {
 }
 
 class _HomeApplicationScreenState extends State<HomeApplicationScreen> {
-  PageController _pageController = PageController();
+  final PageController _pageController = PageController();
   int _currentIndex = 0;
 
   void _onPageChanged(int index) {
@@ -37,11 +37,14 @@ class _HomeApplicationScreenState extends State<HomeApplicationScreen> {
   }
 
   void _onItemTapped(int selectedIndex) {
-    _pageController.animateToPage(
-      selectedIndex,
-      duration: const Duration(milliseconds: 300),
-      curve: Curves.easeInOut,
-    );
+    setState(() {
+      _pageController.animateToPage(
+        selectedIndex,
+        duration: const Duration(milliseconds: 300),
+        curve: Curves.easeInOut,
+      );
+      _currentIndex = selectedIndex;
+    });
   }
 
   @override
@@ -73,9 +76,11 @@ class _HomeApplicationScreenState extends State<HomeApplicationScreen> {
                   onTap: _onItemTapped,
                   backgroundColor: whiteColor,
                   elevation: 0,
-                  items:  [
+                  items: [
                     BottomNavigationBarItem(
-                      icon: SvgPicture.asset("assets/svg/home but light.svg"),
+                      icon: SvgPicture.asset(
+                        "assets/svg/home but light.svg",
+                      ),
                       // FaIcon(FontAwesomeIcons.house),
                       label: "Home",
                     ),
@@ -98,8 +103,13 @@ class _HomeApplicationScreenState extends State<HomeApplicationScreen> {
                 backgroundColor: whiteColor,
                 elevation: 0,
                 items: [
-                   BottomNavigationBarItem(
-                    icon: SvgPicture.asset("assets/svg/home but light.svg" , height: 24, width: 24, color: primaryColor,),
+                  BottomNavigationBarItem(
+                    icon: SvgPicture.asset(
+                      "assets/svg/home but light.svg",
+                      height: 24,
+                      width: 24,
+                      color: primaryColor,
+                    ),
                     //FaIcon(FontAwesomeIcons.house),
                     label: "Home",
                   ),
@@ -107,12 +117,14 @@ class _HomeApplicationScreenState extends State<HomeApplicationScreen> {
                     icon: numberOfRequests == 0
                         ? const FaIcon(FontAwesomeIcons.comments)
                         : badges.Badge(
-                          badgeStyle: BadgeStyle(
-                            badgeColor: primaryColor,
-                            padding:  EdgeInsets.all(5),
-                          ),
-                            badgeContent: Text(numberOfRequests.toString(),style: TextStyle(color: whiteColor),),
-                  
+                            badgeStyle: BadgeStyle(
+                              badgeColor: primaryColor,
+                              padding: EdgeInsets.all(5),
+                            ),
+                            badgeContent: Text(
+                              numberOfRequests.toString(),
+                              style: TextStyle(color: whiteColor),
+                            ),
                             child: const FaIcon(FontAwesomeIcons.comments),
                           ),
                     label: "Chats",
