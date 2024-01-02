@@ -28,7 +28,7 @@ class HomeScreen extends StatefulWidget {
 class _HomeScreenState extends State<HomeScreen> {
   List<String> goalRelation = [];
   List<String> gender = [""];
-  List<int> minAndMaxAge = [0, 100];
+  List<int> minAndMaxAge = [18, 65];
   void _showAgeRangePicker(BuildContext context) {
     showModalBottomSheet(
       context: context,
