@@ -41,7 +41,7 @@ class AuthRepository {
         }
       });
     } else {
-      return const Stream.empty();
+      return  Stream.value(null);
     }
   }
 
