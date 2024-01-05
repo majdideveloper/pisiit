@@ -96,7 +96,7 @@ class _HomeScreenState extends State<HomeScreen> {
               icon: const FaIcon(
                 FontAwesomeIcons.sliders,
                 color: primaryColor,
-                size: 30,
+                
               )),
         ],
       ),

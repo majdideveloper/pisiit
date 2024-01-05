@@ -46,7 +46,7 @@ class AppBarProfile extends StatelessWidget implements PreferredSizeWidget {
             icon: const FaIcon(
               FontAwesomeIcons.rightFromBracket,
               color: primaryColor,
-              size: 30,
+             // size: 30,
             )
 
             //  Icon(
