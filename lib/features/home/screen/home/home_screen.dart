@@ -210,16 +210,34 @@ class ItemListUsers extends StatelessWidget {
 
   final UserModel userModel;
   final UserModel ownUserModel;
+Route _createRoute() {
+  return PageRouteBuilder(
+    pageBuilder: (context, animation, secondaryAnimation) => UserProfile(userModel: userModel, ownUserModel: ownUserModel,),
+    transitionsBuilder: (context, animation, secondaryAnimation, child) {
+      const begin = Offset(0.0, 1.0);
+      const end = Offset.zero;
+      const curve = Curves.ease;
+
+      var tween = Tween(begin: begin, end: end).chain(CurveTween(curve: curve));
+
+      return SlideTransition(
+        position: animation.drive(tween),
+        child: child,
+      );
+    },
+  );
+}
 
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
-        Navigator.pushNamed(
-          context,
-          UserProfile.routeName,
-          arguments: {"userModel": userModel, "ownUserModel": ownUserModel},
-        );
+         Navigator.of(context).push(_createRoute());
+        // Navigator.pushNamed(
+        //   context,
+        //   UserProfile.routeName,
+        //   arguments: {"userModel": userModel, "ownUserModel": ownUserModel},
+        // );
       },
       child: Stack(
         children: [
