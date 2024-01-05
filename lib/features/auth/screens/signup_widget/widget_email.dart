@@ -70,32 +70,34 @@ class _WidgetEmailState extends State<WidgetEmail> {
             mediumPaddingVert,
             // ! Custom this in widget
           
-            Row(
-              children: [
-                Checkbox(
-                  value: widget.isChecked,                
-                  onChanged:widget.onChanged,
-                  // (value) {
-                  //   setState(() {
-                  //     widget.isChecked = value!;
-                  //     print(widget.isChecked);
-                  //   });                     
-                  // }
+            FittedBox(
+              child: Row(
+                children: [
+                  Checkbox(
+                    value: widget.isChecked,                
+                    onChanged:widget.onChanged,
+                    // (value) {
+                    //   setState(() {
+                    //     widget.isChecked = value!;
+                    //     print(widget.isChecked);
+                    //   });                     
+                    // }
+                    ),
+                  Text(
+                    'I agree to Pesst',
+                    style: textStyleText.copyWith(
+                      fontWeight: FontWeight.w900,
+                    ),
                   ),
-                Text(
-                  'I agree to Pesst',
-                  style: textStyleText.copyWith(
-                    fontWeight: FontWeight.w900,
-                  ),
-                ),
-                TextButton(
-                  onPressed: () {},
-                  child: Text(
-                    'Privacy Policy',
-                    style: textStyleTextBold.copyWith(color: primaryColor),
-                  ),
-                )
-              ],
+                  TextButton(
+                    onPressed: () {},
+                    child: Text(
+                      'Privacy Policy',
+                      style: textStyleTextBold.copyWith(color: primaryColor),
+                    ),
+                  )
+                ],
+              ),
             ),
           ],
         ),

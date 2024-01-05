@@ -141,12 +141,14 @@ class _CustomTextContainerState extends State<CustomTextContainer> {
           ),
           borderRadius: BorderRadius.circular(20),
         ),
-        child: Text(
-          widget.text,
-          style: textStyleTextBold.copyWith(
-            color: widget.listInteresrt.contains(widget.text)
-                ? whiteColor
-                : blackColor,
+        child: FittedBox(
+          child: Text(
+            widget.text,
+            style: textStyleTextBold.copyWith(
+              color: widget.listInteresrt.contains(widget.text)
+                  ? whiteColor
+                  : blackColor,
+            ),
           ),
         ),
       ),

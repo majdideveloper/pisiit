@@ -39,9 +39,11 @@ class ItemList extends StatelessWidget {
         ),
         borderRadius: BorderRadius.circular(20),
       ),
-      child: Text(
-        text,
-        style: textStyleTextBold,
+      child: FittedBox(
+        child: Text(
+          text,
+          style: textStyleTextBold,
+        ),
       ),
     );
   }
