@@ -31,9 +31,11 @@ class CustomButton extends StatelessWidget {
               MaterialStateProperty.all(const Size(double.infinity, 48.0)),
           backgroundColor: MaterialStateProperty.all(color ?? primaryColor),
         ),
-        child: Text(
-          textButton,
-          style: textStyleTextBold.copyWith(color: colorText ?? lightColor ),
+        child: FittedBox(
+          child: Text(
+            textButton,
+            style: textStyleTextBold.copyWith(color: colorText ?? lightColor ),
+          ),
         ),
       ),
     );

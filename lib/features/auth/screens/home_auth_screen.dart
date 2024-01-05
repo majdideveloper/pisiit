@@ -67,7 +67,7 @@ class HomeAuthScreen extends StatelessWidget {
               largePaddingHor,
               SizedBox(height: 100,),
               CustomButton(
-                colorText: lightColor,
+                colorText: whiteColor,
                 textButton: "Log in",
                 onPressed: () {
                   Navigator.pushNamed(

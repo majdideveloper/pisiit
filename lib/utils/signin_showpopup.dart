@@ -338,46 +338,48 @@ void popUpRepondRequestDialog(
             ),
           ],
         ),
-        content: Column(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            // smallPaddingVert,
-            // Align(
-            //   alignment: Alignment.topLeft,
-            //   child: Text(
-            //     "${requestModel.nameSender} :",
-            //     style: textStyleTextBold,
-            //   ),
-            // ),
-            smallPaddingVert,
-            SingleChildScrollView(
-              child: Container(
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(10),
-                  color: lightColor, // Adjust the color of the box as needed
-                ),
-                width: double.maxFinite,
-                height: 70,
-                child: Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: Text(
-                    requestModel.opener,
-                    style: textStyleTextBold,
+        content: SingleChildScrollView(
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              // smallPaddingVert,
+              // Align(
+              //   alignment: Alignment.topLeft,
+              //   child: Text(
+              //     "${requestModel.nameSender} :",
+              //     style: textStyleTextBold,
+              //   ),
+              // ),
+              smallPaddingVert,
+              SingleChildScrollView(
+                child: Container(
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(10),
+                    color: lightColor, // Adjust the color of the box as needed
+                  ),
+                  width: double.maxFinite,
+                  height: 70,
+                  child: Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Text(
+                      requestModel.opener,
+                      style: textStyleTextBold,
+                    ),
                   ),
                 ),
               ),
-            ),
-            smallPaddingVert,
-            CustomTextField(
-              hintText: "Repond about your Request...",
-              obscureText: false,
-              controller: controller,
-              maxLines: 2,
-              style: textStyleTextBold.copyWith(
-                fontSize: 16,
-              ),
-            )
-          ],
+              smallPaddingVert,
+              CustomTextField(
+                hintText: "Repond about your Request...",
+                obscureText: false,
+                controller: controller,
+                maxLines: 2,
+                style: textStyleTextBold.copyWith(
+                  fontSize: 16,
+                ),
+              )
+            ],
+          ),
         ),
         actions: <Widget>[
           Consumer(

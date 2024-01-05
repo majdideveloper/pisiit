@@ -56,6 +56,7 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                 smallPaddingVert,
                 //* ussing a textfiel with validate function shoing snackbar
                 CustomValidateTextField(
+                    keyboardType:TextInputType.emailAddress,
                     controller: emailController,
                     nameTextField: "Email",
                     prefixIcon: const Icon(

@@ -51,56 +51,60 @@ class _OtpVerifWWidgetState extends State<OtpVerifWWidget> {
   @override
   Widget build(BuildContext context) {
 
-    return Column(children: [
-      WidgetTitle(
-        title: "OTP code verification 🔐",
-        subTitle:
-            "We have sent an OTP code to your email and ${widget.emailController.text}.\n Enter the OTP code below to verify",
-      ),
-      mediumPaddingVert,
-      Text(widget.otp[0]),
-      Row(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          OtpInputField(
-            controller: widget.otp1Controller,
-          ),
-          OtpInputField(
-            controller: widget.otp2Controller,
-          ),
-          OtpInputField(
-            controller: widget.otp3Controller,
-          ),
-          OtpInputField(
-            controller: widget.otp4Controller,
-          ),
-          OtpInputField(
-            controller: widget.otp5Controller,
-          ),
-          OtpInputField(
-            controller: widget.otp6Controller,
-          ),
-        ],
-      ),
-      mediumPaddingVert,
-      if (!verifOTP(
-          widget.otp[0],
-          widget.otp1Controller.text +
-              widget.otp2Controller.text +
-              widget.otp3Controller.text +
-              widget.otp4Controller.text +
-              widget.otp5Controller.text +
-              widget.otp6Controller.text ))
-        OtpCounter(
-          newotp: () {
-            updateOTP(widget.otp);
-            sendOTPToEmail(
-              widget.emailController.text,
-              widget.otp,
-            );
-          },
+    return SingleChildScrollView(
+      child: Column(children: [
+        WidgetTitle(
+          title: "OTP code verification 🔐",
+          subTitle:
+              "We have sent an OTP code to your email and ${widget.emailController.text}.\n Enter the OTP code below to verify",
         ),
-    ]);
+        mediumPaddingVert,
+        Text(widget.otp[0]),
+        FittedBox(
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              OtpInputField(
+                controller: widget.otp1Controller,
+              ),
+              OtpInputField(
+                controller: widget.otp2Controller,
+              ),
+              OtpInputField(
+                controller: widget.otp3Controller,
+              ),
+              OtpInputField(
+                controller: widget.otp4Controller,
+              ),
+              OtpInputField(
+                controller: widget.otp5Controller,
+              ),
+              OtpInputField(
+                controller: widget.otp6Controller,
+              ),
+            ],
+          ),
+        ),
+        mediumPaddingVert,
+        if (!verifOTP(
+            widget.otp[0],
+            widget.otp1Controller.text +
+                widget.otp2Controller.text +
+                widget.otp3Controller.text +
+                widget.otp4Controller.text +
+                widget.otp5Controller.text +
+                widget.otp6Controller.text ))
+          OtpCounter(
+            newotp: () {
+              updateOTP(widget.otp);
+              sendOTPToEmail(
+                widget.emailController.text,
+                widget.otp,
+              );
+            },
+          ),
+      ]),
+    );
   }
 }
 

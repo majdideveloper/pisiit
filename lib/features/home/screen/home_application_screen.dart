@@ -80,6 +80,7 @@ class _HomeApplicationScreenState extends State<HomeApplicationScreen> {
                     BottomNavigationBarItem(
                       icon: SvgPicture.asset(
                         "assets/svg/home but light.svg",
+                        width: 24,height: 24,
                       ),
                       // FaIcon(FontAwesomeIcons.house),
                       label: "Home",

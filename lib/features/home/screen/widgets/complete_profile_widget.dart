@@ -9,30 +9,33 @@ class CompleteProfileWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
+      width: double.infinity,
       padding: const EdgeInsets.all(16),
       decoration: const BoxDecoration(
           color: primaryColor,
           borderRadius: BorderRadius.all(Radius.circular(12))),
-      height: 140,
-      child: Row(
-        children: [
-          CompletProgreseProfile(),
-          mediumPaddingHor,
-          Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text(
-                "Complete Your profile",
-                style: textStyleTextBold.copyWith(color: whiteColor),
-              ),
-              // ! to fix this text with fitBox
-              Text(
-                "Complete your profile to \nexperience the best dating\nexperience and better chat",
-                style: textStyleText.copyWith(color: whiteColor),
-              )
-            ],
-          )
-        ],
+      height: 120,
+      child: FittedBox(
+        child: Row(
+          children: [
+            CompletProgreseProfile(),
+            mediumPaddingHor,
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  "Complete Your profile",
+                  style: textStyleTextBold.copyWith(color: whiteColor),
+                ),
+                // ! to fix this text with fitBox
+                Text(
+                  "Complete your profile \nto experience the best dating\nexperience and better chat",
+                  style: textStyleText.copyWith(color: whiteColor),
+                )
+              ],
+            )
+          ],
+        ),
       ),
     );
   }
