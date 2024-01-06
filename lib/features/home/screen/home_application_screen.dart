@@ -83,7 +83,8 @@ class _HomeApplicationScreenState extends State<HomeApplicationScreen> {
                     BottomNavigationBarItem(
                       icon: SvgPicture.asset(
                         "assets/svg/home but light.svg",
-                        width: 24,height: 24,
+                        width: 24,
+                        height: 24,
                       ),
                       // FaIcon(FontAwesomeIcons.house),
                       label: "Home",
@@ -110,14 +111,16 @@ class _HomeApplicationScreenState extends State<HomeApplicationScreen> {
                 elevation: 0,
                 items: [
                   BottomNavigationBarItem(
-                    activeIcon:
-                    FaIcon(FontAwesomeIcons.house, color: primaryColor,),
+                    activeIcon: FaIcon(
+                      FontAwesomeIcons.house,
+                      color: primaryColor,
+                    ),
                     //  SvgPicture.asset(
                     //   "assets/svg/home but light.svg",
                     //   height: 24,
                     //   width: 24,
                     //   color: primaryColor,
-                    // ), 
+                    // ),
                     icon: SvgPicture.asset(
                       "assets/svg/home but light.svg",
                       height: 24,
@@ -129,24 +132,32 @@ class _HomeApplicationScreenState extends State<HomeApplicationScreen> {
                     label: "Home",
                   ),
                   BottomNavigationBarItem(
-                    activeIcon:  numberOfRequests == 0  ?
-                    FaIcon(FontAwesomeIcons.solidComments, color: primaryColor,)
-                    : 
-                    badges.Badge(
+                    activeIcon: numberOfRequests == 0
+                        ? FaIcon(
+                            FontAwesomeIcons.solidComments,
+                            color: primaryColor,
+                          )
+                        : badges.Badge(
                             badgeStyle: BadgeStyle(
                               badgeColor: whiteColor,
-                              borderSide: BorderSide(width: 2,color: primaryColor),
+                              borderSide:
+                                  BorderSide(width: 2, color: primaryColor),
                               padding: EdgeInsets.all(5),
                             ),
                             badgeContent: Text(
                               numberOfRequests.toString(),
                               style: TextStyle(color: primaryColor),
                             ),
-                            child: 
-                         
-                     FaIcon(FontAwesomeIcons.solidComments, color: primaryColor,), ),
+                            child: FaIcon(
+                              FontAwesomeIcons.solidComments,
+                              color: primaryColor,
+                            ),
+                          ),
                     icon: numberOfRequests == 0
-                        ? const FaIcon(FontAwesomeIcons.comments, color: primaryColor,)
+                        ? const FaIcon(
+                            FontAwesomeIcons.comments,
+                            color: primaryColor,
+                          )
                         : badges.Badge(
                             badgeStyle: BadgeStyle(
                               badgeColor: primaryColor,
@@ -156,13 +167,22 @@ class _HomeApplicationScreenState extends State<HomeApplicationScreen> {
                               numberOfRequests.toString(),
                               style: TextStyle(color: whiteColor),
                             ),
-                            child: const FaIcon(FontAwesomeIcons.comments, color: primaryColor,),
+                            child: const FaIcon(
+                              FontAwesomeIcons.comments,
+                              color: primaryColor,
+                            ),
                           ),
                     label: "Chats",
                   ),
                   const BottomNavigationBarItem(
-                    activeIcon: FaIcon(FontAwesomeIcons.userLarge, color: primaryColor,),
-                    icon: FaIcon(FontAwesomeIcons.user ,color: primaryColor,),
+                    activeIcon: FaIcon(
+                      FontAwesomeIcons.userLarge,
+                      color: primaryColor,
+                    ),
+                    icon: FaIcon(
+                      FontAwesomeIcons.user,
+                      color: primaryColor,
+                    ),
                     label: "Profile",
                   )
                 ],
