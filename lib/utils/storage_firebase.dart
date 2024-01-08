@@ -22,11 +22,12 @@ class CommonFirebaseStorageRepository {
   });
 
   Future<List<String>?> saveUserImageToStorage(
-      {required String uid, required List<File> files}) async {
+      {required String uid, required List<File?> files}) async {
     List<String> results = [];
     try {
       for (int index = 0; index < files.length; index++) {
-        File imageFile = files[index];
+        File? imageFile = files[index]!;
+
         final Reference _ref =
             storage.ref().child('images/users/$uid/profile$index.png');
         final UploadTask _task = _ref.putFile(imageFile);
@@ -37,6 +38,36 @@ class CommonFirebaseStorageRepository {
         });
       }
       print('All files uploaded.');
+      return results;
+    } catch (e) {
+      print(e);
+    }
+    return null;
+  }
+
+  Future<List<String>?> saveUpdateUserImageToStorage(
+      {required String uid, required List<File?> files}) async {
+    List<String> results = [];
+    try {
+      for (int index = 0; index < files.length; index++) {
+        print("before file +++++++++++ nottttttt founnnnnnnd");
+        if (files[index] == null) {
+          continue;
+        } else {
+          File imageFile = files[index]!;
+          print("file nottttttt founnnnnnnd");
+          final Reference _ref =
+              storage.ref().child('images/users/$uid/profile$index.png');
+          final UploadTask _task = _ref.putFile(imageFile);
+          await _task.whenComplete(() {
+            print('File at index $index (${imageFile.path}) uploaded.');
+          }).then((result) async {
+            results.add(await result.ref.getDownloadURL());
+          });
+        }
+      }
+      print('All files uploaded.');
+
       return results;
     } catch (e) {
       print(e);

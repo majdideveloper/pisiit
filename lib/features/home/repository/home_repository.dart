@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:io';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -6,6 +7,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:pisiit/models/user_model.dart';
 import 'package:pisiit/utils/signin_showpopup.dart';
+import 'package:pisiit/utils/storage_firebase.dart';
 
 final homeRepositoryProvider = Provider(
   (ref) => HomeRepository(
@@ -132,6 +134,8 @@ class HomeRepository {
 
   Future<void> updateUser(
       String userid,
+      ProviderRef ref,
+      // List<File?> imageURLs,
       String name,
       String birthday,
       String jobTitle,
@@ -143,10 +147,12 @@ class HomeRepository {
       int age,
       BuildContext context) async {
     try {
-      final CollectionReference usersCollection =
-          FirebaseFirestore.instance.collection('Users');
+      //!change this code !!!!!!!!!!!!!
 
-      await usersCollection.doc(userid).update(
+      // List<String>? urlImage = await ref
+      //     .read(commonFirebaseStorageRepositoryProvider)
+      //     .saveUpdateUserImageToStorage(uid: userid, files: imageURLs);
+      await firestore.collection('Users').doc(userid).update(
         {
           'name': name,
           'birthday': birthday,

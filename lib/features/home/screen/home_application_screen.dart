@@ -144,6 +144,14 @@ class _HomeApplicationScreenState extends State<HomeApplicationScreen> {
                                   BorderSide(width: 2, color: primaryColor),
                               padding: EdgeInsets.all(5),
                             ),
+                            badgeAnimation: badges.BadgeAnimation.rotation(
+                              animationDuration: Duration(seconds: 0),
+                              colorChangeAnimationDuration:
+                                  Duration(seconds: 0),
+                              loopAnimation: false,
+                              curve: Curves.fastOutSlowIn,
+                              colorChangeAnimationCurve: Curves.easeInCubic,
+                            ),
                             badgeContent: Text(
                               numberOfRequests.toString(),
                               style: TextStyle(color: primaryColor),
@@ -162,6 +170,14 @@ class _HomeApplicationScreenState extends State<HomeApplicationScreen> {
                             badgeStyle: BadgeStyle(
                               badgeColor: primaryColor,
                               padding: EdgeInsets.all(5),
+                            ),
+                            badgeAnimation: badges.BadgeAnimation.rotation(
+                              animationDuration: Duration(seconds: 0),
+                              colorChangeAnimationDuration:
+                                  Duration(seconds: 0),
+                              loopAnimation: false,
+                              curve: Curves.fastOutSlowIn,
+                              colorChangeAnimationCurve: Curves.easeInCubic,
                             ),
                             badgeContent: Text(
                               numberOfRequests.toString(),

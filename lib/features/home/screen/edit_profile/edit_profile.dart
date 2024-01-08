@@ -1,14 +1,14 @@
-import "dart:core";
 import "dart:io";
 
 import "package:country_picker/country_picker.dart";
 import "package:flutter/material.dart";
 import "package:flutter_riverpod/flutter_riverpod.dart";
 import "package:intl/intl.dart";
-import "package:pisiit/features/auth/screens/signup_widget/widget_gender.dart";
-import "package:pisiit/features/auth/widgets/custom_image_container.dart";
+
 import "package:pisiit/features/home/controller/home_controller.dart";
 import 'package:pisiit/features/auth/widgets/customtext_field.dart';
+import "package:pisiit/features/home/screen/edit_profile/widgets/custom_edit_image_container.dart";
+
 import "package:pisiit/features/home/screen/my_profile/profile_screen.dart";
 import "package:pisiit/features/home/screen/my_profile/widgets/custom_multi_choice.dart";
 import "package:pisiit/features/home/screen/my_profile/widgets/custom_text_profile.dart";
@@ -40,6 +40,8 @@ class _EditProfileState extends ConsumerState<EditProfile> {
 
   List<String> gender = [" "];
   List<File?> listImages = [];
+
+  List<String>? listImagesUser = [];
   List<String> Newinterests = [];
   List<String> NewInterests2 = [];
   List<String> newRelationGoals = [" "];
@@ -96,8 +98,20 @@ class _EditProfileState extends ConsumerState<EditProfile> {
         ? widget.user.age
         : calculateage(birthController.text);
 
-    await ref.read(homeControllerProvider).updateUser(widget.user.uid, name,
-        birth, job, country, about, interst, gend, relation, age, context);
+    await ref.read(homeControllerProvider).updateUser(
+          widget.user.uid,
+          // listImages,
+          name,
+          birth,
+          job,
+          country,
+          about,
+          interst,
+          gend,
+          relation,
+          age,
+          context,
+        );
 
     Navigator.pop(context);
 
@@ -116,6 +130,14 @@ class _EditProfileState extends ConsumerState<EditProfile> {
     gender[0] = widget.user.gender;
     newRelationGoals[0] = widget.user.relationGoals;
     Newinterests = widget.user.interests as List<String>;
+    listImagesUser = widget.user.imageURLs as List<String>;
+    // listImageWithIndex.forEach((key, value) {
+    //   if (key! >= listImagesUser!.length) {
+    //     return;
+    //   }
+    //   listImageWithIndex[key] = listImagesUser![key];
+    // });
+    // print(listImageWithIndex);
 
     super.initState();
   }
@@ -149,7 +171,7 @@ class _EditProfileState extends ConsumerState<EditProfile> {
                 height: 360,
                 child: ImagesEditContainer(
                   listImages: listImages,
-                  listUrlsImages: widget.user.imageURLs,
+                  listUrlsImages: listImagesUser,
                 ),
               ),
               mediumPaddingVert,
@@ -382,12 +404,15 @@ class ImagesEditContainer extends StatelessWidget {
         ),
         itemCount: 6,
         itemBuilder: (BuildContext context, int index) {
-          return (listImages.length > index)
-              ? CustomImageContainer(
+          print(index);
+          print("length is ${listUrlsImages?.length}");
+
+          return (listUrlsImages!.length > index)
+              ? CustomEditImageContainer(
                   listImages: listImages,
-                  imageUrl: listImages[index],
-                )
-              : CustomImageContainer(
+                  // imageUrl: listImages[index],
+                  urlImageFromFirebase: listUrlsImages?.elementAt(index))
+              : CustomEditImageContainer(
                   listImages: listImages,
                 );
         },

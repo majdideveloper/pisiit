@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:pisiit/features/home/screen/my_profile/edit_profile.dart';
+import 'package:pisiit/features/home/screen/edit_profile/edit_profile.dart';
 import 'package:pisiit/features/home/screen/widgets/appbar_profile.dart';
 import 'package:pisiit/features/home/screen/widgets/complete_profile_widget.dart';
 import 'package:pisiit/features/home/screen/widgets/image_widget.dart';
@@ -14,13 +14,18 @@ import 'package:pisiit/utils/colors.dart';
 import 'package:pisiit/utils/helper_padding.dart';
 import 'package:pisiit/utils/helper_textstyle.dart';
 
-class ProfileScreen extends StatelessWidget {
+class ProfileScreen extends StatefulWidget {
   final UserModel userModel;
   const ProfileScreen({
     Key? key,
     required this.userModel,
   }) : super(key: key);
 
+  @override
+  State<ProfileScreen> createState() => _ProfileScreenState();
+}
+
+class _ProfileScreenState extends State<ProfileScreen> {
   @override
   Widget build(BuildContext context) {
     List<bool> listBoolPictures = [
@@ -34,9 +39,9 @@ class ProfileScreen extends StatelessWidget {
     return Scaffold(
       appBar: const AppBarProfile(),
       body: Consumer(builder: (context, ref, child) {
-        for (int index = 2; index <= 5; index++) {
-          if (userModel.imageURLs!.length > index) {
-            print(userModel.imageURLs!.length);
+        for (int index = 1; index <= 5; index++) {
+          if (widget.userModel.imageURLs!.length > index) {
+            print(widget.userModel.imageURLs!.length);
 
             listBoolPictures[index] = true;
           } else {
@@ -53,29 +58,25 @@ class ProfileScreen extends StatelessWidget {
                 const CompleteProfileWidget(),
                 mediumPaddingVert,
                 ImageWidget(
-                  imageUrl: userModel.imageURLs![0],
+                  imageUrl: widget.userModel.imageURLs![0],
                 ),
                 smallPaddingVert,
                 InfoUserWidget(
-                  user: userModel,
-                  userid: userModel.uid,
-                  name: userModel.name,
-                  age: userModel.age.toString(),
-                  gender: userModel.gender,
-                  jobTitle: userModel.jobTitle,
-                  country: userModel.country
-                      .substring(0, userModel.country.length - 5),
+                  user: widget.userModel,
+                  userid: widget.userModel.uid,
+                  name: widget.userModel.name,
+                  age: widget.userModel.age.toString(),
+                  gender: widget.userModel.gender,
+                  jobTitle: widget.userModel.jobTitle,
+                  country: widget.userModel.country
+                      .substring(0, widget.userModel.country.length - 5),
                 ),
                 smallPaddingVert,
-                //! this code rewirte to be more redable
-                // VisibilityImage(
-                //   visibility: listBoolPictures[1],
-                //   image: userModel.imageURLs![1] ,
-                // ),
+                mediumPaddingVert,
                 listBoolPictures[1] ? mediumPaddingVert : const SizedBox(),
                 listBoolPictures[1]
                     ? ImageWidget(
-                        imageUrl: userModel.imageURLs![1],
+                        imageUrl: widget.userModel.imageURLs![1],
                       )
                     : const SizedBox(),
 
@@ -83,15 +84,15 @@ class ProfileScreen extends StatelessWidget {
                 divider,
                 smallPaddingVert,
                 AboutMeWidget(
-                  aboutMe: userModel.bio.trim() == ""
+                  aboutMe: widget.userModel.bio.trim() == ""
                       ? "Describe yourself in two sentences to make your profile stand out. What are your key qualities or interests that you want someone to know? "
-                      : userModel.bio,
+                      : widget.userModel.bio,
                 ),
                 mediumPaddingVert,
                 listBoolPictures[2] ? mediumPaddingVert : const SizedBox(),
                 listBoolPictures[2]
                     ? ImageWidget(
-                        imageUrl: userModel.imageURLs![2],
+                        imageUrl: widget.userModel.imageURLs![2],
                       )
                     : const SizedBox(),
                 smallPaddingVert,
@@ -99,13 +100,13 @@ class ProfileScreen extends StatelessWidget {
                 smallPaddingVert,
                 SectionWidget(
                   nameSection: "Interests",
-                  interests: userModel.interests as List<String>,
+                  interests: widget.userModel.interests as List<String>,
                 ),
                 mediumPaddingVert,
                 listBoolPictures[3] ? mediumPaddingVert : const SizedBox(),
                 listBoolPictures[3]
                     ? ImageWidget(
-                        imageUrl: userModel.imageURLs![3],
+                        imageUrl: widget.userModel.imageURLs![3],
                       )
                     : const SizedBox(),
                 smallPaddingVert,
@@ -114,20 +115,20 @@ class ProfileScreen extends StatelessWidget {
                 //! section Relationship goals
                 RelationshipGoalWidget(
                   title: "Relation Goals",
-                  relationGoals: userModel.relationGoals,
+                  relationGoals: widget.userModel.relationGoals,
                 ),
                 mediumPaddingVert,
                 listBoolPictures[4] ? mediumPaddingVert : const SizedBox(),
                 listBoolPictures[4]
                     ? ImageWidget(
-                        imageUrl: userModel.imageURLs![4],
+                        imageUrl: widget.userModel.imageURLs![4],
                       )
                     : const SizedBox(),
                 mediumPaddingVert,
                 listBoolPictures[5] ? mediumPaddingVert : const SizedBox(),
                 listBoolPictures[5]
                     ? ImageWidget(
-                        imageUrl: userModel.imageURLs![5],
+                        imageUrl: widget.userModel.imageURLs![5],
                       )
                     : const SizedBox(),
               ],
@@ -139,8 +140,12 @@ class ProfileScreen extends StatelessWidget {
         backgroundColor: greyColor.shade200,
         //lightColor,
         onPressed: () {
-          Navigator.pushNamed(context, EditProfile.routeName,
-              arguments: {'userid': userModel.uid, 'user': userModel});
+          Navigator.pushNamed(context, EditProfile.routeName, arguments: {
+            'userid': widget.userModel.uid,
+            'user': widget.userModel
+          }).then((value) {
+            setState(() {});
+          });
         },
         child: SvgPicture.asset(
           "assets/svg/edit.svg",

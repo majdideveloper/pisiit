@@ -2,7 +2,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:pisiit/features/home/screen/my_profile/edit_profile.dart';
+import 'package:pisiit/features/home/screen/edit_profile/edit_profile.dart';
 import 'package:pisiit/models/user_model.dart';
 import 'package:pisiit/utils/colors.dart';
 import 'package:pisiit/utils/helper_padding.dart';
@@ -55,14 +55,11 @@ class InfoUserWidget extends ConsumerWidget {
         smallPaddingVert,
         ItemInfoUserSvg(
             //icon: Icons.work,
-            svgPath:
-              "assets/svg/case light.svg",
+            svgPath: "assets/svg/case light.svg",
             textDescription: jobTitle),
         smallPaddingVert,
         ItemInfoUserSvg(
-          svgPath: "assets/svg/home but light.svg", 
-          textDescription: country
-          ),
+            svgPath: "assets/svg/home but light.svg", textDescription: country),
       ],
     );
   }
@@ -75,7 +72,6 @@ class ItemInfoUser extends StatelessWidget {
     Key? key,
     this.icon,
     required this.textDescription,
-
   }) : super(key: key);
 
   @override
@@ -93,7 +89,6 @@ class ItemInfoUser extends StatelessWidget {
   }
 }
 
-
 class ItemInfoUserSvg extends StatelessWidget {
   final String svgPath;
   final String textDescription;
@@ -108,7 +103,12 @@ class ItemInfoUserSvg extends StatelessWidget {
   Widget build(BuildContext context) {
     return Row(
       children: [
-        SvgPicture.asset(svgPath, height: 20,width: 20, color: blackColor,),
+        SvgPicture.asset(
+          svgPath,
+          height: 20,
+          width: 20,
+          color: blackColor,
+        ),
         smallPaddingHor,
         Text(
           textDescription,

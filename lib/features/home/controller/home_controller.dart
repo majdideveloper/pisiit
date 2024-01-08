@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:pisiit/features/home/repository/home_repository.dart';
@@ -64,6 +66,7 @@ class HomeController {
   // }
   Future<void> updateUser(
       String userid,
+      // List<File?> imageURLs,
       String name,
       String birthday,
       String jobTitle,
@@ -74,7 +77,7 @@ class HomeController {
       String relationGoals,
       int age,
       BuildContext context) async {
-    homeRepository.updateUser(userid, name, birthday, jobTitle, country, bio,
-        interests, gender, relationGoals, age, context);
+    homeRepository.updateUser(userid, ref, name, birthday, jobTitle, country,
+        bio, interests, gender, relationGoals, age, context);
   }
 }

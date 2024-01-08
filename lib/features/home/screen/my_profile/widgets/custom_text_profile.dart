@@ -41,7 +41,6 @@ class _CustomProfileTextFieldState extends State<CustomProfileTextField> {
     return Container(
       width: widget.width ?? 155,
       child: TextFormField(
-        autofocus: true,
         readOnly: widget.readonly ?? false,
         controller: widget.controller,
         maxLength: widget.maxLength,
