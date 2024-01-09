@@ -134,11 +134,13 @@ class ChatsScreen extends StatelessWidget {
                                         //   ),
                                         //),
                                         smallPaddingVert,
-                                        Text(
-                                          request[index].nameSender,
-                                          style: textStyleText.copyWith(
-                                              fontSize: 14),
-                                        ),
+                                        SubstringName(name: request[index].nameSender, style: textStyleText.copyWith(
+                                               fontSize: 14))
+                                        // Text(
+                                        //   request[index].nameSender,
+                                        //   style: textStyleText.copyWith(
+                                        //       fontSize: 14),
+                                        // ),
                                       ],
                                     ),
                                   ),

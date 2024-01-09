@@ -343,12 +343,7 @@ void popUpRepondRequestDialog(
                 //   ),
                 // ),
                 smallPaddingVert,
-                 Text(
-                           recipient.name.length > 8
-                              ?  recipient.name.substring(0, 7) +
-                                  "..."  
-                              :  recipient.name ,style: textStyleTextBold,
-                        ),
+                 SubstringName(name: recipient.name,),
                 // Text(
                 //   recipient.name,
                 //   style: textStyleTextBold,
@@ -496,6 +491,24 @@ void popUpRepondRequestDialog(
       );
     },
   );
+}
+
+class SubstringName extends StatelessWidget {
+  final String name;
+  final TextStyle? style;
+  const SubstringName({
+    super.key, required this.name, this.style, 
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Text(
+              name.length > 8
+                 ?  name.substring(0, 7) +
+                     "..."  
+                 :  name ,style: style ?? textStyleTextBold,
+           );
+  }
 }
 
 Future<void> showPopRequest(BuildContext context) async {

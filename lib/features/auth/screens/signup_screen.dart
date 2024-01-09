@@ -159,6 +159,7 @@ class _SignUpScreenState extends ConsumerState<SignUpScreen> {
             // continue to the next case
             //send otp
             otp = generateOTP();
+            print(otp);
             sendOTPToEmail(emailController.text, otp);
           }
         }
