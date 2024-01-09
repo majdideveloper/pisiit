@@ -240,7 +240,7 @@ class ChatsScreen extends StatelessWidget {
                                               children: [
                                                 Text(
                                                   contacts[index].name,
-                                                  style: textStyleTextBold,
+                                                  style: textStyleTextBold
                                                 ),
                                                 l > 25 ? 
                                                 Text(
@@ -260,7 +260,8 @@ class ChatsScreen extends StatelessWidget {
                                             Text(
                                               DateFormat('HH:mm').format(
                                                   contacts[index].timeSent),
-                                              style: textStyleTextBold,
+                                              style: textStyleTextBold.copyWith(
+                                               fontSize: 14,),
                                             ),
                                           ],
                                         ),

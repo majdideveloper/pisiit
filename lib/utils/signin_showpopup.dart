@@ -377,7 +377,8 @@ void popUpRepondRequestDialog(
                     padding: const EdgeInsets.all(8.0),
                     child: Text(
                       requestModel.opener,
-                      style: textStyleTextBold,
+                      style: textStyleTextBold.copyWith(
+                                               fontSize: 12, fontWeight: FontWeight.w500),
                     ),
                   ),
                 ),
@@ -389,7 +390,8 @@ void popUpRepondRequestDialog(
                 controller: controller,
                 maxLines: 2,
                 style: textStyleTextBold.copyWith(
-                  fontSize: 16,
+                  fontSize: 12,
+                  fontWeight: FontWeight.w300
                 ),
               )
             ],
