@@ -59,7 +59,7 @@ class _OtpVerifWWidgetState extends State<OtpVerifWWidget> {
               "We have sent an OTP code to your email and ${widget.emailController.text}.\n Enter the OTP code below to verify",
         ),
         mediumPaddingVert,
-        Text(widget.otp[0]),
+        //Text(widget.otp[0]),
         FittedBox(
           child: Row(
             mainAxisAlignment: MainAxisAlignment.center,
@@ -155,7 +155,7 @@ class OtpCounter extends StatefulWidget {
 }
 
 class _OtpCounterState extends State<OtpCounter> {
-  int _counter = 30;
+  int _counter = 60;
   bool _showButton = false;
   Timer? _timer;
 
@@ -182,7 +182,7 @@ class _OtpCounterState extends State<OtpCounter> {
 
   void resetCounter() {
     setState(() {
-      _counter = 30;
+      _counter = 60;
       _showButton = false;
     });
     // Restart the counter

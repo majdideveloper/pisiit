@@ -183,9 +183,11 @@ void simplePisitDialog(
                 // ),
                 smallPaddingVert,
                 Text(
-                  sender.name,
-                  style: textStyleTextBold,
-                )
+                           sender.name.length > 8
+                              ?  sender.name.substring(0, 7) +
+                                  "..."  
+                              :  sender.name ,style: textStyleTextBold,
+                        ),
               ],
             ),
 
@@ -223,9 +225,15 @@ void simplePisitDialog(
                 // ),
                 smallPaddingVert,
                 Text(
-                  recipient.name,
-                  style: textStyleTextBold,
-                )
+                           recipient.name.length > 8
+                              ?  recipient.name.substring(0, 7) +
+                                  "..."  
+                              :  recipient.name ,style: textStyleTextBold,
+                        ),
+                // Text(
+                //   recipient.name,
+                //   style: textStyleTextBold,
+                // )
               ],
             ),
           ],
@@ -253,7 +261,6 @@ void simplePisitDialog(
                         currentUserId: sender.uid,
                         senderUserModel: sender,
                       );
-
                   Navigator.pop(context);
                   Navigator.pop(context);
                 },
@@ -306,10 +313,16 @@ void popUpRepondRequestDialog(
                 //   ),
                 // ),
                 smallPaddingVert,
-                Text(
-                  requestModel.nameSender,
-                  style: textStyleTextBold,
-                )
+                 Text(
+                           requestModel.nameSender.length > 8
+                              ?  requestModel.nameSender.substring(0, 7) +
+                                  "..."  
+                              :  requestModel.nameSender ,style: textStyleTextBold,
+                        ),
+                // Text(
+                //   requestModel.nameSender,
+                //   style: textStyleTextBold,
+                // )
               ],
             ),
             Image.asset(
@@ -330,10 +343,16 @@ void popUpRepondRequestDialog(
                 //   ),
                 // ),
                 smallPaddingVert,
-                Text(
-                  recipient.name,
-                  style: textStyleTextBold,
-                )
+                 Text(
+                           recipient.name.length > 8
+                              ?  recipient.name.substring(0, 7) +
+                                  "..."  
+                              :  recipient.name ,style: textStyleTextBold,
+                        ),
+                // Text(
+                //   recipient.name,
+                //   style: textStyleTextBold,
+                // )
               ],
             ),
           ],
