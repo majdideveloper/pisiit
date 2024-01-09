@@ -10,6 +10,7 @@ import 'package:pisiit/firebase_options.dart';
 import 'package:pisiit/models/user_model.dart';
 import 'package:pisiit/router.dart';
 import 'package:pisiit/utils/colors.dart';
+import 'package:pisiit/widgets/splash_screen.dart';
 
 void main() async {
 
@@ -59,7 +60,8 @@ class MyApp extends ConsumerWidget {
                     error: err.toString(),
                   );
                 },
-                loading: () => const Loader(),
+                loading: () => const SplashScreen(),
+                // Loader(),
               ),
     );
   }
@@ -70,8 +72,10 @@ class Loader extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Center(
-      child: CircularProgressIndicator(),
+    return Scaffold(
+      body: Center(
+        child: CircularProgressIndicator( color: primaryColor,),
+      ),
     );
   }
 }

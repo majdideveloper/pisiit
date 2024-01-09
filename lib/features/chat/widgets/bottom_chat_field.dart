@@ -116,7 +116,7 @@ class _BottomChatFieldState extends ConsumerState<BottomChatField> {
   //   }
   // }
 
-   void selectGIF() async {
+   void     selectGIF() async {
     
             // final gif = await Giphy.getGif(context: context, apiKey: '3eIFTBFqPL2wccMx26W7lo8ddtYxN4Y7');
             // if (gif != null) {
