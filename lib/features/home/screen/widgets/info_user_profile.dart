@@ -41,7 +41,7 @@ class InfoUserWidget extends ConsumerWidget {
         Center(
           child: Text(
             "$name ($age)",
-            textAlign: TextAlign.center,
+           textAlign: TextAlign.center,
             style: textStyleTextBold.copyWith(fontSize: 26),
           ),
         ),

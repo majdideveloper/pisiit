@@ -147,18 +147,14 @@ class HomeRepository {
       int age,
       BuildContext context) async {
     try {
-<<<<<<< HEAD
+
       //!change this code !!!!!!!!!!!!!
 
       // List<String>? urlImage = await ref
       //     .read(commonFirebaseStorageRepositoryProvider)
       //     .saveUpdateUserImageToStorage(uid: userid, files: imageURLs);
       await firestore.collection('Users').doc(userid).update(
-=======
-      final CollectionReference usersCollection =
-          FirebaseFirestore.instance.collection('Users');
-      await usersCollection.doc(userid).update(
->>>>>>> dad43e7 (giiit pulll)
+
         {
           'name': name,
           'birthday': birthday,
