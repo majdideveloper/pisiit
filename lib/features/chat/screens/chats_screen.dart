@@ -238,14 +238,15 @@ class ChatsScreen extends StatelessWidget {
                                               crossAxisAlignment:
                                                   CrossAxisAlignment.start,
                                               children: [
-                                                Text(
-                                                  contacts[index].name,
-                                                  style: textStyleTextBold
-                                                ),
-                                                l > 25 ? 
+                                                SubstringName(name: contacts[index].name,),
+                                                // Text(
+                                                //   contacts[index].name,
+                                                //   style: textStyleTextBold
+                                                // ),
+                                                l > 20 ? 
                                                 Text(
                                                   contacts[index]
-                                                    .lastMessage.substring(0, 25)+"......")
+                                                    .lastMessage.substring(0, 20)+"......")
                                                     :  Text(
                                                   contacts[index]
                                                     .lastMessage)
